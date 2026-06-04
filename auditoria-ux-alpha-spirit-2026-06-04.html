@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoría UX · Alpha Spirit Store · Junio 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0e0e0c;
+    --ink-2:#2a2a26;
+    --paper:#f6f3ec;
+    --paper-2:#efeae0;
+    --cream:#fbf8f1;
+    --line:#dcd6c7;
+    --accent:#c44a1c;      /* terracota Alpha */
+    --accent-2:#3a5a3f;    /* verde profundo */
+    --gold:#b8893a;
+    --red:#a8281e;
+    --amber:#c97900;
+    --green:#3a5a3f;
+    --blue:#2a4a6b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;font-weight:400}
+  .wrap{max-width:1240px;margin:0 auto;background:var(--cream);box-shadow:0 0 80px rgba(0,0,0,0.04)}
+
+  /* HEADER */
+  .hero{background:var(--ink);color:#fff;padding:96px 80px 88px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(800px 400px at 80% -10%, rgba(196,74,28,0.25), transparent 60%);pointer-events:none}
+  .hero-tag{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:#a8a39a;margin-bottom:24px;font-weight:600}
+  .hero h1{font-family:'Fraunces',serif;font-size:72px;font-weight:500;line-height:1.02;letter-spacing:-2px;margin-bottom:24px}
+  .hero h1 em{font-style:italic;color:#e89a6b;font-weight:400}
+  .hero .lede{font-size:21px;color:#cfcabf;max-width:780px;line-height:1.5;font-weight:300;margin-bottom:40px}
+  .hero-meta{display:flex;gap:48px;font-size:13px;color:#807a6f;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;border-top:1px solid #2a2a26;padding-top:32px;margin-top:48px}
+  .hero-meta div span{display:block;color:#fff;font-size:14px;margin-top:6px;letter-spacing:0;text-transform:none;font-weight:400}
+
+  /* NAV */
+  .nav{background:var(--paper-2);padding:20px 80px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+  .nav-inner{display:flex;gap:28px;flex-wrap:wrap;font-size:13px;font-weight:500}
+  .nav a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px;transition:all 0.2s}
+  .nav a:hover{color:var(--accent);border-color:var(--accent)}
+
+  /* SECTIONS */
+  section{padding:96px 80px;border-bottom:1px solid var(--line)}
+  .sec-tag{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+  .sec-tag::before{content:"";display:inline-block;width:32px;height:1px;background:var(--accent)}
+  h2{font-family:'Fraunces',serif;font-size:52px;font-weight:500;line-height:1.05;letter-spacing:-1.5px;margin-bottom:20px;color:var(--ink)}
+  h2 em{font-style:italic;color:var(--accent);font-weight:400}
+  .sec-lede{font-size:20px;color:#5a5448;max-width:840px;margin-bottom:64px;font-weight:300;line-height:1.5}
+  h3{font-family:'Fraunces',serif;font-size:32px;font-weight:500;margin:48px 0 16px;letter-spacing:-0.5px;color:var(--ink)}
+  h4{font-size:18px;font-weight:600;margin:32px 0 12px;color:var(--ink);letter-spacing:-0.2px}
+  p{font-size:16px;line-height:1.7;margin-bottom:14px;color:var(--ink-2)}
+  strong{font-weight:600;color:var(--ink)}
+  ul,ol{margin:16px 0 16px 22px}
+  li{font-size:16px;line-height:1.65;margin:8px 0;color:var(--ink-2)}
+
+  /* SCORE GRID */
+  .scores{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
+  .score{background:#fff;border:1px solid var(--line);padding:32px 28px;border-radius:4px;position:relative;overflow:hidden}
+  .score::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+  .score.green::before{background:var(--green)}
+  .score.amber::before{background:var(--amber)}
+  .score.red::before{background:var(--red)}
+  .score-num{font-family:'Fraunces',serif;font-size:64px;font-weight:500;line-height:1;letter-spacing:-2px;color:var(--ink)}
+  .score-num span{font-size:24px;color:#a8a39a;font-weight:400}
+  .score-label{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:#807a6f;margin-top:14px;font-weight:600}
+  .score-desc{font-size:13px;color:#5a5448;margin-top:8px;line-height:1.5}
+
+  /* FINDING CARDS */
+  .findings{display:grid;grid-template-columns:1fr;gap:24px;margin-top:40px}
+  .finding{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);padding:32px 36px;border-radius:4px}
+  .finding.crit{border-left-color:var(--red)}
+  .finding.warn{border-left-color:var(--amber)}
+  .finding.ok{border-left-color:var(--green)}
+  .finding.info{border-left-color:var(--blue)}
+  .finding-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:14px;flex-wrap:wrap}
+  .finding-title{font-family:'Fraunces',serif;font-size:24px;font-weight:500;letter-spacing:-0.4px;color:var(--ink);flex:1}
+  .badge{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 10px;border-radius:2px;font-weight:700;white-space:nowrap}
+  .b-crit{background:#f7e2e0;color:var(--red)}
+  .b-warn{background:#fbecd1;color:var(--amber)}
+  .b-ok{background:#dbe6dc;color:var(--green)}
+  .b-info{background:#d9e3ef;color:var(--blue)}
+  .b-tag{background:var(--paper-2);color:var(--ink-2);margin-left:6px}
+  .evidence{background:var(--paper);padding:18px 22px;border-radius:3px;margin:18px 0;font-size:14px;color:#5a5448;border-left:2px solid var(--line);font-style:italic}
+  .evidence::before{content:"Evidencia: ";font-style:normal;font-weight:600;color:var(--ink);text-transform:uppercase;font-size:11px;letter-spacing:1px}
+  .reco{background:#f0ebe0;padding:18px 22px;border-radius:3px;margin:18px 0;font-size:15px;color:var(--ink-2)}
+  .reco::before{content:"→ Recomendación: ";font-weight:700;color:var(--accent);text-transform:uppercase;font-size:11px;letter-spacing:1.5px;display:block;margin-bottom:8px}
+
+  /* HEURISTICS GRID */
+  .heur-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:40px}
+  .heur{background:#fff;border:1px solid var(--line);padding:24px 28px;border-radius:4px;display:flex;gap:20px;align-items:flex-start}
+  .heur-num{font-family:'Fraunces',serif;font-size:36px;font-weight:500;line-height:1;color:var(--accent);min-width:48px;letter-spacing:-1px}
+  .heur-body{flex:1}
+  .heur-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+  .heur-score{display:inline-block;font-size:10px;letter-spacing:1px;padding:3px 8px;border-radius:2px;font-weight:700;text-transform:uppercase;margin-left:6px;vertical-align:middle}
+  .heur p{font-size:14px;margin-bottom:0;color:#5a5448;line-height:1.55}
+
+  /* COMPARE TABLE */
+  .table-wrap{overflow-x:auto;margin:40px 0}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  thead{background:var(--paper-2)}
+  th{text-align:left;padding:16px 20px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;color:var(--ink);border-bottom:1px solid var(--line)}
+  td{padding:16px 20px;font-size:14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+  tr:last-child td{border-bottom:none}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .dot-r{background:var(--red)}
+  .dot-a{background:var(--amber)}
+  .dot-g{background:var(--green)}
+
+  /* ROADMAP */
+  .roadmap{margin-top:48px}
+  .phase{background:#fff;border:1px solid var(--line);padding:36px 40px;border-radius:4px;margin-bottom:24px;position:relative}
+  .phase-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:10px}
+  .phase h3{margin-top:0;font-size:28px;margin-bottom:8px}
+  .phase-meta{font-size:13px;color:#807a6f;margin-bottom:24px;font-weight:500}
+  .phase-list{margin:0;padding:0;list-style:none}
+  .phase-list li{padding:14px 0;border-top:1px solid var(--line);font-size:15px;display:flex;gap:16px;align-items:flex-start}
+  .phase-list li::before{content:"";display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;margin-top:9px;flex-shrink:0}
+
+  /* MOODBOARD */
+  .mood{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+  .mood-card{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .mood-swatch{height:180px;display:flex;align-items:flex-end;padding:16px;color:#fff;font-family:'Fraunces',serif;font-size:22px;font-weight:500;letter-spacing:-0.5px}
+  .mood-body{padding:20px 24px}
+  .mood-body h4{margin:0 0 6px;font-size:14px}
+  .mood-body p{font-size:13px;color:#5a5448;margin:0;line-height:1.5}
+  .sw-ink{background:linear-gradient(135deg,#0e0e0c,#2a2a26)}
+  .sw-terra{background:linear-gradient(135deg,#c44a1c,#a83812)}
+  .sw-green{background:linear-gradient(135deg,#3a5a3f,#2a4530)}
+  .sw-cream{background:linear-gradient(135deg,#f6f3ec,#e8e0cc);color:var(--ink)}
+  .sw-gold{background:linear-gradient(135deg,#b8893a,#8a6428)}
+  .sw-clay{background:linear-gradient(135deg,#e89a6b,#c47848)}
+
+  /* WIREFRAME */
+  .wire{background:#fff;border:1px solid var(--line);padding:32px;border-radius:4px;margin:40px 0}
+  .wire-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:20px}
+  .wire-dot{display:flex;gap:6px}
+  .wire-dot span{width:10px;height:10px;border-radius:50%;background:#d4cfc2}
+  .wire-url{font-family:'JetBrains Mono',monospace;font-size:12px;color:#807a6f;background:var(--paper);padding:6px 14px;border-radius:3px;flex:1;margin:0 20px;text-align:center}
+  .wire-grid{display:grid;gap:14px}
+  .block{background:var(--paper-2);border:1px dashed #b8b0a0;padding:18px;text-align:center;font-size:13px;color:#5a5448;border-radius:3px;font-weight:500}
+  .block.tall{padding:42px 18px}
+  .block.h{background:var(--ink);color:#fff;border:none;padding:64px 24px;font-family:'Fraunces',serif;font-size:18px;font-weight:500;letter-spacing:-0.3px}
+  .block.h em{font-style:italic;color:#e89a6b;font-weight:400}
+  .block.pri{background:var(--accent);color:#fff;border:none;font-weight:600}
+  .block.sub{background:#fff;border:1px solid var(--line);color:var(--ink-2)}
+  .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  .row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .row-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+
+  /* QUOTE */
+  .quote{background:var(--ink);color:#fff;padding:64px 80px;margin:80px -80px;font-family:'Fraunces',serif;font-size:36px;line-height:1.3;font-weight:400;font-style:italic;letter-spacing:-0.5px}
+  .quote::before{content:"\201C";font-size:120px;line-height:0.5;color:var(--accent);display:block;margin-bottom:32px;font-style:normal}
+  .quote-att{font-family:'Inter',sans-serif;font-size:13px;font-style:normal;color:#a8a39a;text-transform:uppercase;letter-spacing:2px;margin-top:32px;font-weight:600}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:#a8a39a;padding:72px 80px;text-align:center}
+  footer p{color:#a8a39a;font-size:13px;margin:8px 0}
+  footer strong{color:#fff}
+
+  /* MISC */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px}
+  .stat{font-family:'Fraunces',serif;font-size:72px;font-weight:500;letter-spacing:-2px;line-height:1;color:var(--accent);display:block;margin-bottom:8px}
+  .pull{background:#fff;border:1px solid var(--line);padding:40px;border-radius:4px}
+  .matrix{display:grid;grid-template-columns:120px repeat(3,1fr);gap:2px;background:var(--line);border:1px solid var(--line);margin-top:32px;border-radius:4px;overflow:hidden}
+  .matrix > div{background:#fff;padding:18px 16px;font-size:13px}
+  .matrix .mh{background:var(--paper-2);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;text-align:center;color:var(--ink)}
+  .matrix .ml{background:var(--paper-2);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink);display:flex;align-items:center}
+  .matrix-cell strong{display:block;font-size:13px;margin-bottom:4px;color:var(--ink)}
+  .matrix-cell span{font-size:12px;color:#5a5448;display:block;margin:3px 0}
+
+  @media (max-width:880px){
+    .hero,section,.nav,footer{padding:64px 28px}
+    .hero h1{font-size:44px}
+    h2{font-size:36px}
+    .scores,.row-3,.row-4,.mood,.heur-grid,.two-col{grid-template-columns:1fr}
+    .quote{margin:48px -28px;padding:48px 28px;font-size:24px}
+    .hero-meta{flex-direction:column;gap:20px}
+    .matrix{grid-template-columns:1fr;gap:0}
+    .nav{position:relative}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-tag">Auditoría UX · Junio 2026</div>
+  <h1>Una web que <em>cuida</em> tanto<br>como el producto que vende.</h1>
+  <p class="lede">Auditoría completa de aspiritpetfood.store — versiones España e internacional — bajo lente UX, conversión, marca, accesibilidad y benchmarking competitivo. El objetivo: rediseñar manteniendo la esencia artesanal y natural de Alpha Spirit, llevándola a un estándar contemporáneo de premium pet food.</p>
+  <div class="hero-meta">
+    <div>Cliente<span>Alpha Spirit · Amigüitos Pets &amp; Life S.A.</span></div>
+    <div>Dominio analizado<span>aspiritpetfood.store (ES, EN, IT, PT)</span></div>
+    <div>Páginas auditadas<span>Home · PDP · Colección · Real Food · Políticas · Checkout</span></div>
+    <div>Fecha<span>4 de junio de 2026</span></div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#resumen">Resumen ejecutivo</a>
+    <a href="#diagnostico">Diagnóstico global</a>
+    <a href="#hallazgos">Hallazgos críticos</a>
+    <a href="#heuristicas">Heurísticas Nielsen</a>
+    <a href="#i18n">Internacional</a>
+    <a href="#pdp">Ficha de producto</a>
+    <a href="#confianza">Confianza &amp; conversión</a>
+    <a href="#mobile">Mobile &amp; performance</a>
+    <a href="#bench">Benchmark</a>
+    <a href="#concepto">Concepto contemporáneo</a>
+    <a href="#roadmap">Roadmap</a>
+  </div>
+</nav>
+
+<!-- RESUMEN EJECUTIVO -->
+<section id="resumen">
+  <div class="sec-tag">01 · Resumen ejecutivo</div>
+  <h2>Producto de <em>10</em>. Web de <em>5,8</em>.</h2>
+  <p class="sec-lede">Alpha Spirit tiene un producto que enamora — 2.159 reseñas en web propia con tono entusiasta, palatabilidad superior, tecnología patentada (Tenderize) y un detalle de marca que genera amor incondicional (snack de regalo en cada pedido). La web, sin embargo, no está a la altura: es una plantilla Shopify de 2018 sin jerarquía visual, sin localización real, con copy genérico, friction en la PDP y cero comunicación de los diferenciales que sí generan recompra.</p>
+
+  <div class="scores">
+    <div class="score amber"><div class="score-num">5,8<span>/10</span></div><div class="score-label">Score UX global</div><div class="score-desc">Funcional pero genérica. Sin personalidad de marca, sin priorización de mensajes.</div></div>
+    <div class="score red"><div class="score-num">3,5<span>/10</span></div><div class="score-label">Localización i18n</div><div class="score-desc">Versión EN/IT/PT con menús, banners y CTAs en español. Inaceptable para marca internacional.</div></div>
+    <div class="score amber"><div class="score-num">6,0<span>/10</span></div><div class="score-label">PDP &amp; conversión</div><div class="score-desc">Falta jerarquía, faltan trust signals, falta calculadora de raciones, cross-sell con stock-out.</div></div>
+    <div class="score red"><div class="score-num">4,0<span>/10</span></div><div class="score-label">Marca &amp; storytelling</div><div class="score-desc">Tenderize, Lorca, snack de regalo y 85% carne fresca casi invisibles. Plantilla Shopify desnuda.</div></div>
+  </div>
+
+  <h3>Los tres movimientos que más valor desbloquean</h3>
+  <div class="findings">
+    <div class="finding info">
+      <div class="finding-head">
+        <div class="finding-title">1. Reconstruir la home como página de marca, no como catálogo</div>
+        <span class="badge b-info">Impacto alto · Esfuerzo medio</span>
+      </div>
+      <p>Hoy la home muestra 4 banners ("LO MEJOR EN ALIMENTACIÓN", "ALIMENTACIÓN 100% NATURAL", "CALIDAD PREMIUM PARA TODOS", "SUPERALIMENTOS AL PODER") + listado de productos genérico. Ninguno cuenta la historia: <strong>cocinado a baja temperatura en Lorca, 85% carne fresca, snack de regalo en cada pedido, fórmula que conquista al perro más quisquilloso</strong>. Edgard &amp; Cooper y Dogfy Diet venden experiencia y propósito; Alpha Spirit vende SKUs.</p>
+    </div>
+    <div class="finding info">
+      <div class="finding-head">
+        <div class="finding-title">2. Quiz / matchmaker "¿Qué necesita tu peludo?"</div>
+        <span class="badge b-info">Impacto alto · Esfuerzo medio</span>
+      </div>
+      <p>Catálogo real (revisado 4-jun-2026 en /collections/all): <strong>200 productos</strong> · 5 líneas (Alpha Spirit, Primal Spirit, Orygo, Real Food, Snacks) × 2 especies × seco/semi/húmedo/snacks/packs. El usuario llega y se ahoga (paradoja de la elección, Ley de Hick). Un quiz de 4-5 pasos (especie · edad · peso · sensibilidades · objetivo) reduce fricción, recoge datos de zero-party y abre la puerta a personalización y a justificar la suscripción que ya existe (5%) elevándola a un beneficio real (-25% 1ª entrega). Es exactamente lo que Dogfy Diet hace mejor.</p>
+    </div>
+    <div class="finding info">
+      <div class="finding-head">
+        <div class="finding-title">3. Lanzar suscripción real (no solo cupón newsletter)</div>
+        <span class="badge b-info">Impacto alto · Esfuerzo alto</span>
+      </div>
+      <p>Las reseñas están llenas de "llevo mucho tiempo pidiéndolo y siempre repetimos" — el comportamiento de recompra existe; lo que falta es la mecánica que lo capture como MRR. Hoy la suscripción solo es "10% por suscribirte al newsletter". La PDP ya tiene "Este artículo es una compra recurrente o diferida" en letra pequeña, pero sin tipos de cadencia visibles ni beneficios. Convertir esto en un Subscribe &amp; Save (envío cada 4/6/8 semanas, -10% permanente, snack extra, posibilidad de pausar) sería transformacional para LTV.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNÓSTICO GLOBAL -->
+<section id="diagnostico">
+  <div class="sec-tag">02 · Diagnóstico global</div>
+  <h2>Lo que la web <em>dice</em> hoy<br>vs. lo que la marca <em>es</em>.</h2>
+  <p class="sec-lede">Test de coherencia entre la promesa del producto (artesanal, español, premium, palatable) y la experiencia digital actual.</p>
+
+  <div class="two-col">
+    <div class="pull">
+      <h4 style="color:var(--red);margin-top:0">Lo que dice hoy la web</h4>
+      <ul>
+        <li>"Tienda online" en Shopify con plantilla estándar.</li>
+        <li>Logo blanco sobre negro + menú denso con 7 niveles de profundidad.</li>
+        <li>Banner promo: "Envíos GRATUITOS desde 29€" + "GRATIS 10% en producto" — dos beneficios apilados que se canibalizan.</li>
+        <li>Hero rotativo con 4 banners y copy en MAYÚSCULAS: "LO MEJOR EN ALIMENTACIÓN", "ALIMENTACIÓN 100% NATURAL".</li>
+        <li>Listado de productos en grid genérico tipo dropshipper.</li>
+        <li>Reviews al final, sin estrellas visibles, sin filtros, sin fotos.</li>
+        <li>Footer minimalista: solo email de soporte, sin WhatsApp, sin teléfono, sin Bizum.</li>
+        <li>Países: ES, IT, PT — y banderita EN sin tienda EN funcional.</li>
+      </ul>
+    </div>
+    <div class="pull">
+      <h4 style="color:var(--green);margin-top:0">Lo que es Alpha Spirit en realidad</h4>
+      <ul>
+        <li>Marca <strong>artesanal española</strong> con fábrica propia en Lorca (Murcia).</li>
+        <li>Tecnología patentada <strong>Tenderize</strong> — cocción a baja temperatura, único en el mercado.</li>
+        <li>Hasta <strong>85% de carne y pescado fresco</strong> — supera a Acana, dobla a Dogfy.</li>
+        <li>Producto <strong>semihúmedo</strong> que resuelve al perro quisquilloso (25+ menciones en reviews).</li>
+        <li><strong>Snack de regalo</strong> en cada pedido — generador único de fidelidad emocional.</li>
+        <li>4 gamas con propósito (Alpha · Primal · Orygo · Real Food) que abarcan 3 puntos de precio.</li>
+        <li>Comunidad <strong>Alpha Friends</strong> con UGC orgánico en Instagram (12,8K seguidores, 906 posts).</li>
+        <li>2.159 reseñas con ~4,7★ promedio y patrón emocional reconocible.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="quote">
+    Tienes una marca de <strong>charcutería natural para perros</strong> vendiéndose como si fuera un saco de pienso industrial.
+    <div class="quote-att">Diagnóstico de posicionamiento — Junio 2026</div>
+  </div>
+</section>
+
+<!-- HALLAZGOS CRÍTICOS -->
+<section id="hallazgos">
+  <div class="sec-tag">03 · Hallazgos críticos</div>
+  <h2>17 problemas detectados,<br>priorizados por <em>impacto</em>.</h2>
+  <p class="sec-lede">Cada hallazgo está clasificado por severidad y va con evidencia tomada directamente de la web auditada (4 de junio de 2026).</p>
+
+  <div class="findings">
+
+    <div class="finding crit">
+      <div class="finding-head">
+        <div class="finding-title">H01. La versión EN/IT/PT no está traducida</div>
+        <span class="badge b-crit">Crítico · i18n</span>
+      </div>
+      <p>En <code>/en</code> el menú principal sigue en español ("Perros - Seco", "Albóndigas", "Bocaditos", "Huesos"), el banner top y todos los heros de la home permanecen en español ("LO MEJOR EN ALIMENTACIÓN", "ALIMENTACIÓN 100% NATURAL", "COMPRAR"), y el formulario de newsletter dice "Suscríbete y recibe un 10% de descuento". Solo el chrome de Shopify (Search, Cart, Log in) está traducido. Esto sale en Google a clientes UK/FR/DE y genera abandono inmediato.</p>
+      <div class="evidence">En www.aspiritpetfood.store/en, header dice "Skip to content" pero el menú listing dice "Perros - Snacks · Gatos - Húmedo · Bocaditos". Para un comprador británico es una señal de "no es para mí".</div>
+      <div class="reco">Implementar Shopify Markets con traducción real de menús, banners y copy. Mientras tanto, esconder el selector EN hasta tener la traducción lista (mejor sin opción que con opción rota).</div>
+    </div>
+
+    <div class="finding crit">
+      <div class="finding-head">
+        <div class="finding-title">H02. La home no comunica los diferenciales que sí generan recompra</div>
+        <span class="badge b-crit">Crítico · Marca</span>
+      </div>
+      <p>Los tres diferenciales que más mencionan tus clientes — <strong>tecnología Tenderize</strong>, <strong>snack de regalo en cada pedido</strong>, y el <strong>semihúmedo que enloquece al perro quisquilloso</strong> — son los que más impacto tendrían sobre conversión, pero están escondidos: Tenderize aparece solo en la PDP en un párrafo de texto plano; el snack se anuncia en un banner promocional al lado de "envío gratis"; y "semihúmedo" no se menciona en home.</p>
+      <div class="evidence">Hero actual: "LO MEJOR EN ALIMENTACIÓN / Nuestra línea de alimentos SUPER PREMIUM. Innovación y experiencia crean productos únicos para tu mascota, con 100% de carne y pescado fresco." — Copy genérico que cualquier marca premium podría firmar.</div>
+      <div class="reco">Reescribir el hero principal con un mensaje apropiable. Sugerencia inicial: <em>"Cocinado a baja temperatura en Lorca. Con 85% de carne fresca. Por eso a tu perro no le hace falta convencerse."</em></div>
+    </div>
+
+    <div class="finding crit">
+      <div class="finding-head">
+        <div class="finding-title">H03. Cross-sell de la PDP recomienda productos AGOTADOS</div>
+        <span class="badge b-crit">Crítico · Pérdida de ventas</span>
+      </div>
+      <p>En la PDP de "Alimento The Only One 7 Days Formula", la sección "Cómpralo con" muestra dos productos — Albóndigas de Cordero y Comino y Paté de Conejo con Plátano — ambos marcados <strong>Agotado</strong>. Estás invirtiendo prime real estate del PDP en frustrar al cliente.</p>
+      <div class="reco">Filtrar el algoritmo de cross-sell por stock &gt; 0. Si no hay nada disponible y relevante, mejor ocultar la sección. Y revisar urgentemente el OOS — los reviews mencionan ya 8+ veces "no hay stock / lo descatalogan".</div>
+    </div>
+
+    <div class="finding crit">
+      <div class="finding-head">
+        <div class="finding-title">H04. IA confusa: 3 puntos de entrada compiten (Perros / Gatos / Packs) sin jerarquía clara de marca</div>
+        <span class="badge b-crit">Crítico · IA</span>
+      </div>
+      <p>El menú top desktop es simple (Perros · Gatos · Packs Alpha Spirit) — lo cual es bueno — pero el footer expone 5 líneas de producto (Alpha Spirit · Primal Spirit · Orygo · Real Food · Snacks). Esto crea dos sistemas mentales en paralelo: <strong>"entro por especie"</strong> (Perros/Gatos) vs <strong>"entro por gama de marca"</strong> (Alpha/Primal/Orygo/Real). El recién llegado no sabe cuál es premium, cuál es básica, cuál tiene superalimentos. Falta una página "Compara las líneas" o un quiz que recomiende.</p>
+      <div class="reco">Mantener las 3 entradas actuales (Perros · Gatos · Packs) y añadir dos: <strong>Por qué Alpha</strong> (con story Tenderize + Lorca) y <strong>Suscríbete y ahorra</strong>. Dentro de Perros, organizar por <em>necesidad</em> (cachorro, adulto, senior, sensible) y no por gama de marca. Las 5 líneas (Alpha Spirit, Primal Spirit, Orygo, Real Food, Snacks) necesitan una página comparativa "Cuál línea es para mi perro" con tabla precio/% carne/superalimentos.</div>
+    </div>
+
+    <div class="finding warn">
+      <div class="finding-head">
+        <div class="finding-title">H05. Banner top apila dos mensajes que se canibalizan</div>
+        <span class="badge b-warn">Alto · Copy</span>
+      </div>
+      <p>El header anuncia: "¡Envíos GRATUITOS desde 29€ en península!" + "GRATIS el 10% de tu compra en productos Alpha Spirit al recibir el pedido. ¡SORPRESA!". El segundo mensaje es magia (snack de regalo único en el mercado) pero está redactado como tecnicismo de fidelización. Y juntos son ruido.</p>
+      <div class="reco">Dos slots rotativos en el announcement bar, no dos mensajes apilados. Y reescribir el segundo: <em>"En cada pedido te enviamos un snack natural de regalo. Porque a tu peludo le hace ilusión también."</em></div>
+    </div>
+
+    <div class="finding warn">
+      <div class="finding-head">
+        <div class="finding-title">H06. PDP sin tabla de raciones interactiva ni dosificador</div>
+        <span class="badge b-warn">Alto · Conversión</span>
+      </div>
+      <p>La PDP del 7 Days Formula dice "Consulte la tabla de necesidades diarias de alimento como punto de referencia, variando la cantidad según la edad, nivel de actividad física, peso o raza". Pero la tabla no se muestra. Un cliente con un Pastor Alemán de 35 kg no puede saber si el saco de 12 kg le dura un mes o dos, y por tanto no puede comparar precio/día con su pienso actual.</p>
+      <div class="reco">Mini-calculadora en PDP: <em>"Mi perro pesa __ kg · Nivel de actividad ◯ bajo ◯ medio ◯ alto"</em> → devuelve raciones diarias, duración del saco y coste por día. Reduce objeción de precio sin tener que bajarlo.</div>
+    </div>
+
+    <div class="finding warn">
+      <div class="finding-head">
+        <div class="finding-title">H07. Reviews abajo de la PDP, sin estrellas, sin fotos, sin filtros</div>
+        <span class="badge b-warn">Alto · Prueba social</span>
+      </div>
+      <p>La PDP del 7 Days dice "128 reviews" pero no muestra el rating en estrellas. Y al final aparecen barras de porcentaje, una lista de reseñas, sin imagen del cliente ni filtro por talla del perro o por fórmula. Sin embargo, en las reseñas hay un patrón emocional fuerte ("mi pastor alemán", "mi podenca Reina", "mis cuatro perras"). Estás dejando frío un activo enorme.</p>
+      <div class="reco">Sustituir por widget tipo Loox / Junip: estrellas en header de la PDP, foto del perro en cada review, filtros por edad, raza, fórmula, talla. Pedir foto en el email post-compra con un incentivo (un snack extra).</div>
+    </div>
+
+    <div class="finding warn">
+      <div class="finding-head">
+        <div class="finding-title">H08. La suscripción existe y es flexible, pero el 5% off es inferior al newsletter (10%) — desincentivo racional</div>
+        <span class="badge b-warn">Alto · LTV</span>
+      </div>
+      <p>En la PDP aparece un toggle "OPCIONES DE COMPRA" con dos cards: <strong>Compra Única</strong> (€19,80) y <strong>Suscríbete y ahorra un 5%</strong> con badge "AHORRA 5%" y precio €18,81 vs €19,80 tachado. Tiene frecuencia Quincenal/Mensual, link "Detalles de la suscripción" y promesa de control absoluto (skip/edit/cancel). <strong>Lo flexible está bien, el incentivo no.</strong> El popup de newsletter da 10% off (one-shot). Resultado: el usuario que hace cuentas ve que suscribirse le da menos descuento que apuntarse al boletín. Dogfy/E&amp;C ofrecen 40-50% en 1ª entrega y 10-15% en recurrentes.</p>
+      <div class="reco">El toggle ya existe — falta reescribir incentivos: <strong>1ª entrega -25%</strong> · <strong>recurrente -12-15%</strong> · <strong>snack premium gratis cada 3 entregas</strong> · <strong>envío siempre gratis</strong>. Añadir frecuencia calculada por peso del perro (no solo Quincenal/Mensual). Mover beneficios encima del precio, no debajo en "Detalles".</div>
+    </div>
+
+    <div class="finding warn">
+      <div class="finding-head">
+        <div class="finding-title">H09. Imágenes de producto son packshots planos sobre fondo blanco</div>
+        <span class="badge b-warn">Alto · Marca</span>
+      </div>
+      <p>Todas las fotos de PDP son del saco aislado. No hay foto editorial (perro real comiéndolo, mano dosificando, textura del semihúmedo, el snack de regalo en mano). Los nombres internos de las imágenes son <code>saco_3kg_seco_7days.png</code> — datado y nada de mood. La competencia premium (E&amp;C, Open Farm, Naku) usa fotografía editorial con luz natural.</p>
+      <div class="reco">Sesión de fotografía: <strong>(a)</strong> packshot limpio con sombra cinematográfica, <strong>(b)</strong> perro real comiendo en cocina con luz cálida, <strong>(c)</strong> ingredientes crudos detrás del saco, <strong>(d)</strong> macro de textura semihúmeda, <strong>(e)</strong> unboxing con snack de regalo destacado.</p>
+    </div>
+
+    <div class="finding warn">
+      <div class="finding-head">
+        <div class="finding-title">H10. Promesa de envío 3-5 días vs. realidad reportada de 8 días</div>
+        <span class="badge b-warn">Alto · Expectativa</span>
+      </div>
+      <p>La política dice "3 a 5 días laborales", pero hay reviews que mencionan "Ha tardado mucho en llegar (8 días) pero entiendo que son malas fechas". Si Navidad/Reyes es el momento más sensible, expectativa mal gestionada cuesta reseñas.</p>
+      <div class="reco">Banner contextual en PDP cuando hay riesgo de retraso: <em>"Pedidos entre el __ y el __ pueden tardar 1-2 días más por alta demanda. Pídelo antes del __ para recibirlo en Navidad."</em> + tracking proactivo por WhatsApp.</div>
+    </div>
+
+    <div class="finding warn">
+      <div class="finding-head">
+        <div class="finding-title">H11. Sin opciones de pago locales relevantes (Bizum, Klarna)</div>
+        <span class="badge b-warn">Medio · Conversión</span>
+      </div>
+      <p>Los métodos visibles en footer (confirmados en aspiritpetfood.store el 4-jun-2026) son: AmEx, Apple Pay, Google Pay, Maestro, Mastercard, Shop Pay, Union Pay, Visa. <strong>Faltan Bizum (España, ~25M usuarios), SeQura/Klarna (BNPL líderes en ES) y PayPal</strong>. Para sacos de 76€ y compras de varias mascotas, "Paga en 3 plazos sin intereses" reduce fricción de ticket alto. PayPal es además un must para compradores que no quieren introducir tarjeta en sitios nuevos.</p>
+      <div class="reco">Activar Bizum (Redsys o Mollie en Shopify) y Klarna / SeQura en checkout. Mostrar el "desde 19€ en 3 plazos sin intereses" bajo el precio en PDP.</div>
+    </div>
+
+    <div class="finding warn">
+      <div class="finding-head">
+        <div class="finding-title">H12. Política de devoluciones hostil y poco visible</div>
+        <span class="badge b-warn">Medio · Confianza</span>
+      </div>
+      <p>La política indica: <strong>recogida cuesta 6,95€ + IVA al cliente</strong>, las reclamaciones por daño solo valen en las <strong>primeras 24 horas tras recibir</strong>, y el comprador debe gestionar la devolución por email. Para producto de food/perecedero esto es entendible operativamente, pero comunicarlo así de seco es una bandera roja para el comprador premium primerizo.</p>
+      <div class="reco">Reescribir como "Garantía Alpha Spirit": <em>"Si tu perro no lo come, te devolvemos el dinero. Sin preguntas, sin gastos de devolución durante 30 días."</em> — alinear con E&amp;C que es así de generoso. El coste de las devoluciones reales será marginal y el upside en confianza es altísimo.</p>
+    </div>
+
+    <div class="finding warn">
+      <div class="finding-head">
+        <div class="finding-title">H13. La PDP no aborda la objeción "le da diarrea" (15+ menciones)</div>
+        <span class="badge b-warn">Medio · Objeción</span>
+      </div>
+      <p>El reporte 7 Maletas detecta que la objeción #1 negativa es "le da diarrea / gastritis a mi perro", con 15+ menciones en Trustpilot, ZooPlus y foros. La causa real suele ser una transición demasiado rápida (Alpha es semihúmedo y más rico en carne), pero la web no tiene una guía clara de "Cómo cambiar el pienso de tu perro a Alpha Spirit en 7 días".</p>
+      <div class="reco">Página dedicada "Guía de transición en 7 días" + módulo en PDP <em>"Es la primera vez que pruebas Alpha Spirit"</em> con el plan ilustrado. Insertar también físicamente en el paquete del primer pedido.</div>
+    </div>
+
+    <div class="finding warn">
+      <div class="finding-head">
+        <div class="finding-title">H14. Sin página "Sobre nosotros" / "Por qué Alpha Spirit"</div>
+        <span class="badge b-warn">Medio · Storytelling</span>
+      </div>
+      <p>Hay blog ("Noticias") pero no hay una página de marca que cuente Lorca, los 20+ años de fabricación, la familia detrás de Amigüitos Pets &amp; Life, la fábrica, los proveedores locales. E&amp;C dedica medio sitio a esto, Dogfy hace lo propio. Para una marca premium, el origin story es lo que justifica el precio.</p>
+      <div class="reco">Crear página <strong>"Por qué cocinamos así"</strong> con foto de fábrica en Lorca, video de 60s del proceso Tenderize, perfil de la familia fundadora, mapa de proveedores españoles. Linkable desde PDP ("Conoce nuestra cocina").</p>
+    </div>
+
+    <div class="finding info">
+      <div class="finding-head">
+        <div class="finding-title">H15. Falta sticky CTA y mini-cart en mobile</div>
+        <span class="badge b-info">Medio · Mobile</span>
+      </div>
+      <p>En la PDP mobile, hay que scrollear hasta arriba para volver a "Añadir al carrito". Es una barrera enorme — el 70% del tráfico de e-commerce pet es mobile.</p>
+      <div class="reco">Sticky CTA inferior fijo en mobile con precio + selector de talla + botón "Añadir al carrito" siempre visible, estilo Mejuri/Allbirds.</div>
+    </div>
+
+    <div class="finding info">
+      <div class="finding-head">
+        <div class="finding-title">H16. Sin canal de soporte conversacional (WhatsApp, chat)</div>
+        <span class="badge b-info">Medio · Soporte</span>
+      </div>
+      <p>El único canal visible es email a info@aspiritpetfood.com y horario "Lunes a Viernes de 6:30 a 15:00". Una pregunta del tipo "¿cuál de las 4 fórmulas le va mejor a mi cachorro alérgico?" debería poder hacerse desde la propia web. WhatsApp Business es estándar en e-commerce español.</p>
+      <div class="reco">Botón flotante WhatsApp Business con asesoramiento humano + bot de FAQ entrenado con tu base de reseñas. Especialmente útil pre-compra.</div>
+    </div>
+
+    <div class="finding info">
+      <div class="finding-head">
+        <div class="finding-title">H17. SEO técnico — descripciones meta duplicadas en todas las páginas</div>
+        <span class="badge b-info">Medio · SEO</span>
+      </div>
+      <p>El meta-description de home, política de envíos y muchas categorías es exactamente el mismo: "En Alpha Spirit apostamos por el bienestar…". Google lo penaliza con menor CTR y dificulta el ranking por intención.</p>
+      <div class="reco">Reescribir meta descriptions por tipo de página. Home: foco en "Tenderize + 85% carne". Categoría: foco en filtro (semihúmedo, sin cereales). PDP: ingrediente principal + USP corto.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HEURÍSTICAS NIELSEN -->
+<section id="heuristicas">
+  <div class="sec-tag">04 · Heurísticas Nielsen</div>
+  <h2>Las 10 heurísticas,<br>evaluadas <em>una a una</em>.</h2>
+  <p class="sec-lede">Cada heurística calificada de 1 a 5. Promedio: <strong>2,8 / 5</strong> — por debajo de un estándar contemporáneo aceptable (≥ 4).</p>
+
+  <div class="heur-grid">
+    <div class="heur"><div class="heur-num">01</div><div class="heur-body"><div class="heur-title">Visibilidad del estado del sistema <span class="heur-score b-warn">3/5</span></div><p>Cart muestra ítems pero no estimación de envío en mini-cart. PDP no informa de stock real ("Agotado" sí, pero no "Quedan 3"). Sin tracking proactivo del pedido visible en cuenta.</p></div></div>
+
+    <div class="heur"><div class="heur-num">02</div><div class="heur-body"><div class="heur-title">Coincidencia entre sistema y mundo real <span class="heur-score b-crit">2/5</span></div><p>Vocabulario técnico ("compra recurrente o diferida", "no extrusionado", "ácidos grasos poliinsaturados omega-3 EPA+DHA 2000 mg/kg") sin traducción a beneficio. El petparent quiere saber "le va bien al estómago", no kJ/kg.</p></div></div>
+
+    <div class="heur"><div class="heur-num">03</div><div class="heur-body"><div class="heur-title">Control y libertad del usuario <span class="heur-score b-warn">3/5</span></div><p>Falta "guardar para más tarde" en carrito. La suscripción no muestra cómo cancelar/pausar antes de comprar. El cambio de país hace reset del carrito.</p></div></div>
+
+    <div class="heur"><div class="heur-num">04</div><div class="heur-body"><div class="heur-title">Consistencia y estándares <span class="heur-score b-crit">2/5</span></div><p>Mezcla de mayúsculas y minúsculas en CTAs ("COMPRAR" vs "Compra rápida"). Sección "Let customers speak for us" en inglés dentro de home ES. Iconografía inconsistente.</p></div></div>
+
+    <div class="heur"><div class="heur-num">05</div><div class="heur-body"><div class="heur-title">Prevención de errores <span class="heur-score b-warn">3/5</span></div><p>Selector cantidad "1-10+" raro (dropdown infinito sin lógica de stock). Newsletter responde "Email is invalid or already taken" sin contexto. Cross-sell con productos agotados.</p></div></div>
+
+    <div class="heur"><div class="heur-num">06</div><div class="heur-body"><div class="heur-title">Reconocer en vez de recordar <span class="heur-score b-warn">3/5</span></div><p>El catálogo se navega por nombres propios ("Wanderlust", "Oceanland", "Rebel Fram") sin pista de ingrediente principal en el nombre del producto en grid. El usuario tiene que memorizar.</p></div></div>
+
+    <div class="heur"><div class="heur-num">07</div><div class="heur-body"><div class="heur-title">Flexibilidad y eficiencia de uso <span class="heur-score b-warn">3/5</span></div><p>Falta búsqueda predictiva con miniaturas. No hay "comprar de nuevo" en cuenta de cliente recurrente. No hay shortcut por sabor/fórmula favorita.</p></div></div>
+
+    <div class="heur"><div class="heur-num">08</div><div class="heur-body"><div class="heur-title">Diseño estético y minimalista <span class="heur-score b-crit">2/5</span></div><p>Hero recargado con 4 banners superpuestos. Composición analítica en bloque de texto plano. Sin jerarquía visual, sin espacios en blanco. Tipografía única, sin contraste serif/sans para crear ritmo editorial.</p></div></div>
+
+    <div class="heur"><div class="heur-num">09</div><div class="heur-body"><div class="heur-title">Ayuda a reconocer y recuperar errores <span class="heur-score b-warn">3/5</span></div><p>Errores genéricos de Shopify por defecto. Sin sugerencias para producto sin stock ("Te avisamos cuando vuelva" — falta).</p></div></div>
+
+    <div class="heur"><div class="heur-num">10</div><div class="heur-body"><div class="heur-title">Ayuda y documentación <span class="heur-score b-crit">2/5</span></div><p>No hay FAQ pública. No hay guía de transición. No hay "cómo cambiar de mi pienso actual". El blog está vacío de contenido útil para resolver dudas pre-compra. Soporte humano solo email en horario laboral.</p></div></div>
+  </div>
+</section>
+
+<!-- I18N -->
+<section id="i18n">
+  <div class="sec-tag">05 · Localización internacional</div>
+  <h2>Una marca <em>internacional</em><br>sin web internacional.</h2>
+  <p class="sec-lede">Trustpilot Alpha Spirit FR tiene 75 reseñas, hay clientes en UK, Dinamarca, Países Bajos y Italia, pero la web no soporta seriamente ningún mercado fuera de España.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:24%">Mercado</th><th style="width:14%">Idioma</th><th style="width:14%">Moneda</th><th style="width:14%">Menú</th><th style="width:14%">Hero/Copy</th><th>Política envíos</th></tr></thead>
+      <tbody>
+        <tr><td><strong>España</strong></td><td><span class="dot dot-g"></span>ES correcto</td><td>EUR</td><td><span class="dot dot-g"></span>ES</td><td><span class="dot dot-g"></span>ES</td><td>Cubierto (península + Baleares)</td></tr>
+        <tr><td><strong>Italia</strong></td><td><span class="dot dot-a"></span>IT solo en footer</td><td>EUR</td><td><span class="dot dot-r"></span>ES</td><td><span class="dot dot-r"></span>ES</td><td>No mencionado en política</td></tr>
+        <tr><td><strong>Portugal</strong></td><td><span class="dot dot-a"></span>PT solo en footer</td><td>EUR</td><td><span class="dot dot-r"></span>ES</td><td><span class="dot dot-r"></span>ES</td><td>No mencionado en política</td></tr>
+        <tr><td><strong>Reino Unido</strong></td><td><span class="dot dot-r"></span>EN solo chrome Shopify</td><td><span class="dot dot-r"></span>EUR únicamente</td><td><span class="dot dot-r"></span>ES</td><td><span class="dot dot-r"></span>ES</td><td><span class="dot dot-r"></span>No cubierto</td></tr>
+        <tr><td><strong>Francia</strong></td><td><span class="dot dot-r"></span>Sin selector FR</td><td><span class="dot dot-r"></span>EUR</td><td><span class="dot dot-r"></span>ES</td><td><span class="dot dot-r"></span>ES</td><td><span class="dot dot-r"></span>No cubierto pese a 75 reviews Trustpilot</td></tr>
+        <tr><td><strong>Alemania</strong></td><td><span class="dot dot-r"></span>Sin selector DE</td><td><span class="dot dot-r"></span>EUR</td><td><span class="dot dot-r"></span>ES</td><td><span class="dot dot-r"></span>ES</td><td><span class="dot dot-r"></span>No cubierto</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Recomendación priorizada</h3>
+  <ol>
+    <li><strong>Decisión estratégica primero:</strong> ¿la tienda online vende fuera de España directo al consumidor o solo a través de distribuidores (Zooplus, Miscota)? Si la respuesta es "solo distribuidores fuera", esconde el selector EN/IT/PT y crea landings <em>"Find Alpha Spirit in your country"</em>. Si la respuesta es "queremos vender DTC", entonces invertir en localización completa es no negociable.</li>
+    <li><strong>Si vendéis DTC:</strong> usar Shopify Markets nativo con traducción humana (no Google Translate) de menús, banners, copy, políticas, blog y emails post-compra. Activar GBP, multi-currency, y rutas de envío específicas por mercado con coste y plazo claros.</li>
+    <li><strong>Trustpilot FR a 3,0★ es urgente:</strong> hoy sale en Google cuando alguien busca "alpha spirit avis". Responder uno a uno a los 1-star, pedir a clientes ES satisfechos que dejen reseña en Trustpilot ES con masa crítica baja para subir score rápido.</li>
+  </ol>
+</section>
+
+<!-- PDP -->
+<section id="pdp">
+  <div class="sec-tag">06 · Ficha de producto</div>
+  <h2>La PDP es donde<br>se gana o se <em>pierde</em>.</h2>
+  <p class="sec-lede">Hoy la PDP de Alpha Spirit funciona, pero no convence. Aquí el rediseño conceptual.</p>
+
+  <h3>Estado actual vs propuesta</h3>
+  <div class="two-col">
+    <div class="wire">
+      <div class="wire-header">
+        <div class="wire-dot"><span></span><span></span><span></span></div>
+        <div class="wire-url">aspiritpetfood.store/products/...  (ACTUAL)</div>
+      </div>
+      <div class="wire-grid">
+        <div class="block sub">Anuncio doble apilado (envío + sorpresa)</div>
+        <div class="block sub">Top nav: Perros · Gatos · Packs Alpha Spirit (¡Nuevo!)</div>
+        <div class="row-2">
+          <div class="block tall">📷 Packshot saco<br>(fondo blanco plano)</div>
+          <div>
+            <div class="block sub" style="text-align:left">Título producto<br>"Alimento The Only One 7 Days Formula"<br><br>128 reviews (sin ★)<br><br>Tamaño: ◯ 3Kg ◯ 12Kg<br><br>Cantidad ▼ 1-10+<br><br>[Añadir al carrito]<br><br>Texto legal suscripción (mini)</div>
+          </div>
+        </div>
+        <div class="block sub">Cross-sell con productos AGOTADOS</div>
+        <div class="block tall">Descripción larga con composición analítica<br>(45% carne de cerdo fresca... 70 mg/kg hierro...)</div>
+        <div class="block sub">Tabla raciones — solo mencionada</div>
+        <div class="block sub">Reviews (sin estrellas, sin fotos)</div>
+      </div>
+    </div>
+
+    <div class="wire">
+      <div class="wire-header">
+        <div class="wire-dot"><span></span><span></span><span></span></div>
+        <div class="wire-url">aspiritpetfood.store/products/...  (PROPUESTA)</div>
+      </div>
+      <div class="wire-grid">
+        <div class="block sub">Anuncio único rotativo (snack regalo destacado)</div>
+        <div class="block sub">Nav simplificada (5 items)</div>
+        <div class="row-2">
+          <div class="block tall">📷 Galería editorial<br>1 packshot · 1 textura · 1 perro · 1 unboxing</div>
+          <div>
+            <div class="block sub" style="text-align:left"><strong>7 Days Formula</strong><br>7 proteínas, 1 saco — la favorita del perro quisquilloso<br><br>★★★★★ 4,8 (128) · "le encanta"<br><br>Tamaño visual: [3Kg] [12Kg]<br>Coste/día estimado · €0,72<br><br><strong>Compra única</strong> €19,80<br><strong>○ Suscríbete y ahorra · €17,82</strong><br>· -10% siempre<br>· snack premium en cada envío<br>· edita o pausa cuando quieras<br><br>[ AÑADIR AL CARRITO ]<br><br>✓ Envío gratis desde 29€  ✓ Snack de regalo  ✓ Bizum/Klarna</div>
+          </div>
+        </div>
+        <div class="row-4"><div class="block sub">85% carne</div><div class="block sub">Cocinado lento</div><div class="block sub">Made in Lorca</div><div class="block sub">Sin cereales</div></div>
+        <div class="block h">Cocinamos a baja temperatura.<br><em>Como cocinarías tú.</em></div>
+        <div class="block sub">Tabs: Ingredientes · Composición · Para qué perro · Cómo cambiar</div>
+        <div class="block sub">Calculadora interactiva de raciones</div>
+        <div class="block sub">Reviews con foto, filtros raza/talla</div>
+        <div class="block sub">Cross-sell solo con stock + bundle "completa el plato"</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Las 7 mejoras clave en PDP</h3>
+  <ol>
+    <li><strong>Sub-título descriptivo</strong> bajo el nombre: <em>"7 proteínas distintas, 1 saco. La favorita del perro quisquilloso."</em></li>
+    <li><strong>Estrellas visibles arriba</strong> con número de reviews. Sin esto, las 128 reviews son invisibles.</li>
+    <li><strong>Selección de tamaño visual</strong> con tarjetas (no radios) que muestren duración estimada por peso del perro.</li>
+    <li><strong>Switch Compra única / Suscripción</strong> con beneficios listados, no texto legal.</li>
+    <li><strong>USP-strip horizontal</strong> debajo del fold: 4 íconos · 4 promesas (85% carne · Tenderize · Snack regalo · Hecho en Lorca).</li>
+    <li><strong>Calculadora de raciones</strong> reemplaza la tabla referencial muerta.</li>
+    <li><strong>Sticky CTA en mobile</strong> con precio + variante + botón.</li>
+  </ol>
+</section>
+
+<!-- CONFIANZA -->
+<section id="confianza">
+  <div class="sec-tag">07 · Confianza &amp; conversión</div>
+  <h2>Tienes <em>2.159 reseñas</em>.<br>Pero el visitante no lo nota.</h2>
+  <p class="sec-lede">Trust signals existentes vs. trust signals visibles. La brecha es donde se pierde la conversión.</p>
+
+  <div class="scores">
+    <div class="score green"><div class="score-num">2.159</div><div class="score-label">Reseñas web propia</div><div class="score-desc">Activo enorme prácticamente invisible en home.</div></div>
+    <div class="score amber"><div class="score-num">4,2<span>★</span></div><div class="score-label">Google Business Lorca</div><div class="score-desc">No se muestra en web. Linkar genera credibilidad local.</div></div>
+    <div class="score red"><div class="score-num">3,0<span>★</span></div><div class="score-label">Trustpilot FR</div><div class="score-desc">Reseñas sin responder. Reputational risk activo.</div></div>
+    <div class="score green"><div class="score-num">12,8K</div><div class="score-label">Instagram seguidores</div><div class="score-desc">Linkado solo en footer. Sin feed UGC en home.</div></div>
+  </div>
+
+  <h3>Las 8 piezas de confianza que hay que mostrar (en este orden)</h3>
+  <div class="findings">
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">1. Estrellas y número de reviews — en hero, PDP y footer</div><span class="badge b-ok">Quick win</span></div>
+      <p>Widget único con score global agregado (Web + Google + Amazon) — "4,7★ basado en 3.247 reseñas verificadas". Aparece en home, sticky en PDP, y en footer.</p>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">2. Sección "Made in Lorca" con foto real de fábrica</div><span class="badge b-ok">Quick win</span></div>
+      <p>Una imagen del polígono Saprelorca + equipo + maquinaria Tenderize. Convierte "marca española" en evidencia. Coste fotográfico: una sesión.</p>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">3. Garantía "Si no le gusta, te devolvemos el dinero"</div><span class="badge b-ok">Cambio política</span></div>
+      <p>Reemplaza la política de devoluciones hostil. Refuerza el mensaje de palatabilidad y elimina el riesgo percibido del primer pedido. Probable coste real: &lt;0,5% pedidos.</p>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">4. Carrusel UGC "Alpha Friends" con perros reales</div><span class="badge b-ok">Marca</span></div>
+      <p>Convertir el contenido orgánico de Instagram (ya con hashtag #alphafriends) en sección de home. Filtrable por raza/tamaño. Conecta producto con caso real.</p>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">5. Quote-block de cliente "real" en home</div><span class="badge b-ok">Copy</span></div>
+      <p>Usar literal una review del reporte 7 Maletas: "Mi podenca Reina estaba con Dogfy y la aborreció. Pero este pienso le encanta, es capaz de comerse el saco de un tirón." — Alexandra · Google Reviews.</p>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">6. Sellos visibles: sin cereales, sin gluten, made in Spain</div><span class="badge b-ok">Visual</span></div>
+      <p>Iconos discretos pero presentes en PDP, footer y página de marca. Si tenéis certificaciones (HACCP, IFS, BRC), mostradlas con el sello oficial.</p>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">7. Badge "Recomendado por veterinarios" con respaldo</div><span class="badge b-ok">Autoridad</span></div>
+      <p>Si hay clínicas o veterinarios que prescriben Alpha Spirit, formalizar acuerdo con 5-10 + página dedicada con sus testimonios. Es el tipo de respaldo que rompe la objeción "es caro".</p>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">8. FAQ de pre-compra accesible desde cualquier página</div><span class="badge b-ok">Soporte</span></div>
+      <p>"¿Cuánto le dura un saco?", "¿Cómo cambio del pienso actual?", "¿Es bueno para mi cachorro?", "¿Le caerá bien al estómago?". Respuestas honestas que reducen la fricción y filtran al cliente equivocado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MOBILE & PERFORMANCE -->
+<section id="mobile">
+  <div class="sec-tag">08 · Mobile &amp; performance</div>
+  <h2>El 70% de tu tráfico es mobile.<br>La PDP <em>no</em> está pensada para mobile.</h2>
+  <p class="sec-lede">Diagnóstico técnico y de experiencia móvil. Las tiendas Shopify suelen rondar 20-50 en PageSpeed mobile por exceso de scripts y apps; un objetivo realista premium es 70+.</p>
+
+  <h3>Issues priorizados</h3>
+  <div class="findings">
+    <div class="finding warn">
+      <div class="finding-head"><div class="finding-title">M01. Sin sticky CTA en PDP mobile</div><span class="badge b-warn">Alto</span></div>
+      <p>Para añadir al carrito hay que scrollear arriba. Edgard &amp; Cooper, Allbirds, Mejuri tienen sticky bottom bar con precio + selector + CTA fijo.</p>
+    </div>
+    <div class="finding warn">
+      <div class="finding-head"><div class="finding-title">M02. Imágenes hero servidas a 1500×1500 px aunque sea mobile</div><span class="badge b-warn">Alto</span></div>
+      <p>El recurso <code>MONTAJE_WEB_ALPHA_2.png</code> se sirve a 1500px en mobile sin srcset adaptativo. Penaliza LCP (objetivo &lt;2,5s) y consume datos.</p>
+    </div>
+    <div class="finding warn">
+      <div class="finding-head"><div class="finding-title">M03. Mega-menú colapsado mobile sigue siendo enorme</div><span class="badge b-warn">Alto</span></div>
+      <p>El menú desktop top sólo tiene 3 ítems (Perros · Gatos · Packs) — esto es positivo. El problema está en mobile: la jerarquía expone también las 5 líneas de marca (Alpha Spirit · Primal · Orygo · Real Food + snacks) sin separación visual, mezclándose categorías por especie y por gama. El usuario no sabe cuál línea es premium ni cuál encaja con su perro.</p>
+    </div>
+    <div class="finding info">
+      <div class="finding-head"><div class="finding-title">M04. Cookie banner / popups sin coordinar</div><span class="badge b-info">Medio</span></div>
+      <p>Newsletter popup y cookie banner aparecen en serie, sin priorización. En mobile bloquean la pantalla.</p>
+    </div>
+    <div class="finding info">
+      <div class="finding-head"><div class="finding-title">M05. Pago Apple Pay / Google Pay no destacado</div><span class="badge b-info">Medio</span></div>
+      <p>Shop Pay y wallets son críticos en mobile (one-click). Hoy aparecen solo en checkout. Botones de pago expreso en PDP mobile reducen abandono.</p>
+    </div>
+  </div>
+
+  <h3>Objetivos técnicos</h3>
+  <ul>
+    <li><strong>LCP</strong> &lt; 2,5s (hoy probablemente 4-6s por imágenes pesadas)</li>
+    <li><strong>CLS</strong> &lt; 0,1 (hoy hay shifts por carga tardía de banners promo)</li>
+    <li><strong>INP</strong> &lt; 200ms (hoy el mega-menú probablemente excede)</li>
+    <li><strong>Lighthouse mobile</strong> 70+ (típico Shopify premium bien optimizado)</li>
+    <li>Auditar apps Shopify instaladas y eliminar las no esenciales (cada app suele añadir 50-200ms)</li>
+    <li>Convertir hero a WebP/AVIF con srcset por viewport</li>
+    <li>Lazy-load todo lo bajo del fold</li>
+  </ul>
+</section>
+
+<!-- BENCHMARK -->
+<section id="bench">
+  <div class="sec-tag">09 · Benchmark competitivo</div>
+  <h2>Lo que están haciendo<br>las marcas que <em>marcan tendencia</em>.</h2>
+  <p class="sec-lede">Referencias seleccionadas por relevancia directa al posicionamiento Alpha Spirit. No se trata de copiar, sino de adoptar las prácticas que ya son estándar premium en 2026.</p>
+
+  <h3>Tráfico real medido en SimilarWeb (Feb–Abr 2026)</h3>
+  <p style="margin:8px 0 16px;font-size:14px;color:#6e6e73">El gap cuantitativo entre Alpha Spirit y los líderes DTC. Producto y web sólidos — falta tráfico.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Marca</th><th>Visitas/mes</th><th>Tendencia</th><th>Bounce</th><th>Pages/visit</th><th>Mobile</th><th>País principal</th></tr></thead>
+      <tbody>
+        <tr style="background:#fff4d6"><td><strong>Alpha Spirit</strong></td><td><strong>8.016</strong></td><td style="color:#a33">↓ −17%</td><td style="color:#248a3d"><strong>27,95%</strong></td><td>4,45</td><td>42,9%</td><td>🇪🇸 ES 83,5%</td></tr>
+        <tr><td>Dogfy Diet</td><td>291.891</td><td style="color:#a33">↓ −36%</td><td>50,95%</td><td>3,24</td><td>75,4%</td><td>🇮🇹 IT 41,8%</td></tr>
+        <tr style="background:#e7f5e9"><td><strong>Patitas&amp;Co</strong></td><td><strong>242.392</strong></td><td style="color:#248a3d"><strong>↑ +70%</strong></td><td>46,20%</td><td><strong>5,86</strong></td><td>77,6%</td><td>🇪🇸 ES 61,7%</td></tr>
+        <tr><td>Edgard &amp; Cooper</td><td>242.258</td><td style="color:#a33">↓ −18%</td><td>45,35%</td><td>3,78</td><td>81,6%</td><td>🇫🇷 FR 27,8%</td></tr>
+        <tr><td>Food For Joe</td><td>39.407</td><td style="color:#248a3d">↑ +49%</td><td>38,70%</td><td>4,67</td><td>53,8%</td><td>🇪🇸 ES 67,8%</td></tr>
+        <tr><td>Natuka BARF</td><td>~31.663</td><td style="color:#a33">↓ −11%</td><td>—</td><td>—</td><td>—</td><td>🇪🇸 ES</td></tr>
+        <tr><td>Wild Balance</td><td>~12.265</td><td style="color:#a33">↓ −16%</td><td>—</td><td>—</td><td>52,6%</td><td>🇪🇸 ES</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:14px;font-size:14px;background:#fff8e1;padding:14px 18px;border-left:4px solid #cf6727;border-radius:4px"><strong>Lectura:</strong> Alpha Spirit recibe 30× menos visitas que los líderes, pero su bounce (27,95%) y duración (2:19) son mejores. El producto convierte. El cuello de botella es captación. Los DTC paid-first (Dogfy, E&amp;C) están en caída de doble dígito, mientras los SEO-first (Patitas&amp;Co +70%, Food For Joe +49%) explotan. Patitas&amp;Co ya iguala a los DTC en escala (242K/mes) sin Meta Ads — sólo con autoridad de contenido + multi-LatAm + tienda física. Ventana de mercado clara.</p>
+
+  <h3 style="margin-top:36px">Cuatro marcas de referencia · qué hacen y qué copiar</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Marca</th><th>Modelo</th><th>Lo que hacen bien</th><th>Aplicable a Alpha Spirit</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Edgard &amp; Cooper</strong><br>Bélgica / int.</td>
+          <td>D2C + retail</td>
+          <td>Pet finder personalizado, transparencia radical de ingredientes, programa de loyalty con donación a refugios, FAQ extensa, tone of voice cercano.</td>
+          <td>Quiz matchmaker, programa Alpha Friends con donación a refugios españoles, FAQ visible.</td>
+        </tr>
+        <tr>
+          <td><strong>Dogfy Diet</strong><br>España</td>
+          <td>Subscripción exclusiva</td>
+          <td>Funnel guiado con personalización por perro, cálculo automático de ración, suscripción flexible, customer dashboard, advertising eficaz.</td>
+          <td>Quiz personalizado + Subscribe &amp; Save real con cadencia automática.</td>
+        </tr>
+        <tr>
+          <td><strong>Patitas&amp;Co</strong><br>España / LatAm</td>
+          <td>Pet shop multi-marca + contenido</td>
+          <td>SEO machine (61,7% del tráfico) con contenido educativo veterinario, blog de autoridad, recetas y guías de alimentación. Pages/visit 5,86 (mejor del sector). 2 tiendas físicas en Madrid. +70% MoM sin Meta Ads.</td>
+          <td>Plan SEO + blog editorial veterinario (cuidados, transición, recetas) + autoridad de dominio. Modelo replicable y barato. Posible distribución física en Patitas como prueba retail.</td>
+        </tr>
+        <tr>
+          <td><strong>Naku</strong><br>España</td>
+          <td>D2C premium</td>
+          <td>Estética editorial muy contemporánea, fotografía cálida y emocional, copy en primera persona, transparencia de origen, foco en bienestar.</td>
+          <td>Dirección de arte. Naku es referencia clara para el nuevo look &amp; feel.</td>
+        </tr>
+        <tr>
+          <td><strong>Open Farm</strong><br>Canadá</td>
+          <td>D2C ético premium</td>
+          <td>Trazabilidad por código de lote, micro-historias de proveedores, foco en sostenibilidad, calidad fotográfica de mood.</td>
+          <td>Trazabilidad de carne ibérica + storytelling de Lorca y proveedores españoles.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Las 5 prácticas que YA son estándar premium en 2026</h3>
+  <ol>
+    <li><strong>Quiz / matchmaker</strong> como entrada principal — reduce paradoja de elección y captura datos zero-party.</li>
+    <li><strong>Suscripción flexible</strong> con cadencia editable, snack premium gratis y pausa en 1 clic.</li>
+    <li><strong>Trazabilidad e ingredient transparency</strong> con mapas de origen, fichas técnicas legibles y QR en packaging.</li>
+    <li><strong>UGC en home</strong> (Instagram embebido o galería propia) como prueba social viva.</li>
+    <li><strong>Pet profile</strong> en cuenta del cliente — guarda nombre, raza, peso, alergias del perro y personaliza emails y recomendaciones.</li>
+  </ol>
+</section>
+
+<!-- CONCEPTO CONTEMPORÁNEO -->
+<section id="concepto">
+  <div class="sec-tag">10 · Concepto contemporáneo</div>
+  <h2>La nueva web<br>en una <em>frase</em>.</h2>
+  <p class="sec-lede" style="font-family:'Fraunces',serif;font-style:italic;font-size:36px;line-height:1.25;color:var(--ink);max-width:920px">Una marca artesana de comida cocinada para perros, contada con la calma de un buen restaurante, no con el ruido de un supermercado de pienso.</p>
+
+  <h3>Dirección de arte</h3>
+  <div class="mood">
+    <div class="mood-card"><div class="mood-swatch sw-ink">Tinta — base</div><div class="mood-body"><h4>#0E0E0C</h4><p>Negro carbón en fondos y CTAs. Sustituye el negro plano actual y aporta profundidad editorial.</p></div></div>
+    <div class="mood-card"><div class="mood-swatch sw-terra">Terracota — acento</div><div class="mood-body"><h4>#C44A1C</h4><p>Calidez mediterránea coherente con Lorca y con la marca artesanal. Para botones primarios y detalles.</p></div></div>
+    <div class="mood-card"><div class="mood-swatch sw-green">Verde profundo</div><div class="mood-body"><h4>#3A5A3F</h4><p>Naturalidad sin caer en cliché orgánico. Para badges, secciones de wellness e ingredientes.</p></div></div>
+    <div class="mood-card"><div class="mood-swatch sw-cream">Crema — papel</div><div class="mood-body"><h4>#F6F3EC</h4><p>Fondo principal. Más cálido que el blanco frío de Shopify. Da sensación de papel artesanal.</p></div></div>
+    <div class="mood-card"><div class="mood-swatch sw-gold">Oro tostado</div><div class="mood-body"><h4>#B8893A</h4><p>Para premio/regalo (snack incluido), suscripción, programa de fidelización.</p></div></div>
+    <div class="mood-card"><div class="mood-swatch sw-clay">Arcilla</div><div class="mood-body"><h4>#E89A6B</h4><p>Tono cálido para ilustración, fondos de testimonios y highlights tipográficos.</p></div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="pull">
+      <h4>Tipografía</h4>
+      <p style="font-family:'Fraunces',serif;font-size:32px;font-weight:500;letter-spacing:-1px;margin:12px 0 4px;color:var(--ink)">Fraunces · Serif editorial</p>
+      <p style="font-size:14px;color:#807a6f;margin-bottom:20px">Para títulos, citas y momentos de marca. Aporta calidez y carácter artesano.</p>
+      <p style="font-family:'Inter',sans-serif;font-size:18px;font-weight:500;letter-spacing:-0.3px;margin:12px 0 4px;color:var(--ink)">Inter · Sans-serif neutra</p>
+      <p style="font-size:14px;color:#807a6f">Para cuerpo, UI, ingredientes y datos técnicos. Limpia y legible en mobile.</p>
+    </div>
+    <div class="pull">
+      <h4>Tono de voz</h4>
+      <ul>
+        <li><strong>Honesto, no pomposo</strong> — habla de "carne fresca" no de "proteína biológicamente apropiada".</li>
+        <li><strong>Cálido, no cursi</strong> — "tu peludo" sí, "el lomito" no.</li>
+        <li><strong>Concreto, no genérico</strong> — "Cocinamos a baja temperatura en Lorca" en vez de "Productos de calidad premium".</li>
+        <li><strong>Con confianza, no defensivo</strong> — no perseguir el "100%". Si es 85%, di 85% y explica por qué.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Wireframe — Home contemporánea</h3>
+  <div class="wire">
+    <div class="wire-header"><div class="wire-dot"><span></span><span></span><span></span></div><div class="wire-url">aspiritpetfood.store  ·  PROPUESTA HOME</div></div>
+    <div class="wire-grid">
+      <div class="block sub">⚑ Snack natural de regalo en cada pedido — envío gratis desde 29€</div>
+      <div class="block sub">Logo · Perros · Gatos · Por qué Alpha · Suscripción · Buscar · Cuenta · Carrito</div>
+      <div class="block h">Cocinado a baja temperatura<br><em>en Lorca, Murcia.</em><br><span style="font-size:14px;color:#a8a39a;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;display:block;margin-top:18px">Por eso a tu perro no le hace falta convencerse.</span></div>
+      <div class="row-2">
+        <div class="block pri">Encuentra su comida ideal · 2 min</div>
+        <div class="block sub">Ver todos los productos</div>
+      </div>
+      <div class="row-4"><div class="block sub">85% carne fresca</div><div class="block sub">Tecnología Tenderize</div><div class="block sub">Snack de regalo</div><div class="block sub">Hecho en España</div></div>
+      <div class="block tall">[ Carrusel UGC — Alpha Friends ]<br>fotos reales de perros con su Alpha Spirit</div>
+      <div class="row-3">
+        <div class="block sub">Alpha Spirit<br>nuestra fórmula original</div>
+        <div class="block sub">Primal Spirit<br>natural y accesible</div>
+        <div class="block sub">Orygo<br>con superalimentos</div>
+      </div>
+      <div class="block h" style="background:var(--accent-2);padding:48px 24px">"Mi podenca Reina estaba con Dogfy y la aborreció. Pero este pienso le encanta, es capaz de comerse el saco de un tirón."<br><span style="font-size:13px;color:#cfcabf;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;font-family:Inter;font-style:normal;display:block;margin-top:24px">Alexandra · Google Reviews</span></div>
+      <div class="block tall">📷 Sección "Made in Lorca"<br>foto fábrica + equipo + tecnología Tenderize</div>
+      <div class="row-2">
+        <div class="block sub">Cómo cambiar de tu pienso actual a Alpha Spirit en 7 días</div>
+        <div class="block sub">¿Tu perro es quisquilloso? Esto es lo que pasa cuando prueba semihúmedo</div>
+      </div>
+      <div class="block sub">★★★★★ 4,7 · 2.159 reseñas verificadas · Trustpilot · Google · Amazon</div>
+      <div class="block sub">Footer · Contacto WhatsApp · Bizum/Klarna · ES/EN/IT/PT real · Newsletter</div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="sec-tag">11 · Roadmap de implementación</div>
+  <h2>Tres fases.<br>De <em>quick wins</em> a rediseño.</h2>
+  <p class="sec-lede">Matriz impacto/esfuerzo + fases ordenadas para que el equipo pueda empezar mañana sin esperar al rediseño completo.</p>
+
+  <h3>Matriz impacto / esfuerzo</h3>
+  <div class="matrix">
+    <div></div>
+    <div class="mh">Esfuerzo bajo<br>(1-2 semanas)</div>
+    <div class="mh">Esfuerzo medio<br>(3-6 semanas)</div>
+    <div class="mh">Esfuerzo alto<br>(2-4 meses)</div>
+
+    <div class="ml">Impacto<br>alto</div>
+    <div class="matrix-cell">
+      <strong>Quick wins</strong>
+      <span>· Filtrar cross-sell OOS</span>
+      <span>· Mostrar estrellas en PDP</span>
+      <span>· Reescribir banner top</span>
+      <span>· Esconder selector EN roto</span>
+      <span>· Activar Bizum</span>
+    </div>
+    <div class="matrix-cell">
+      <strong>Sprint conversión</strong>
+      <span>· Calculadora raciones</span>
+      <span>· Sticky CTA mobile</span>
+      <span>· Sub-título PDP</span>
+      <span>· USP-strip y trust block</span>
+      <span>· Garantía "le encanta o devolvemos"</span>
+    </div>
+    <div class="matrix-cell">
+      <strong>Movimientos estratégicos</strong>
+      <span>· Quiz matchmaker</span>
+      <span>· Suscripción real</span>
+      <span>· Rediseño visual home + PDP</span>
+      <span>· Localización EN/IT/PT real</span>
+    </div>
+
+    <div class="ml">Impacto<br>medio</div>
+    <div class="matrix-cell">
+      <span>· Meta descriptions únicas</span>
+      <span>· Botón WhatsApp</span>
+      <span>· Comprimir imágenes home</span>
+    </div>
+    <div class="matrix-cell">
+      <span>· Página "Por qué Alpha"</span>
+      <span>· Guía transición 7 días</span>
+      <span>· UGC Alpha Friends home</span>
+      <span>· Reviews con foto</span>
+    </div>
+    <div class="matrix-cell">
+      <span>· Programa fidelización</span>
+      <span>· Pet profile en cuenta</span>
+    </div>
+  </div>
+
+  <div class="roadmap">
+    <div class="phase">
+      <div class="phase-tag">Fase 01 · 2-3 semanas</div>
+      <h3>Quick wins de conversión</h3>
+      <div class="phase-meta">Sin rediseño. Sin desarrollo pesado. Solo configuración Shopify, copy y trust signals.</div>
+      <ul class="phase-list">
+        <li>Filtrar cross-sell por stock &gt; 0 y rotar cuando esté vacío</li>
+        <li>Activar widget de estrellas visible en home, PDP y footer (Loox / Junip / Judge.me)</li>
+        <li>Reescribir announcement bar destacando "snack natural de regalo en cada pedido"</li>
+        <li>Esconder selector EN/IT/PT mientras no haya traducción real, o pasar a landing "Find Alpha Spirit in your country"</li>
+        <li>Activar Bizum y Klarna / SeQura en checkout y mostrar "desde 19€ en 3 plazos" en PDP</li>
+        <li>Reescribir política de devoluciones como "Garantía Alpha Spirit"</li>
+        <li>Botón flotante WhatsApp Business con respuestas a 8-10 dudas frecuentes</li>
+        <li>Reescribir meta descriptions únicas por página</li>
+        <li>Responder uno a uno a las reviews 1★ en Trustpilot FR</li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-tag">Fase 02 · 6-8 semanas</div>
+      <h3>Rediseño PDP + storytelling de marca</h3>
+      <div class="phase-meta">Diseño visual contemporáneo + componentes clave. Sin tocar aún el catálogo completo.</div>
+      <ul class="phase-list">
+        <li>Sesión fotográfica completa: packshots editoriales, perros reales, textura, unboxing con snack</li>
+        <li>Nuevo design system (Fraunces + Inter, paleta crema/terracota/verde profundo)</li>
+        <li>Página "Por qué Alpha Spirit" con storytelling de Lorca, fábrica, equipo y Tenderize</li>
+        <li>Guía de transición de 7 días + módulo embebido en PDP</li>
+        <li>Rediseño completo de PDP: sub-título, USP-strip, switch compra/suscripción, calculadora de raciones, reviews con foto, sticky CTA mobile</li>
+        <li>Sección UGC "Alpha Friends" en home con feed de Instagram filtrable</li>
+        <li>FAQ visible y completa</li>
+        <li>Optimización mobile: WebP/AVIF, srcset, lazy-load, eliminar apps Shopify innecesarias — objetivo Lighthouse 70+</li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-tag">Fase 03 · 3-4 meses</div>
+      <h3>Producto digital: quiz, suscripción, localización</h3>
+      <div class="phase-meta">Movimientos que cambian el modelo de negocio, no solo el sitio.</div>
+      <ul class="phase-list">
+        <li>Quiz "Encuentra la comida ideal de tu peludo" como entrada principal de la home — 4-5 pasos, recomienda fórmula + ración + cadencia</li>
+        <li>Re-incentivar la suscripción que ya existe: subir del 5% actual a -25% 1ª entrega + -12-15% recurrente, snack premium gratis cada 3 envíos, frecuencia editable por peso del perro (no solo Quincenal/Mensual), pausa en 1 clic</li>
+        <li>Pet profile en cuenta del cliente — nombre, edad, peso, alergias, recomendaciones personalizadas</li>
+        <li>Localización completa EN/IT/PT con Shopify Markets, traducción humana, rutas de envío y monedas locales</li>
+        <li>Programa de fidelización Alpha Friends: puntos por reviews con foto, referidos, suscripción, etc.</li>
+        <li>Rediseño completo de home y arquitectura de categorías por necesidad (cachorro/adulto/senior/sensible) en vez de por marca interna</li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-tag">Fase 04 · 4-6 meses · Canal nuevo</div>
+      <h3>Abrir TikTok Shop como canal de captación</h3>
+      <div class="phase-meta">+21K vendedores españoles activos a mediados de 2026 (+75% YoY), alimentación es la 2ª categoría más comprada (26% del gasto), AOV global ~55€ — calcado al de Alpha Spirit. Comisión 5%.</div>
+      <ul class="phase-list">
+        <li>Abrir con <strong>5-8 SKUs hero</strong> (no los 200): Packs Soft Food 3kg (€34,95), Pack The Only One 3kg (€21-32), Albóndigas (€2,95), Mousse (€0,96), Estofados Real Food. Mix entry-level + ticket medio.</li>
+        <li>Activar <strong>programa de afiliados</strong> con 30-50 micro-creators cinófilos (10-50K seguidores) al 8-12% comisión. TikTok LIVE semanal de cocción Tenderize.</li>
+        <li>Capa de <strong>Spark Ads</strong> sobre contenido orgánico que funcione. Reinvertir 12-15% del GMV.</li>
+        <li>Bundles exclusivos "Welcome Pack" 25€ + QR en caja para migrar al cliente a la web propia (suscripción) — TikTok capta, la web retiene.</li>
+        <li>Inversión año 1: <strong>5-7% del paid total</strong> (~50-70K€). Si MER ≥ 2,5x sostenido, escalar a 12-15% en año 2.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CIERRE -->
+<section style="background:var(--ink);color:#fff;border-bottom:none">
+  <div class="sec-tag" style="color:#e89a6b">12 · Cierre</div>
+  <h2 style="color:#fff">El producto ya enamora.<br>La web tiene que <em style="color:#e89a6b">empezar a hacerlo</em>.</h2>
+  <p style="font-size:18px;color:#cfcabf;max-width:840px;margin-top:32px;font-weight:300;line-height:1.6">Alpha Spirit no necesita reinventarse. Lo que tiene es bueno: una marca con propósito real, un producto patentado, una fábrica artesana en Lorca, una comunidad emocional y un snack que la gente recuerda. Lo que necesita es que la web cuente esa historia con la calma, el cuidado y la jerarquía visual que el producto ya merece. Quick wins en 3 semanas. Rediseño en 3 meses. Modelo de suscripción en 6.</p>
+  <div class="hero-meta" style="border-top:1px solid #2a2a26;margin-top:64px">
+    <div>Próximo paso<span style="color:#fff">Validar Fase 01 con el equipo y ejecutar los quick wins de conversión en 2-3 semanas</span></div>
+    <div>Riesgo principal<span style="color:#fff">Posponer la localización EN/IT/PT mientras se sigue vendiendo internacional</span></div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Auditoría UX · Alpha Spirit Store</strong></p>
+  <p>4 de junio de 2026 · Dani · Incubalia</p>
+  <p style="margin-top:24px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase">Fuentes: aspiritpetfood.store (ES/EN/IT/PT), reporte 7 Maletas Alpha Spirit, Trustpilot, Google Business, Edgard &amp; Cooper, Dogfy Diet, Naku, Open Farm, Shopify Performance benchmarks 2026</p>
+</footer>
+
+</div>
+</body>
+</html>

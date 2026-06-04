@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Embudo + Benchmark de Inversión · Alpha Spirit</title>
+<style>
+  :root{
+    --bg:#0f1614;
+    --paper:#fafaf6;
+    --ink:#1a2421;
+    --muted:#5f6b67;
+    --line:#e3e0d6;
+    --accent:#c9a35b;
+    --accent-dk:#8a6b2e;
+    --green:#3b8a5a;
+    --amber:#d29a2b;
+    --red:#c0473a;
+    --soft:#f3efe5;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+    font-size:15.5px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 32px 96px}
+  header.hero{
+    background:linear-gradient(135deg,#0f1614 0%,#1f2a26 100%);
+    color:#fafaf6;
+    padding:56px 40px;
+    border-radius:18px;
+    margin-bottom:40px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";
+    position:absolute;
+    right:-60px;top:-60px;
+    width:260px;height:260px;
+    background:radial-gradient(circle,var(--accent) 0%,transparent 70%);
+    opacity:.18;
+  }
+  .kicker{
+    font-size:12px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+    font-weight:600;
+  }
+  h1{
+    font-size:38px;
+    line-height:1.15;
+    margin:0 0 14px 0;
+    font-weight:700;
+    letter-spacing:-.5px;
+  }
+  .sub{
+    font-size:17px;
+    color:#d8d3c5;
+    max-width:680px;
+    margin:0;
+  }
+  h2{
+    font-size:26px;
+    margin:56px 0 18px 0;
+    letter-spacing:-.3px;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:8px;
+  }
+  h3{
+    font-size:19px;
+    margin:32px 0 10px 0;
+    color:var(--ink);
+  }
+  h4{font-size:15px;margin:18px 0 6px 0;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent-dk)}
+  p{margin:8px 0 14px 0}
+  .lead{font-size:16.5px;color:var(--muted)}
+  .grid{display:grid;gap:18px}
+  .grid-2{grid-template-columns:1fr 1fr}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .grid-4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:780px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+  .card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px;
+  }
+  .card.soft{background:var(--soft);border-color:#e8e4d6}
+  .card.dark{background:var(--ink);color:#fff;border:none}
+  .card.dark h3{color:var(--accent)}
+
+  .metric{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .metric .v{font-size:30px;font-weight:700;letter-spacing:-1px;color:var(--ink)}
+  .metric .l{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+  .metric .d{font-size:13px;color:var(--muted);margin-top:4px}
+
+  /* Funnel */
+  .funnel{margin:24px 0 8px 0}
+  .funnel-row{
+    display:grid;
+    grid-template-columns:160px 1fr 200px;
+    gap:16px;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .funnel-row:last-child{border-bottom:none}
+  .funnel-stage{font-weight:600}
+  .funnel-stage .num{
+    display:inline-block;
+    width:24px;height:24px;border-radius:50%;
+    background:var(--accent);color:#fff;
+    text-align:center;line-height:24px;
+    font-size:12px;margin-right:8px;font-weight:700;
+  }
+  .funnel-bar{
+    height:38px;background:var(--soft);border-radius:8px;position:relative;overflow:hidden;
+  }
+  .funnel-bar .fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--accent) 0%,var(--accent-dk) 100%);
+    display:flex;align-items:center;padding-left:14px;color:#fff;font-weight:600;font-size:13px;
+  }
+  .funnel-bar .leak{
+    position:absolute;right:14px;top:0;bottom:0;
+    display:flex;align-items:center;font-size:12px;color:var(--red);font-weight:600;
+  }
+  .funnel-meta{font-size:13px;color:var(--muted)}
+
+  /* Tables */
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+  th{text-align:left;padding:10px 12px;background:var(--ink);color:#fff;font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+  td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+
+  /* Severity chips */
+  .chip{
+    display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  }
+  .chip.hi{background:#fcecea;color:var(--red)}
+  .chip.md{background:#fbf2dc;color:var(--amber)}
+  .chip.lo{background:#e7f3eb;color:var(--green)}
+  .chip.tag{background:var(--soft);color:var(--muted)}
+
+  /* Scenario boxes */
+  .scen{
+    border-radius:14px;padding:24px;color:#fff;position:relative;overflow:hidden;
+  }
+  .scen.x2{background:linear-gradient(135deg,#3b8a5a,#1f5a3b)}
+  .scen.x3{background:linear-gradient(135deg,#c9a35b,#8a6b2e)}
+  .scen.x15{background:linear-gradient(135deg,#3b5a8a,#1f2a5a)}
+  .scen .tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:.8}
+  .scen .num-big{font-size:42px;font-weight:800;letter-spacing:-1px;margin:6px 0}
+  .scen ul{margin:10px 0 0 0;padding-left:18px;font-size:14px}
+  .scen ul li{margin:4px 0}
+
+  blockquote{
+    border-left:3px solid var(--accent);
+    background:var(--soft);
+    margin:18px 0;
+    padding:14px 18px;
+    border-radius:0 8px 8px 0;
+    font-size:14.5px;
+  }
+
+  .callout{
+    background:#1a2421;color:#fafaf6;
+    border-radius:14px;padding:24px;margin:24px 0;
+    display:flex;gap:18px;align-items:flex-start;
+  }
+  .callout .icon{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--accent);color:#1a2421;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;flex-shrink:0;
+  }
+  .callout h4{color:var(--accent);margin-top:0}
+
+  footer{
+    margin-top:60px;padding-top:24px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13px;
+  }
+  .src{font-size:12px;color:var(--muted)}
+  .src a{color:var(--accent-dk)}
+
+  .pill{
+    display:inline-block;background:var(--ink);color:#fff;padding:3px 10px;border-radius:99px;font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:600;
+  }
+
+  ul.checks{list-style:none;padding-left:0}
+  ul.checks li{padding:6px 0 6px 28px;position:relative}
+  ul.checks li::before{
+    content:"✓";position:absolute;left:0;top:6px;
+    width:18px;height:18px;border-radius:50%;
+    background:var(--green);color:#fff;
+    text-align:center;line-height:18px;font-size:11px;font-weight:700;
+  }
+  ul.x li::before{content:"✕";background:var(--red)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker">Auditoría · Embudo + Benchmark de Inversión</div>
+  <h1>Cómo Alpha Spirit pasa de ~2M€ a 4M€ y 6M€ sin romper la unit economics</h1>
+  <p class="sub">Diagnóstico cuantitativo del embudo actual, fugas críticas, palancas de mejora y el cuánto-invertir realista para duplicar o triplicar facturación en 12–18 meses.</p>
+</header>
+
+<section>
+  <div class="grid grid-4">
+    <div class="card metric">
+      <div class="l">Facturación actual</div>
+      <div class="v">~2,0M€</div>
+      <div class="d">Base de partida 2025/2026</div>
+    </div>
+    <div class="card metric">
+      <div class="l">Mercado DTC Pet ES</div>
+      <div class="v">14-18%</div>
+      <div class="d">Cuota online del total pet food en España 2026</div>
+    </div>
+    <div class="card metric">
+      <div class="l">CR Shopify pet care</div>
+      <div class="v">3,28%</div>
+      <div class="d">Benchmark Shopify; top quartile 5%+</div>
+    </div>
+    <div class="card metric">
+      <div class="l">LTV:CAC top</div>
+      <div class="v">12 : 1</div>
+      <div class="d">Top performers DTC pet (alta recompra)</div>
+    </div>
+  </div>
+</section>
+
+<section>
+<h2>1. Radiografía del embudo actual</h2>
+<p class="lead">A falta de datos cuantitativos de Shopify/GA en la auditoría previa, estos números son una <strong>reconstrucción top-down</strong> tomando 2M€ de facturación y el AOV observado (~55€) como ancla, contrastados con los benchmarks Shopify pet care.</p>
+
+<div class="funnel">
+  <div class="funnel-row">
+    <div class="funnel-stage"><span class="num">1</span>Sesiones</div>
+    <div class="funnel-bar"><div class="fill" style="width:100%">~1,8M sesiones/año &nbsp; · &nbsp; ~150K/mes</div></div>
+    <div class="funnel-meta">Mix SEO marca + Meta Ads + tráfico directo</div>
+  </div>
+  <div class="funnel-row">
+    <div class="funnel-stage"><span class="num">2</span>Vista PDP</div>
+    <div class="funnel-bar"><div class="fill" style="width:62%">~62% &nbsp; (1,1M views)</div><div class="leak">↓ 38%</div></div>
+    <div class="funnel-meta">Hero comunica gamas pero diluye USP único (Tenderize)</div>
+  </div>
+  <div class="funnel-row">
+    <div class="funnel-stage"><span class="num">3</span>Add to cart</div>
+    <div class="funnel-bar"><div class="fill" style="width:14%">~14% &nbsp; (252K ATC)</div><div class="leak">↓ 48% vs PDP</div></div>
+    <div class="funnel-meta">PDP sin calculadora de raciones, sin objeciones</div>
+  </div>
+  <div class="funnel-row">
+    <div class="funnel-stage"><span class="num">4</span>Inicio checkout</div>
+    <div class="funnel-bar"><div class="fill" style="width:7%">~7% &nbsp; (126K)</div><div class="leak">↓ 50% vs ATC</div></div>
+    <div class="funnel-meta">Suscripción invisible, falta urgencia/social proof</div>
+  </div>
+  <div class="funnel-row">
+    <div class="funnel-stage"><span class="num">5</span>Compra</div>
+    <div class="funnel-bar"><div class="fill" style="width:2%">~2% &nbsp; (36K pedidos)</div><div class="leak">↓ 71% vs checkout</div></div>
+    <div class="funnel-meta">Sin Bizum/Klarna · envío percibido lento</div>
+  </div>
+  <div class="funnel-row">
+    <div class="funnel-stage"><span class="num">6</span>Recompra 90d</div>
+    <div class="funnel-bar"><div class="fill" style="width:0.7%">~35% repite (12,6K)</div><div class="leak">↓ Sub. infrautilizada</div></div>
+    <div class="funnel-meta">Suscripción existe (5% off) pero menos que newsletter (10%)</div>
+  </div>
+</div>
+
+<div class="callout">
+  <div class="icon">!</div>
+  <div>
+    <h4>El cuello de botella real no es el tráfico, es la conversión</h4>
+    <p style="margin:0">Con un CR estimado del <strong>~2%</strong> contra el <strong>3,28% mediana</strong> de Shopify pet care y un <strong>5%+ del top quartile</strong>, Alpha Spirit está dejando entre <strong>900K€ y 2,2M€/año encima de la mesa</strong> sólo arreglando PDP, checkout y suscripción — antes de meter un solo euro extra en paid.</p>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>2. Las 8 fugas que más cuestan</h2>
+<p class="lead">Priorizadas por <strong>impacto en € recuperables</strong> × facilidad de implementación. Esto es la primera cola que debería atacar Alpha Spirit antes de escalar inversión.</p>
+
+<table>
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Fuga</th>
+    <th>Stage</th>
+    <th>Severidad</th>
+    <th>€ recuperables/año</th>
+    <th>Fix</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>1</td>
+    <td><strong>Suscripción mal incentivada</strong>: existe en PDP (Quincenal/Mensual con skip/edit/cancel) pero solo da <strong>5% off</strong>. El newsletter da 10%. El usuario racional NO se suscribe.</td>
+    <td>Retención</td>
+    <td><span class="chip hi">Crítica</span></td>
+    <td class="num">+600-900K</td>
+    <td>Subir 1ª entrega a 25-30%, recurrente a 12-15% + snack premium gratis cada 3 entregas</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>PDP no contesta objeciones</strong> (diarrea por transición, raciones, microondas) ni muestra reviews con estrellas/fotos.</td>
+    <td>PDP → ATC</td>
+    <td><span class="chip hi">Crítica</span></td>
+    <td class="num">+250-400K</td>
+    <td>Bloque "preguntas frecuentes" + tabla raciones + reviews con foto</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>Checkout sin Bizum, Klarna, SeQura ni PayPal</strong>. Métodos actuales: Visa, Mastercard, Amex, Maestro, Apple Pay, Google Pay, Shop Pay, Union Pay. Crítico en ES.</td>
+    <td>Checkout</td>
+    <td><span class="chip hi">Crítica</span></td>
+    <td class="num">+150-250K</td>
+    <td>Activar Bizum + SeQura/Klarna 3 plazos + PayPal (Shopify Payments lo permite)</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><strong>Stock crítico en Packs</strong>: 4 de los 16 packs aparecen "Agotado" en /collections/packs-perro (Aves de Corral 12kg, Multiprotein 12kg, Soft Food Aves 9kg). El cross-sell también muestra agotados.</td>
+    <td>PDP → ATC</td>
+    <td><span class="chip hi">Crítica</span></td>
+    <td class="num">+80-140K</td>
+    <td>Alertar stock crítico al equipo de producción + filtrar agotados del cross-sell</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><strong>Hero home no comunica Tenderize ni semihúmedo</strong> — los dos diferenciales que justifican el precio premium.</td>
+    <td>Sesión → PDP</td>
+    <td><span class="chip md">Alta</span></td>
+    <td class="num">+120-200K</td>
+    <td>Rehacer hero con video 6s de Tenderize + "Cocinado a baja Tª"</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td><strong>Versiones EN/IT/PT sin traducir</strong> — el mercado europeo queda ciego y Google indexa contenido duplicado en español.</td>
+    <td>SEO + intl.</td>
+    <td><span class="chip md">Alta</span></td>
+    <td class="num">+100-180K</td>
+    <td>Weglot o Langify + hreflang correcto. Cerrar mercados que no se sirven</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td><strong>Sin WhatsApp ni chat</strong>. Sólo email L-V 6:30-15:00. Las dudas de "¿le va bien a mi raza?" se pierden.</td>
+    <td>Pre-compra</td>
+    <td><span class="chip md">Alta</span></td>
+    <td class="num">+60-100K</td>
+    <td>Tidio/Crisp con WhatsApp Business API + plantillas frecuentes</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td><strong>Política devoluciones hostil</strong> (recogida 6,95€+IVA, ventana 24h por daños). Fricción visible en reviews.</td>
+    <td>Post-compra</td>
+    <td><span class="chip md">Alta</span></td>
+    <td class="num">+40-70K LTV</td>
+    <td>Reescribir política + recogida gratuita primera compra (test A/B)</td>
+  </tr>
+  </tbody>
+</table>
+
+<p class="src"><strong>Total € recuperables conservador:</strong> entre <strong>+1,4M€ y +2,2M€/año</strong> sin tocar el presupuesto de paid. Esta es la base sobre la que tiene sentido invertir en escala.</p>
+</section>
+
+<section>
+<h2>3. Benchmark: ¿cuánto invierten los DTC pet food para escalar?</h2>
+
+<div class="grid grid-3">
+  <div class="card soft">
+    <h4>Stage early (1-5M€)</h4>
+    <div class="metric" style="margin-bottom:8px"><div class="v" style="color:var(--accent-dk)">10-18%</div><div class="l">Mkt / facturación</div></div>
+    <p style="font-size:14px;margin:0">Pet food tiene <strong>ventaja estructural</strong>: alta recompra → menos paid por euro vendido que en moda/beauty.</p>
+  </div>
+  <div class="card soft">
+    <h4>Stage growth (5-25M€)</h4>
+    <div class="metric" style="margin-bottom:8px"><div class="v" style="color:var(--accent-dk)">15-25%</div><div class="l">Mkt / facturación</div></div>
+    <p style="font-size:14px;margin:0">DTC en modo escalado deja la zona "cómoda". Aquí entran TV connected, OOH, podcast sponsoring.</p>
+  </div>
+  <div class="card soft">
+    <h4>Aggressive scale</h4>
+    <div class="metric" style="margin-bottom:8px"><div class="v" style="color:var(--accent-dk)">25-40%</div><div class="l">Mkt / facturación</div></div>
+    <p style="font-size:14px;margin:0">Solo si tienes <strong>55-60% margen bruto</strong> y payback &lt;90 días. Es lo que hizo Dogfy 2020-2023.</p>
+  </div>
+</div>
+
+<h3>CAC observado en el sector</h3>
+<table>
+  <thead><tr><th>Métrica</th><th class="num">Pet food DTC EU/ES</th><th>Observación</th></tr></thead>
+  <tbody>
+    <tr><td>CAC blended pet care</td><td class="num">65-85€</td><td>Subió ~70% post-iOS14 (2020 → 2024)</td></tr>
+    <tr><td>Meta CAC primer pedido</td><td class="num">75-95€</td><td>Atribución directa, sin contar incremental</td></tr>
+    <tr><td>AOV típico premium ES</td><td class="num">55-70€</td><td>Suscripción sube AOV a 80-110€</td></tr>
+    <tr><td>LTV 12 meses (sin sub.)</td><td class="num">180-260€</td><td>Recompra 2-3x/año en seco premium</td></tr>
+    <tr><td>LTV 12 meses (con sub.)</td><td class="num">450-650€</td><td>Churn mensual sub. 5-8% típico</td></tr>
+    <tr><td>MER objetivo growth mode</td><td class="num">2,5x - 3,5x</td><td>Por cada € invertido, 2,5-3,5€ facturados</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>4. Cuánto tiene que invertir Alpha Spirit</h2>
+<p class="lead">Tres escenarios construidos con AOV 55€, CAC blended 70€ y MER 3x (conservador para pet food premium con suscripción activada). Todos asumen las 8 fugas del bloque 2 corregidas <strong>antes</strong> de pisar el acelerador.</p>
+
+<div class="grid grid-3">
+
+  <div class="scen x15">
+    <div class="tag">Escenario conservador</div>
+    <div class="num-big">3,0M€</div>
+    <p style="opacity:.9;font-size:14px">+50% vs hoy · 12 meses</p>
+    <ul>
+      <li><strong>Inversión total mkt:</strong> 450-540K€/año (15-18%)</li>
+      <li><strong>Paid puro:</strong> 350-400K€</li>
+      <li><strong>CRO + contenido + email:</strong> 100-140K€</li>
+      <li><strong>Nuevos clientes objetivo:</strong> +18K</li>
+      <li>Solo arreglando embudo + manteniendo paid actual</li>
+    </ul>
+  </div>
+
+  <div class="scen x2">
+    <div class="tag">Escenario duplicar</div>
+    <div class="num-big">4,0M€</div>
+    <p style="opacity:.9;font-size:14px">2x · 12-18 meses</p>
+    <ul>
+      <li><strong>Inversión total mkt:</strong> 800K-1,0M€/año (20-25%)</li>
+      <li><strong>Paid puro:</strong> 650-800K€</li>
+      <li><strong>CRO + brand + contenido:</strong> 150-200K€</li>
+      <li><strong>Nuevos clientes objetivo:</strong> +36K</li>
+      <li>Requiere suscripción re-incentivada + Bizum/SeQura activos</li>
+    </ul>
+  </div>
+
+  <div class="scen x3">
+    <div class="tag">Escenario triplicar</div>
+    <div class="num-big">6,0M€</div>
+    <p style="opacity:.9;font-size:14px">3x · 18-24 meses</p>
+    <ul>
+      <li><strong>Inversión total mkt:</strong> 1,5-1,8M€/año (25-30%)</li>
+      <li><strong>Paid puro:</strong> 1,1-1,3M€</li>
+      <li><strong>Brand (TV/OOH/influencer):</strong> 250-350K€</li>
+      <li><strong>Nuevos clientes objetivo:</strong> +72K</li>
+      <li>Necesita ronda o cashflow financiado · payback &gt;90 días aceptado</li>
+    </ul>
+  </div>
+
+</div>
+
+<h3>Reparto recomendado del presupuesto paid (escenario 2x)</h3>
+<table>
+  <thead><tr><th>Canal</th><th class="num">% del paid</th><th class="num">€ anuales</th><th>Función</th></tr></thead>
+  <tbody>
+    <tr><td>Meta Ads (FB + IG)</td><td class="num">55%</td><td class="num">360-440K</td><td>Volumen TOFU/MOFU · creatividades semihúmedo + Tenderize</td></tr>
+    <tr><td>Google Ads (Search + PMax)</td><td class="num">20%</td><td class="num">130-160K</td><td>Captura marca + categorías "comida natural perro"</td></tr>
+    <tr><td>TikTok Ads</td><td class="num">10%</td><td class="num">65-80K</td><td>UGC + demo cocción · audiencia 30-45 amantes mascotas</td></tr>
+    <tr><td>YouTube / programmatic</td><td class="num">8%</td><td class="num">50-65K</td><td>Brand awareness · retargeting frecuencia controlada</td></tr>
+    <tr><td>Influencer marketing</td><td class="num">7%</td><td class="num">45-55K</td><td>Vets, etólogos y micro-influencers cinófilos</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="icon">€</div>
+  <div>
+    <h4>Regla práctica para el CEO</h4>
+    <p style="margin:0">Mientras el <strong>MER se mantenga ≥ 2,8x</strong> y el <strong>payback &lt; 4 meses</strong>, sigues subiendo presupuesto. Cuando el MER baje de 2,5x dos semanas seguidas, paras de escalar y vuelves a invertir en producto/CRO. Esto evita el error clásico de "quemar caja para crecer en ventas brutas pero destruir margen".</p>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>4.b TikTok Shop: el canal extra que sí vale la pena abrir</h2>
+<p class="lead">TikTok Shop España lanzó en diciembre 2024 y a mediados de 2026 ya tiene <strong>+21.000 vendedores españoles activos</strong> (+75% YoY). <strong>Alimentación es la segunda categoría más comprada (26% del gasto)</strong> y el AOV global ronda los <strong>~55€</strong>, casi calcado al AOV de Alpha Spirit. Para una marca con producto fotogénico (pack con sorpresa, perro comiendo semihúmedo en microondas) y storytelling de origen (Lorca, fábrica propia), TikTok Shop tiene encaje natural.</p>
+
+<div class="grid grid-2">
+  <div class="card soft">
+    <h4 style="color:var(--green)">A favor</h4>
+    <ul>
+      <li><strong>AOV alineado</strong>: media global ~55€, AOV Alpha ~55€.</li>
+      <li><strong>Comisión 5%</strong> sobre total con IVA — asumible con margen bruto 55-60%.</li>
+      <li><strong>Tráfico nuevo</strong>: audiencia 18-34 que no captura Meta. No canibaliza al petparent 35-50 actual.</li>
+      <li><strong>UGC orgánico</strong>: el contenido de mascotas viraliza fácil.</li>
+      <li><strong>Casos sectoriales</strong>: Nico Jamones ya hace 33% de sus ventas online vía TikTok Shop.</li>
+    </ul>
+  </div>
+  <div class="card soft">
+    <h4 style="color:var(--red)">En contra / riesgos</h4>
+    <ul>
+      <li><strong>Pet food no está en top-3 GMV global</strong> (lidera beauty 28%, fashion 22%, food&bev 11%).</li>
+      <li><strong>Logística pesada</strong>: sacos 9-12kg encarecen el envío.</li>
+      <li><strong>Premia impulso, no recurrencia</strong>: difícil migrar a suscripción dentro de TikTok.</li>
+      <li><strong>Comisión 5% sobre IVA incluido</strong> equivale a ~6% sobre precio sin impuestos.</li>
+      <li><strong>Certificaciones food</strong>: hay requisitos sanitarios y de etiquetado específicos.</li>
+    </ul>
+  </div>
+</div>
+
+<h3>Cómo abrirlo sin romper unit economics</h3>
+<table>
+  <thead><tr><th>Mes</th><th>Acción</th><th>Inversión</th><th>KPI</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>M1</td>
+      <td>Abrir tienda con <strong>5 SKUs hero</strong>: Pack Soft Food 3kg (€34,95) · Pack The Only One 3kg (€21-32) · Albóndigas 400gr (€2,95) · Mousse 85gr (€0,96) · Estofados Real Food (€2,99). Mix entry-level + ticket medio.</td>
+      <td class="num">5-8K setup</td>
+      <td>5 SKUs aprobados + 30 vídeos UGC</td>
+    </tr>
+    <tr>
+      <td>M2-M3</td>
+      <td>Activar <strong>programa de afiliados</strong> con 30-50 micro-creators cinófilos (10-50K seguidores) al 8-12% comisión. TikTok LIVE semanal de cocción Tenderize.</td>
+      <td class="num">8-12K/mes</td>
+      <td>50K€ GMV/mes · &gt;200 vídeos</td>
+    </tr>
+    <tr>
+      <td>M4-M6</td>
+      <td>Capa de <strong>TikTok Ads</strong> sobre lo que funciona orgánicamente (Spark Ads). Reinvertir 12-15% del GMV en ads.</td>
+      <td class="num">15-20K/mes</td>
+      <td>120-150K€ GMV/mes</td>
+    </tr>
+    <tr>
+      <td>M7-M12</td>
+      <td>Subir SKUs <strong>exclusivos TikTok Shop</strong> (bundles "Welcome Pack" 25€) y derivar a suscripción en la web post-compra vía QR en caja física.</td>
+      <td class="num">25-35K/mes</td>
+      <td>200K€ GMV/mes · 18% repite en web</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <div class="icon">★</div>
+  <div>
+    <h4>Recomendación: SÍ, pero con tres reglas</h4>
+    <p style="margin:0 0 8px 0"><strong>1. Limitar el catálogo:</strong> 5-8 SKUs como mucho. Los 200 productos de la web ahogan al algoritmo. Solo lo que se entiende en 6 segundos.</p>
+    <p style="margin:0 0 8px 0"><strong>2. Tratarlo como canal de captación, no de recurrencia:</strong> objetivo = primera compra impulso. Después se migra a la web propia para suscripción (LTV 3x mayor).</p>
+    <p style="margin:0"><strong>3. Reservar 5-7% del paid total (no más en año 1):</strong> ~50-70K€ en escenario 2x. Si MER ≥ 2,5x sostenido tras 6 meses, escalar a 12-15% en año 2.</p>
+  </div>
+</div>
+
+<h3>Impacto esperado en el plan</h3>
+<table>
+  <thead><tr><th>Escenario</th><th class="num">GMV TikTok Shop año 1</th><th class="num">% sobre total</th><th>Contribución incremental</th></tr></thead>
+  <tbody>
+    <tr><td>Conservador (3M€ total)</td><td class="num">150-200K€</td><td class="num">5-7%</td><td>Marca + captación nueva audiencia</td></tr>
+    <tr><td>Duplicar (4M€ total)</td><td class="num">300-400K€</td><td class="num">8-10%</td><td>2º canal validado · base para año 2</td></tr>
+    <tr><td>Triplicar (6M€ total)</td><td class="num">500-700K€</td><td class="num">9-12%</td><td>Canal estructural · LIVE semanales</td></tr>
+  </tbody>
+</table>
+
+<p class="src">El reparto del presupuesto paid en el escenario 2x se ajusta así: Meta 50% (antes 55%) · Google 20% · <strong>TikTok Shop + Ads 12-15%</strong> (antes solo TikTok Ads 10%) · YouTube/programmatic 8% · Influencer 7%. La diferencia es que ahora TikTok no es solo ads — es ads + comisión TikTok Shop + afiliados.</p>
+</section>
+
+<section>
+<h2>5. Roadmap 12 meses para llegar a 4M€</h2>
+
+<table>
+  <thead><tr><th>Mes</th><th>Fase</th><th>Foco</th><th>Inversión mes</th><th>KPI a mover</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>M0-M2</td>
+      <td><span class="pill" style="background:var(--green)">Foundation</span></td>
+      <td>Reactivar suscripción existente con incentivos reales (1ª entrega -25%, recurrente -12%, snack gratis cada 3 pedidos). Reescribir PDPs (top 10 SKUs), activar Bizum + SeQura + PayPal, filtro de stock en cross-sell, calculadora de raciones.</td>
+      <td class="num">40-50K/mes</td>
+      <td>CR 2% → 2,8%</td>
+    </tr>
+    <tr>
+      <td>M3-M5</td>
+      <td><span class="pill" style="background:var(--amber)">Optimize</span></td>
+      <td>Localización EN + PT con Weglot, WhatsApp Business, política de devoluciones nueva, primer test de hero con video Tenderize, programa de embajadores con veterinarios.</td>
+      <td class="num">60-70K/mes</td>
+      <td>CR 2,8% → 3,4% · AOV +12%</td>
+    </tr>
+    <tr>
+      <td>M6-M8</td>
+      <td><span class="pill" style="background:var(--accent)">Scale paid</span></td>
+      <td>Escalar Meta a 50K/mes, abrir TikTok Ads y Google PMax, primeros UGC con micro-influencers, embudo suscripción "primer mes -30%".</td>
+      <td class="num">80-100K/mes</td>
+      <td>Pedidos +60% YoY · Subs &gt;15% del revenue</td>
+    </tr>
+    <tr>
+      <td>M9-M12</td>
+      <td><span class="pill" style="background:var(--accent-dk)">Brand+CRM</span></td>
+      <td>Brand TV connected (CTV) en hogares con mascota, programa de referidos, segmentación CRM por raza/edad/peso, retention email 90 días.</td>
+      <td class="num">100-120K/mes</td>
+      <td>LTV 12m +35% · MER ≥ 3x sostenido</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="src"><strong>Inversión acumulada 12 meses:</strong> ~880K-1,02M€ · <strong>Facturación esperada:</strong> 3,8-4,1M€ · <strong>MER medio:</strong> 4,2x (cuenta la base orgánica + recompra).</p>
+</section>
+
+<section>
+<h2>6. Lo que NO hacer</h2>
+
+<ul class="checks x">
+  <li><strong>No meter más paid sin arreglar el embudo.</strong> CR 2% × más tráfico = más quemar dinero por la misma proporción.</li>
+  <li><strong>No copiar a Dogfy.</strong> Su modelo "comida fresca refrigerada a medida" tiene unit economics muy distintos (margen bruto más bajo, logística cara). Alpha Spirit gana por <strong>shelf-stable premium con tecnología</strong>, no por personalización.</li>
+  <li><strong>No abrir 4 mercados a la vez.</strong> Cerrar EN/IT/PT que hoy están a medias y enfocar en <strong>ES + 1 mercado real</strong> (PT o IT) hasta validar repeat rate &gt; 30%.</li>
+  <li><strong>No bajar precio.</strong> El comprador petparent premium NO compra por precio. Compra por confianza y diferencial. Bajar precio mata el margen sin levantar volumen.</li>
+  <li><strong>No saturar branding antes de CRO.</strong> Una campaña de TV con un sitio que convierte al 2% es un agujero. Primero embudo, luego brand.</li>
+</ul>
+</section>
+
+<section>
+<h2>7. Resumen ejecutivo</h2>
+
+<div class="card dark">
+  <h3 style="margin-top:0">Tres números para llevarse a la reunión</h3>
+  <div class="grid grid-3" style="margin-top:14px">
+    <div>
+      <div style="font-size:36px;font-weight:800;color:var(--accent)">+1,4-2,2M€</div>
+      <p style="margin:6px 0 0 0;font-size:14px;opacity:.85">Recuperables/año arreglando embudo, antes de subir paid</p>
+    </div>
+    <div>
+      <div style="font-size:36px;font-weight:800;color:var(--accent)">800K-1M€</div>
+      <p style="margin:6px 0 0 0;font-size:14px;opacity:.85">Inversión total marketing/año para duplicar a 4M€ en 12-18m</p>
+    </div>
+    <div>
+      <div style="font-size:36px;font-weight:800;color:var(--accent)">1,5-1,8M€</div>
+      <p style="margin:6px 0 0 0;font-size:14px;opacity:.85">Inversión total para triplicar a 6M€ en 18-24m (con suscripción activa)</p>
+    </div>
+  </div>
+</div>
+
+<blockquote>
+La diferencia entre duplicar y triplicar Alpha Spirit no está en cuánto se gasta en Meta. Está en si la <strong>suscripción re-incentivada</strong> (subir de 5% a 25% 1ª entrega + 12-15% recurrente), el <strong>checkout español</strong> (Bizum/SeQura/PayPal) y la <strong>PDP que responde objeciones</strong> están en producción <strong>antes</strong> de pisar el acelerador. Sin eso, el 25% sobre facturación se convierte en quema; con eso, se convierte en motor.
+</blockquote>
+
+<div class="callout" style="margin-top:24px">
+  <div class="icon">i</div>
+  <div>
+    <h4>Nota sobre lo que SÍ existe ya en aspiritpetfood.store (revisado el 4-jun-2026)</h4>
+    <p style="margin:0;font-size:14px"><strong>Sí existe</strong>: suscripción con frecuencia Quincenal/Mensual y control total (skip/edit/cancel) — al 5% off. Menú simple en desktop (Perros · Gatos · Packs). Banner "10% gratis del valor del pedido en producto". 16 packs cross-sell. 2.159 reseñas en web. <strong>No existe</strong>: Bizum, SeQura, Klarna, PayPal, WhatsApp/chat, página "Por qué Alpha Spirit", quiz de personalización, calculadora de raciones, reviews con foto.</p>
+  </div>
+</div>
+</section>
+
+<!-- ============== BENCHMARK SIMILARWEB ============== -->
+<section>
+<h2>6. Benchmark SimilarWeb · el gap de tráfico cuantificado</h2>
+
+<p>Datos extraídos de SimilarWeb el 4-jun-2026 (ventana Feb-Abr 2026). Radiografía objetiva del posicionamiento de Alpha Spirit frente al ecosistema DTC pet food europeo.</p>
+
+<h3>6.1 Visitas mensuales y calidad del tráfico</h3>
+
+<table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:16px">
+  <thead>
+    <tr style="background:#1a201c;color:#fff">
+      <th style="padding:10px;text-align:left">Marca</th>
+      <th style="padding:10px">Visitas/mes</th>
+      <th style="padding:10px">3M total</th>
+      <th style="padding:10px">Tendencia</th>
+      <th style="padding:10px">Pages/visit</th>
+      <th style="padding:10px">Duración</th>
+      <th style="padding:10px">Bounce</th>
+      <th style="padding:10px">Mobile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background:#fff4d6"><td style="padding:8px"><strong>Alpha Spirit</strong></td><td style="text-align:center"><strong>8.016</strong></td><td style="text-align:center">24.049</td><td style="text-align:center;color:#a33">↓ −17,08%</td><td style="text-align:center">4,45</td><td style="text-align:center">2:19</td><td style="text-align:center;color:#2a7a3a"><strong>27,95%</strong></td><td style="text-align:center">42,9%</td></tr>
+    <tr><td style="padding:8px;border-top:1px solid #eee">Dogfy Diet</td><td style="text-align:center;border-top:1px solid #eee">291.891</td><td style="text-align:center;border-top:1px solid #eee">875.674</td><td style="text-align:center;border-top:1px solid #eee;color:#a33">↓ −36%</td><td style="text-align:center;border-top:1px solid #eee">3,24</td><td style="text-align:center;border-top:1px solid #eee">1:55</td><td style="text-align:center;border-top:1px solid #eee">50,95%</td><td style="text-align:center;border-top:1px solid #eee">75,4%</td></tr>
+    <tr style="background:#e7f5e9"><td style="padding:8px;border-top:1px solid #eee"><strong>Patitas&amp;Co</strong></td><td style="text-align:center;border-top:1px solid #eee"><strong>242.392</strong></td><td style="text-align:center;border-top:1px solid #eee">727.177</td><td style="text-align:center;border-top:1px solid #eee;color:#2a7a3a"><strong>↑ +70,11%</strong></td><td style="text-align:center;border-top:1px solid #eee"><strong>5,86</strong></td><td style="text-align:center;border-top:1px solid #eee"><strong>2:46</strong></td><td style="text-align:center;border-top:1px solid #eee">46,20%</td><td style="text-align:center;border-top:1px solid #eee">77,6%</td></tr>
+    <tr><td style="padding:8px;border-top:1px solid #eee">Edgard &amp; Cooper</td><td style="text-align:center;border-top:1px solid #eee">242.258</td><td style="text-align:center;border-top:1px solid #eee">726.773</td><td style="text-align:center;border-top:1px solid #eee;color:#a33">↓ −18%</td><td style="text-align:center;border-top:1px solid #eee">3,78</td><td style="text-align:center;border-top:1px solid #eee">2:14</td><td style="text-align:center;border-top:1px solid #eee">45,35%</td><td style="text-align:center;border-top:1px solid #eee">81,6%</td></tr>
+    <tr><td style="padding:8px;border-top:1px solid #eee">Food For Joe</td><td style="text-align:center;border-top:1px solid #eee">39.407</td><td style="text-align:center;border-top:1px solid #eee">118.222</td><td style="text-align:center;border-top:1px solid #eee;color:#2a7a3a">↑ +49,37%</td><td style="text-align:center;border-top:1px solid #eee">4,67</td><td style="text-align:center;border-top:1px solid #eee">2:25</td><td style="text-align:center;border-top:1px solid #eee">38,70%</td><td style="text-align:center;border-top:1px solid #eee">53,8%</td></tr>
+    <tr><td style="padding:8px;border-top:1px solid #eee">Natuka BARF</td><td style="text-align:center;border-top:1px solid #eee">~31.663</td><td style="text-align:center;border-top:1px solid #eee">94.990</td><td style="text-align:center;border-top:1px solid #eee;color:#a33">↓ −11%</td><td style="text-align:center;border-top:1px solid #eee">—</td><td style="text-align:center;border-top:1px solid #eee">—</td><td style="text-align:center;border-top:1px solid #eee">—</td><td style="text-align:center;border-top:1px solid #eee">—</td></tr>
+    <tr><td style="padding:8px;border-top:1px solid #eee">Wild Balance</td><td style="text-align:center;border-top:1px solid #eee">~12.265</td><td style="text-align:center;border-top:1px solid #eee">36.794</td><td style="text-align:center;border-top:1px solid #eee;color:#a33">↓ −16%</td><td style="text-align:center;border-top:1px solid #eee">—</td><td style="text-align:center;border-top:1px solid #eee">—</td><td style="text-align:center;border-top:1px solid #eee">—</td><td style="text-align:center;border-top:1px solid #eee">52,6%</td></tr>
+  </tbody>
+</table>
+
+<div class="callout" style="margin-top:20px;background:#fff8e1;border-left:4px solid #cf6727">
+  <div class="icon" style="background:#cf6727">★</div>
+  <div>
+    <h4>El gap de tráfico y por qué importa para el plan de inversión</h4>
+    <p style="margin:0;font-size:14px">Alpha Spirit recibe <strong>36× menos visitas que Dogfy Diet</strong> y <strong>30× menos que Edgard &amp; Cooper</strong>, pero su bounce rate (27,95%) y duración (2:19) son <strong>mejores que los de los líderes</strong>. Cuando el tráfico llega, convierte. El cuello de botella es captación — no producto, no web. Por eso los <strong>800K-1,0M€ del escenario "duplicar" se justifican</strong>: cada euro extra va a un funnel probado.</p>
+  </div>
+</div>
+
+<h3>6.2 Mix de canales · la asignatura pendiente</h3>
+
+<table style="width:100%;border-collapse:collapse;font-size:13px;margin-top:16px">
+  <thead>
+    <tr style="background:#1a201c;color:#fff">
+      <th style="padding:10px;text-align:left">Canal</th>
+      <th style="padding:10px">Alpha Spirit</th>
+      <th style="padding:10px">Dogfy Diet</th>
+      <th style="padding:10px">Patitas&amp;Co</th>
+      <th style="padding:10px">Edgard &amp; Cooper</th>
+      <th style="padding:10px;text-align:left">Lectura</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="padding:8px">Direct</td><td style="text-align:center">23,27%</td><td style="text-align:center">37,79%</td><td style="text-align:center">29,06%</td><td style="text-align:center">27,31%</td><td style="padding:8px">Dogfy tiene brand recall muy alto (radio, OOH)</td></tr>
+    <tr><td style="padding:8px;border-top:1px solid #eee">Organic Search</td><td style="text-align:center;border-top:1px solid #eee"><strong>73,16%</strong></td><td style="text-align:center;border-top:1px solid #eee">18,81%</td><td style="text-align:center;border-top:1px solid #eee"><strong>61,71%</strong></td><td style="text-align:center;border-top:1px solid #eee">31,08%</td><td style="padding:8px;border-top:1px solid #eee">Alpha Spirit y Patitas&Co dependen de SEO. Diferencia: Patitas escala con contenido de categoría.</td></tr>
+    <tr style="background:#ffeaea"><td style="padding:8px">Paid Search</td><td style="text-align:center"><strong>0%</strong></td><td style="text-align:center">16,31%</td><td style="text-align:center">0,12%</td><td style="text-align:center">16,53%</td><td style="padding:8px">Solo los DTC paid invierten. Patitas no necesita.</td></tr>
+    <tr style="background:#ffeaea"><td style="padding:8px;border-top:1px solid #eee">Display</td><td style="text-align:center;border-top:1px solid #eee"><strong>0%</strong></td><td style="text-align:center;border-top:1px solid #eee">11,70%</td><td style="text-align:center;border-top:1px solid #eee">0,46%</td><td style="text-align:center;border-top:1px solid #eee">10,19%</td><td style="padding:8px;border-top:1px solid #eee">Cero remarketing visual ni programmatic.</td></tr>
+    <tr style="background:#ffeaea"><td style="padding:8px;border-top:1px solid #eee">Paid Social</td><td style="text-align:center;border-top:1px solid #eee"><strong>0%</strong></td><td style="text-align:center;border-top:1px solid #eee">3,86%</td><td style="text-align:center;border-top:1px solid #eee">0,11%</td><td style="text-align:center;border-top:1px solid #eee">3,31%</td><td style="padding:8px;border-top:1px solid #eee">Cero Meta/TikTok Ads. Palanca clave de volumen.</td></tr>
+    <tr><td style="padding:8px;border-top:1px solid #eee">Organic Social</td><td style="text-align:center;border-top:1px solid #eee">0%</td><td style="text-align:center;border-top:1px solid #eee">1,20%</td><td style="text-align:center;border-top:1px solid #eee">2,81%</td><td style="text-align:center;border-top:1px solid #eee">3,18%</td><td style="padding:8px;border-top:1px solid #eee">12,8K seguidores en IG sin generar tráfico medible</td></tr>
+    <tr><td style="padding:8px;border-top:1px solid #eee">Referrals</td><td style="text-align:center;border-top:1px solid #eee">1,85%</td><td style="text-align:center;border-top:1px solid #eee">3,98%</td><td style="text-align:center;border-top:1px solid #eee">2,95%</td><td style="text-align:center;border-top:1px solid #eee">4,40%</td><td style="padding:8px;border-top:1px solid #eee">Falta linkbuilding sectorial (vets, blogs)</td></tr>
+    <tr><td style="padding:8px;border-top:1px solid #eee">Email</td><td style="text-align:center;border-top:1px solid #eee">1,72%</td><td style="text-align:center;border-top:1px solid #eee">5,33%</td><td style="text-align:center;border-top:1px solid #eee">2,40%</td><td style="text-align:center;border-top:1px solid #eee">3,72%</td><td style="padding:8px;border-top:1px solid #eee">Klaviyo infrautilizado · 3-4× margen de mejora</td></tr>
+  </tbody>
+</table>
+
+<div class="callout" style="margin-top:20px">
+  <div class="icon">i</div>
+  <div>
+    <h4>Implicación directa para el reparto del presupuesto paid del escenario "duplicar"</h4>
+    <p style="margin:0;font-size:14px">El reparto recomendado de la sección 4 (Meta 55%, Google 20%, TikTok 10%, YouTube 8%, Influencer 7%) <strong>no es estético: es la copia validada del mix que Dogfy y Edgard &amp; Cooper usan</strong> para llegar a 240-290K visitas/mes. Activar Paid Search + Display + Paid Social en proporciones comparables es el camino corto a 80-120K visitas/mes en 12 meses (10× actual), suficiente para soportar 4M€ con el AOV y CR observados.</p>
+  </div>
+</div>
+
+<h3>6.3 Lecturas competitivas relevantes para el plan</h3>
+
+<ul style="margin:16px 0 0 24px;font-size:14px;line-height:1.7">
+  <li><strong>Dogfy Diet pierde −36% MoM</strong> en sus tres mercados a la vez (IT, ES, FR). Fatiga creativa + ventana competitiva abierta. Coincide con el momento óptimo para que Alpha Spirit entre con Paid Social en España.</li>
+  <li><strong>Edgard &amp; Cooper pierde −18%</strong> pero mantiene mejor estructura (mejor SEO, más mercados). Referencia de mix de canales sostenible — no de inversión total.</li>
+  <li><strong>Patitas&amp;Co sube +70,11% MoM y ya iguala a los DTC en escala</strong> (242K visitas/mes) usando 61,7% Organic Search + 29% Direct y casi nada de pago. Es la prueba de que un modelo SEO + contenido + LatAm escala a 6-figure visitas/mes sin necesitar 1M€/año en paid. Patitas además tiene tiendas físicas en Madrid (Fuencarral 156, Narváez 27) y opera como pet shop multi-marca — Alpha Spirit podría incluso estar ahí distribuida.</li>
+  <li><strong>Food For Joe sube +49% MoM con producto parecido</strong> (comida cocinada para perros y gatos) y mucho menos presupuesto. Confirma el patrón: SEO + organic + LatAm = doble dígito mensual sostenido.</li>
+  <li><strong>Mobile share de Alpha Spirit es 42,9%</strong> (vs 75-82% de los líderes). Audiencia más adulta + UX mobile débil. Refuerza la prioridad de rehacer PDP mobile en Fase 1.</li>
+  <li><strong>Mercado real es España + Portugal</strong> (90,8% del tráfico). Las versiones EN/IT/PT sin traducir son ruido. Priorizar i18n EN/IT/PT en Fase 2 cuando haya producto-mercado validado.</li>
+</ul>
+
+</section>
+
+<footer>
+  <p><strong>Fuentes y benchmarks:</strong></p>
+  <p class="src">
+    · <a href="https://eightx.co/blog/ad-spend-percent-revenue-by-stage-2026">Eightx — Ad Spend % Revenue by Stage 2026</a><br>
+    · <a href="https://eightx.co/blog/marketing-spend-by-dtc-vertical-2026">Eightx — Marketing Spend % by DTC Vertical 2026</a><br>
+    · <a href="https://eightx.co/blog/average-cac-ecommerce-vertical">Eightx — Average CAC by Ecommerce Vertical 2026</a><br>
+    · <a href="https://www.dtcpages.com/blog/ecommerce-conversion-rate-benchmarks-2026">DTC Pages — Ecommerce Conversion Rate Benchmarks 2026</a><br>
+    · <a href="https://www.indexbox.io/store/spain-pet-food-market-analysis-forecast-size-trends-and-insights/">IndexBox — Spain Pet Food Market 2026</a><br>
+    · <a href="https://www.petfoodindustry.com/blogs-columns/adventures-in-pet-food/blog/15820594/online-pet-food-shopping-in-2026-snapshots-and-nuances">PetfoodIndustry — Online pet food shopping 2026</a><br>
+    · <a href="https://cross-border-magazine.com/dogfy-diet-reached-11-million/">Cross-Border Magazine — Dogfy Diet 11M€ revenue</a><br>
+    · <a href="https://www.attnagency.com/blog/dtc-profitability-benchmarks-2026">ATTN Agency — DTC Profitability Benchmarks 2026</a><br>
+    · SimilarWeb (Feb-Abr 2026, consultado 4-jun-2026): aspiritpetfood.store · dogfydiet.com · patitasco.com · edgardcooper.com · foodforjoe.es · natukabarf.com · wildbalance.es
+  </p>
+  <p class="src">Documentos internos referenciados: <em>auditoria-ux-alpha-spirit-2026-06-04.html</em> y <em>7-maletas-alpha-spirit-2026-06-04.html</em>. Las estimaciones del embudo son reconstrucciones top-down a falta de datos de Shopify Analytics; revisar contra GA4/Shopify para afinar.</p>
+  <p class="src">Documento generado el 4 de junio de 2026 · Alpha Spirit Pet Food</p>
+</footer>
+
+</div>
+</body>
+</html>

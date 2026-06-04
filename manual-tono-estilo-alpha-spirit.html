@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Tono y Estilo · Alpha Spirit</title>
+<style>
+  :root {
+    --black: #0f0f0f;
+    --ink: #1c1c1c;
+    --paper: #f6f1e8;
+    --paper-2: #ede5d3;
+    --cream: #faf7f0;
+    --olive: #6b7a3a;
+    --olive-dark: #4f5a2a;
+    --terracotta: #b96b3a;
+    --rust: #8b3e1a;
+    --grey: #6e6a63;
+    --line: #d6cdb8;
+    --good: #4f7a3a;
+    --bad:  #a93226;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Helvetica Neue', 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  /* HERO */
+  .hero {
+    background: var(--black);
+    color: var(--cream);
+    padding: 80px 6vw 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(185,107,58,0.18), transparent 50%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(40px, 7vw, 88px);
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: -1px;
+    margin-bottom: 32px;
+    max-width: 900px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--terracotta);
+  }
+  .hero p {
+    max-width: 620px;
+    font-size: 18px;
+    color: #d6d1c4;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-top: 56px;
+    border-top: 1px solid #2a2a2a;
+    padding-top: 32px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #8c8676;
+  }
+  .hero-meta strong { color: var(--cream); font-weight: 600; display: block; margin-top: 4px; letter-spacing: 0; text-transform: none; font-size: 15px; }
+
+  /* LAYOUT */
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 80px 6vw;
+  }
+  section + section { margin-top: 32px; }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+  }
+  h3 {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    margin-top: 28px;
+  }
+  h4 {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  p { margin-bottom: 16px; }
+  p.lead { font-size: 19px; color: #333; max-width: 720px; }
+  hr.divider {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 64px 0;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--cream);
+    border: 1px solid var(--line);
+    padding: 32px;
+    border-radius: 4px;
+    margin-bottom: 64px;
+  }
+  .toc h4 { margin-bottom: 18px; }
+  .toc ol {
+    list-style: none;
+    counter-reset: toc;
+    columns: 2;
+    column-gap: 40px;
+  }
+  .toc li {
+    counter-increment: toc;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+    break-inside: avoid;
+  }
+  .toc li::before {
+    content: "0" counter(toc);
+    color: var(--terracotta);
+    font-weight: 700;
+    margin-right: 12px;
+    font-size: 13px;
+  }
+  .toc a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .toc a:hover { color: var(--terracotta); }
+
+  /* PILLARS */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .pillar {
+    background: var(--cream);
+    padding: 28px;
+    border-radius: 4px;
+    border-top: 3px solid var(--terracotta);
+  }
+  .pillar .num {
+    font-family: Georgia, serif;
+    font-size: 32px;
+    color: var(--terracotta);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .pillar h3 {
+    margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .pillar p { font-size: 14px; color: #444; margin-bottom: 0; }
+
+  /* PERSONALITY GRID */
+  .traits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .trait {
+    padding: 24px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+  }
+  .trait h4 { color: var(--olive-dark); letter-spacing: 1px; }
+  .trait .is { color: var(--good); font-weight: 600; margin-top: 12px; }
+  .trait .isnot { color: var(--bad); font-weight: 600; margin-top: 4px; }
+  .trait small { display: block; color: #555; font-size: 14px; font-weight: 400; }
+
+  /* TONE SLIDER */
+  .scales { margin-top: 32px; }
+  .scale {
+    margin-bottom: 28px;
+  }
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 8px;
+  }
+  .scale-track {
+    height: 6px;
+    background: var(--paper-2);
+    border-radius: 3px;
+    position: relative;
+  }
+  .scale-fill {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--terracotta);
+    border-radius: 3px;
+  }
+  .scale-marker {
+    position: absolute;
+    top: -6px;
+    width: 18px;
+    height: 18px;
+    background: var(--ink);
+    border-radius: 50%;
+    border: 3px solid var(--paper);
+  }
+
+  /* DO / DON'T */
+  .dodont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .col {
+    padding: 28px;
+    border-radius: 4px;
+  }
+  .col.do {
+    background: #eef2e3;
+    border-left: 4px solid var(--good);
+  }
+  .col.dont {
+    background: #f4e3e0;
+    border-left: 4px solid var(--bad);
+  }
+  .col h4 { margin-bottom: 16px; }
+  .col.do h4 { color: var(--good); }
+  .col.dont h4 { color: var(--bad); }
+  .col ul { list-style: none; }
+  .col li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    font-size: 15px;
+  }
+  .col.do li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--good);
+    font-weight: 700;
+  }
+  .col.dont li::before {
+    content: "✕";
+    position: absolute;
+    left: 0;
+    color: var(--bad);
+    font-weight: 700;
+  }
+
+  /* VOCAB */
+  .vocab {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .vocab-box {
+    background: white;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+  }
+  .vocab-box h4 { margin-bottom: 14px; }
+  .tag {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px 4px 4px 0;
+    border-radius: 20px;
+    font-size: 13px;
+    background: var(--paper-2);
+    color: var(--ink);
+  }
+  .tag.bad {
+    background: #f4e3e0;
+    color: var(--rust);
+    text-decoration: line-through;
+    text-decoration-color: var(--bad);
+  }
+
+  /* EXAMPLES */
+  .example {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .example .label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--grey);
+    margin-bottom: 8px;
+  }
+  .example.good { border-left: 4px solid var(--good); }
+  .example.bad  { border-left: 4px solid var(--bad); }
+  .example.good .label { color: var(--good); }
+  .example.bad  .label { color: var(--bad); }
+  .example blockquote {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    font-style: italic;
+    color: #222;
+    border: none;
+  }
+  .example .note {
+    font-size: 13px;
+    color: var(--grey);
+    margin-top: 10px;
+  }
+
+  /* CHANNELS */
+  .channel {
+    background: var(--cream);
+    padding: 28px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  .channel-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .channel-head h3 { margin: 0; }
+  .channel .meta {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    font-weight: 700;
+  }
+  .channel-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+    margin-top: 16px;
+  }
+  .channel-grid .specs {
+    background: white;
+    padding: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .channel-grid .specs strong { color: var(--olive-dark); }
+
+  /* BRANDS sub-table */
+  .subbrand-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .subbrand {
+    background: white;
+    padding: 28px;
+    border-radius: 4px;
+    border-top: 4px solid var(--olive);
+  }
+  .subbrand:nth-child(2) { border-top-color: var(--terracotta); }
+  .subbrand:nth-child(3) { border-top-color: var(--olive-dark); }
+  .subbrand:nth-child(4) { border-top-color: var(--rust); }
+  .subbrand h3 {
+    margin-top: 0;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+  }
+  .subbrand .promise {
+    font-style: italic;
+    color: var(--grey);
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    color: var(--cream);
+    padding: 60px 6vw 40px;
+    margin-top: 80px;
+  }
+  footer .row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  footer .logo {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 24px;
+  }
+  footer .meta { font-size: 13px; color: #8c8676; }
+  footer .bottom { margin-top: 24px; font-size: 12px; color: #6e6a63; }
+
+  @media (max-width: 800px) {
+    .toc ol { columns: 1; }
+    .pillars { grid-template-columns: 1fr 1fr; }
+    .traits { grid-template-columns: 1fr; }
+    .dodont { grid-template-columns: 1fr; }
+    .vocab { grid-template-columns: 1fr; }
+    .channel-grid { grid-template-columns: 1fr; }
+    .subbrand-grid { grid-template-columns: 1fr; }
+    .container { padding: 56px 6vw; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-eyebrow">Brand Voice Guidelines · v1.0</div>
+  <h1>Manual de tono<br>y estilo <em>Alpha Spirit</em>.</h1>
+  <p>Cómo hablamos cuando hablamos de comida real para perros y gatos. Una guía práctica para escribir en cualquier canal sin perder el espíritu salvaje, natural y honesto que nos define.</p>
+  <div class="hero-meta">
+    <div>Marca<strong>Alpha Spirit</strong></div>
+    <div>Categoría<strong>Pet food natural</strong></div>
+    <div>Mercados<strong>España · Italia · Portugal</strong></div>
+    <div>Web<strong>aspiritpetfood.store</strong></div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- TOC -->
+  <nav class="toc">
+    <h4>Contenidos</h4>
+    <ol>
+      <li><a href="#esencia">Esencia de marca</a></li>
+      <li><a href="#pilares">Pilares de comunicación</a></li>
+      <li><a href="#personalidad">Personalidad y arquetipo</a></li>
+      <li><a href="#tono">Escalas de tono</a></li>
+      <li><a href="#voz">Voz y estilo de escritura</a></li>
+      <li><a href="#vocabulario">Vocabulario propio</a></li>
+      <li><a href="#dodont">Do's &amp; Don'ts</a></li>
+      <li><a href="#submarcas">Voz de cada submarca</a></li>
+      <li><a href="#canales">Adaptación por canal</a></li>
+      <li><a href="#ejemplos">Ejemplos antes/después</a></li>
+      <li><a href="#formato">Reglas de formato</a></li>
+      <li><a href="#checklist">Checklist final</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1. ESENCIA -->
+  <section id="esencia">
+    <div class="eyebrow">01 — Esencia de marca</div>
+    <h2>Alimento natural y cocinado.<br>Tan cerca del estado salvaje como sea posible.</h2>
+    <p class="lead">Alpha Spirit nace de una convicción: perros y gatos están diseñados para alimentarse de carne y pescado fresco, no de subproductos. Todo lo que escribimos debe transmitir esa apuesta por lo real, lo natural y lo cocinado con criterio.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="num">A</div>
+        <h3>Propósito</h3>
+        <p>Devolver a las mascotas la alimentación para la que su cuerpo fue diseñado.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">B</div>
+        <h3>Promesa</h3>
+        <p>Recetas con hasta 85% de carne y pescado fresco, cocinadas a baja temperatura.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">C</div>
+        <h3>Posición</h3>
+        <p>Pet food súper premium, natural y honesto. Sin esconder ingredientes.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">D</div>
+        <h3>Para quién</h3>
+        <p>Tutores que quieren lo mejor para su mascota y entienden la diferencia.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 2. PILARES -->
+  <section id="pilares">
+    <div class="eyebrow">02 — Pilares de comunicación</div>
+    <h2>Cuatro ideas que repetimos siempre,<br>con palabras distintas.</h2>
+    <p class="lead">Cada pieza de copy debe activar al menos uno de estos pilares. Si no activa ninguno, no es Alpha Spirit.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="num">01</div>
+        <h3>Naturalidad</h3>
+        <p>100% natural, ingredientes reconocibles, sin artificios. "Lo que comerían en libertad".</p>
+      </div>
+      <div class="pillar">
+        <div class="num">02</div>
+        <h3>Calidad real</h3>
+        <p>Carne y pescado fresco como ingrediente principal. Porcentajes concretos, no eslóganes vacíos.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">03</div>
+        <h3>Cocinado con criterio</h3>
+        <p>Baja temperatura, tecnología Tenderize, recetas tradicionales. Cocinar también es respetar.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">04</div>
+        <h3>Bienestar visible</h3>
+        <p>El resultado se ve: pelo brillante, energía, digestión. Hablamos del beneficio tangible.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 3. PERSONALIDAD -->
+  <section id="personalidad">
+    <div class="eyebrow">03 — Personalidad</div>
+    <h2>Si Alpha Spirit fuera una persona,<br>sería un cocinero que ama a los animales.</h2>
+    <p class="lead">Arquetipo principal: <strong>El Cuidador</strong> con alma de <strong>Explorador</strong>. Cocina con respeto a la materia prima, conoce el origen de cada ingrediente y trata a cada mascota como si fuera suya.</p>
+
+    <div class="traits">
+      <div class="trait">
+        <h4>Cercano</h4>
+        <small>Habla de tú, sin distancia, como quien te recomienda algo bueno.</small>
+        <div class="is">✓ Cálido y directo</div>
+        <div class="isnot">✕ Coloquial vulgar</div>
+      </div>
+      <div class="trait">
+        <h4>Experto</h4>
+        <small>Sabe de nutrición animal, pero no presume. Explica con claridad.</small>
+        <div class="is">✓ Riguroso accesible</div>
+        <div class="isnot">✕ Jerga veterinaria</div>
+      </div>
+      <div class="trait">
+        <h4>Apasionado</h4>
+        <small>Le importa el bienestar real, no solo vender. Lo nota cualquier lector.</small>
+        <div class="is">✓ Convencido, honesto</div>
+        <div class="isnot">✕ Emocional cursi</div>
+      </div>
+      <div class="trait">
+        <h4>Natural</h4>
+        <small>Habla como cocina: con ingredientes claros, sin aditivos verbales.</small>
+        <div class="is">✓ Sencillo y limpio</div>
+        <div class="isnot">✕ Tecnicista o vacío</div>
+      </div>
+      <div class="trait">
+        <h4>Confiado</h4>
+        <small>No pide perdón por ser premium. Argumenta el porqué.</small>
+        <div class="is">✓ Firme, claro</div>
+        <div class="isnot">✕ Arrogante o agresivo</div>
+      </div>
+      <div class="trait">
+        <h4>Vital</h4>
+        <small>Hay energía en lo que cuenta. Inspira ganas de cuidar mejor.</small>
+        <div class="is">✓ Activo, optimista</div>
+        <div class="isnot">✕ Frívolo o infantil</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 4. TONO -->
+  <section id="tono">
+    <div class="eyebrow">04 — Escalas de tono</div>
+    <h2>Dónde se sitúa Alpha Spirit<br>en cada eje de comunicación.</h2>
+    <p class="lead">El tono se mueve un poco según el canal (más cálido en redes, más informativo en ficha de producto), pero el centro de gravedad siempre es este.</p>
+
+    <div class="scales">
+      <div class="scale">
+        <div class="scale-labels"><span>Formal</span><span>Casual</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:72%"></div><div class="scale-marker" style="left:70%"></div></div>
+      </div>
+      <div class="scale">
+        <div class="scale-labels"><span>Serio</span><span>Divertido</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:55%"></div><div class="scale-marker" style="left:53%"></div></div>
+      </div>
+      <div class="scale">
+        <div class="scale-labels"><span>Respetuoso</span><span>Irreverente</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:30%"></div><div class="scale-marker" style="left:28%"></div></div>
+      </div>
+      <div class="scale">
+        <div class="scale-labels"><span>Genérico</span><span>Entusiasta</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:85%"></div><div class="scale-marker" style="left:83%"></div></div>
+      </div>
+      <div class="scale">
+        <div class="scale-labels"><span>Técnico</span><span>Cotidiano</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:65%"></div><div class="scale-marker" style="left:63%"></div></div>
+      </div>
+      <div class="scale">
+        <div class="scale-labels"><span>Comercial</span><span>Editorial</span></div>
+        <div class="scale-track"><div class="scale-fill" style="width:55%"></div><div class="scale-marker" style="left:53%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 5. VOZ -->
+  <section id="voz">
+    <div class="eyebrow">05 — Voz y estilo</div>
+    <h2>Cómo suena Alpha Spirit cuando escribe.</h2>
+
+    <h3>Reglas de oro</h3>
+    <p><strong>1. Trato de tú.</strong> Siempre hablamos de tú a tú, tanto al tutor como a la mascota (cuando aplica). Nada de "usted" ni "vosotros".</p>
+    <p><strong>2. Frases cortas y rítmicas.</strong> Sujeto + verbo + idea. Si la frase ocupa más de dos líneas en móvil, se parte.</p>
+    <p><strong>3. Concreción antes que adjetivos.</strong> Mejor "85% de carne fresca" que "ingredientes de calidad". El número es nuestro adjetivo.</p>
+    <p><strong>4. Verbo en presente y en activa.</strong> "Cocinamos", "elegimos", "seleccionamos". Nada de "se cocina", "se elabora".</p>
+    <p><strong>5. Beneficio tangible antes que atributo.</strong> No "rico en omega 3" → "pelo brillante desde la primera semana".</p>
+    <p><strong>6. Mayúsculas con criterio.</strong> Reservamos las MAYÚSCULAS para titulares de categoría y claims fuertes ("LO MEJOR EN ALIMENTACIÓN"). Nunca en cuerpo de texto.</p>
+    <p><strong>7. Negrita para el dato, no para el adjetivo.</strong> Bold solo en cifras, ingredientes clave o llamadas a la acción.</p>
+
+    <h3>Estructura típica de una pieza</h3>
+    <div class="example good">
+      <div class="label">Patrón Alpha Spirit</div>
+      <blockquote>
+        [Claim corto en MAYÚSCULAS] →<br>
+        [Una frase con el ingrediente / porcentaje / método] →<br>
+        [Beneficio para la mascota en lenguaje cotidiano] →<br>
+        [CTA simple: COMPRAR / DESCUBRIR / VER MÁS]
+      </blockquote>
+      <div class="note">Es el mismo ritmo que ya usa la web: titular en caja alta, una línea de sustancia, llamada a la acción seca.</div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 6. VOCABULARIO -->
+  <section id="vocabulario">
+    <div class="eyebrow">06 — Vocabulario propio</div>
+    <h2>Palabras que decimos.<br>Palabras que no.</h2>
+
+    <div class="vocab">
+      <div class="vocab-box">
+        <h4>Léxico propio (úsalo)</h4>
+        <span class="tag">100% natural</span>
+        <span class="tag">carne fresca</span>
+        <span class="tag">pescado fresco</span>
+        <span class="tag">cocinado a baja temperatura</span>
+        <span class="tag">tecnología Tenderize</span>
+        <span class="tag">súper premium</span>
+        <span class="tag">superalimentos</span>
+        <span class="tag">receta tradicional</span>
+        <span class="tag">estofado casero</span>
+        <span class="tag">dieta equilibrada</span>
+        <span class="tag">estado salvaje</span>
+        <span class="tag">bienestar</span>
+        <span class="tag">mascota</span>
+        <span class="tag">tu peludo</span>
+        <span class="tag">tutor</span>
+        <span class="tag">ingredientes reconocibles</span>
+        <span class="tag">honesto</span>
+        <span class="tag">selección</span>
+        <span class="tag">cuidar</span>
+      </div>
+      <div class="vocab-box">
+        <h4>Léxico a evitar</h4>
+        <span class="tag bad">subproductos</span>
+        <span class="tag bad">pienso barato</span>
+        <span class="tag bad">químico</span>
+        <span class="tag bad">artificial</span>
+        <span class="tag bad">dueño</span>
+        <span class="tag bad">animal de compañía</span>
+        <span class="tag bad">producto</span>
+        <span class="tag bad">cliente</span>
+        <span class="tag bad">low cost</span>
+        <span class="tag bad">descuentazo</span>
+        <span class="tag bad">milagroso</span>
+        <span class="tag bad">único en el mercado</span>
+        <span class="tag bad">la mejor marca del mundo</span>
+        <span class="tag bad">delicatessen</span>
+        <span class="tag bad">gourmet humano</span>
+      </div>
+    </div>
+
+    <h3>Cómo nombrar al perro, al gato y al tutor</h3>
+    <p><strong>El animal:</strong> "tu perro", "tu gato", "tu mascota", "tu peludo" (informal, en redes). Evitamos "tu amigo de cuatro patas" salvo en redes muy casuales. Nunca "el animalito".</p>
+    <p><strong>La persona:</strong> "tú", "tutor", "familia". Evitamos "dueño" (suena a propiedad) y "amante de los animales" (suena a cliché).</p>
+    <p><strong>El producto:</strong> "receta", "alimento", "estofado", "snack". Evitamos "producto" o "referencia" en copy de cara al cliente.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 7. DO / DON'T -->
+  <section id="dodont">
+    <div class="eyebrow">07 — Do's &amp; Don'ts</div>
+    <h2>Reglas rápidas para no perder el tono.</h2>
+
+    <div class="dodont">
+      <div class="col do">
+        <h4>SÍ hacemos</h4>
+        <ul>
+          <li>Dar el dato concreto: porcentaje, ingrediente, método.</li>
+          <li>Empezar por el beneficio para la mascota.</li>
+          <li>Usar verbos en presente y activa ("cocinamos", "seleccionamos").</li>
+          <li>Frases cortas, una idea por frase.</li>
+          <li>Tutear al lector.</li>
+          <li>Reservar MAYÚSCULAS para titulares de categoría.</li>
+          <li>Bold solo en cifras, ingredientes clave y CTA.</li>
+          <li>Mencionar el origen y el porqué de cada receta.</li>
+          <li>Dejar respirar el texto (espacios en blanco).</li>
+        </ul>
+      </div>
+      <div class="col dont">
+        <h4>NO hacemos</h4>
+        <ul>
+          <li>Adjetivos vacíos: "excelente", "increíble", "el mejor".</li>
+          <li>Promesas milagrosas o claims médicos sin evidencia.</li>
+          <li>Tecnicismos veterinarios sin traducir.</li>
+          <li>Frases largas con subordinadas anidadas.</li>
+          <li>Tratar al tutor de "usted" o llamarle "cliente".</li>
+          <li>Mayúsculas para gritar dentro del cuerpo del texto.</li>
+          <li>Más de un emoji por pieza (y solo en redes/email).</li>
+          <li>Tono apocalíptico sobre los piensos de la competencia.</li>
+          <li>Imitar el lenguaje de gourmet humano ("delicatessen", "umami").</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 8. SUBMARCAS -->
+  <section id="submarcas">
+    <div class="eyebrow">08 — Voz por submarca</div>
+    <h2>Cuatro líneas, cuatro matices del mismo tono.</h2>
+    <p class="lead">Todas comparten ADN, pero cada submarca tiene un acento propio. Cuando escribas, identifica primero la línea y luego ajusta.</p>
+
+    <div class="subbrand-grid">
+      <div class="subbrand">
+        <h3>Alpha Spirit</h3>
+        <div class="promise">Súper premium. Lo mejor en alimentación.</div>
+        <p><strong>Tono:</strong> orgulloso, riguroso, casi editorial. Habla de porcentajes altos (85% carne/pescado), de tecnología y de tradición a la vez.</p>
+        <p><strong>Palabras clave:</strong> súper premium, 85% carne fresca, Tenderize, innovación, único.</p>
+        <p><em>Ejemplo:</em> "Cocinamos cada receta a baja temperatura para conservar el sabor real de la carne. 85% de pescado y carne fresca. Nada más."</p>
+      </div>
+      <div class="subbrand">
+        <h3>Primal Spirit</h3>
+        <div class="promise">Premium accesible. Calidad para todos los públicos.</div>
+        <p><strong>Tono:</strong> cercano, práctico, sin perder la promesa natural. Habla del equilibrio entre precio y honestidad.</p>
+        <p><strong>Palabras clave:</strong> natural, accesible, calidad, sin renunciar.</p>
+        <p><em>Ejemplo:</em> "La misma filosofía Alpha Spirit, ahora al alcance de toda la familia. Comida real, precio justo."</p>
+      </div>
+      <div class="subbrand">
+        <h3>Real Food</h3>
+        <div class="promise">Recetas tradicionales. Como las de toda la vida.</div>
+        <p><strong>Tono:</strong> cálido, casero, nostálgico. Habla de cocina tradicional, de fuego lento, de receta de abuela.</p>
+        <p><strong>Palabras clave:</strong> estofado, casero, tradicional, fuego lento, verduras frescas.</p>
+        <p><em>Ejemplo:</em> "Estofado de pollo con verduras al estilo de siempre. Cocinado a fuego lento, listo para servir."</p>
+      </div>
+      <div class="subbrand">
+        <h3>Orygo</h3>
+        <div class="promise">Premium + superalimentos. Bienestar preventivo.</div>
+        <p><strong>Tono:</strong> moderno, saludable, consciente. Habla de ingredientes funcionales y de prevención.</p>
+        <p><strong>Palabras clave:</strong> superalimentos, preventivo, bienestar, equilibrio, vitalidad.</p>
+        <p><em>Ejemplo:</em> "Pavo con calabaza y un toque de superalimentos. Para que tu perro coma bien hoy y siga fuerte mañana."</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 9. CANALES -->
+  <section id="canales">
+    <div class="eyebrow">09 — Adaptación por canal</div>
+    <h2>El mismo tono, ajustado al contexto.</h2>
+
+    <div class="channel">
+      <div class="channel-head">
+        <h3>Web — Home y landings</h3>
+        <span class="meta">Editorial · Inspiracional</span>
+      </div>
+      <div class="channel-grid">
+        <div class="specs">
+          <strong>Titular:</strong> 3–6 palabras en MAYÚSCULAS.<br><br>
+          <strong>Subtítulo:</strong> 1 frase con dato concreto + beneficio.<br><br>
+          <strong>CTA:</strong> verbo en infinitivo, 1 palabra.<br><br>
+          <strong>Tono:</strong> aspiracional, seguro, premium.
+        </div>
+        <div>
+          <div class="example good">
+            <div class="label">Ejemplo</div>
+            <blockquote>LO MEJOR EN ALIMENTACIÓN<br>Recetas súper premium con 100% de carne y pescado fresco.<br><strong>COMPRAR</strong></blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="channel">
+      <div class="channel-head">
+        <h3>Ficha de producto</h3>
+        <span class="meta">Informativo · Convincente</span>
+      </div>
+      <div class="channel-grid">
+        <div class="specs">
+          <strong>Nombre:</strong> Tipo + sabor/proteína + destinatario.<br><br>
+          <strong>Bullet 1:</strong> Ingrediente principal y %.<br>
+          <strong>Bullet 2:</strong> Método de cocinado.<br>
+          <strong>Bullet 3:</strong> Beneficio tangible.<br><br>
+          <strong>Cuerpo:</strong> 80–120 palabras. Storytelling breve + datos.
+        </div>
+        <div>
+          <div class="example good">
+            <div class="label">Ejemplo</div>
+            <blockquote>Estofado de ternera para perros<br>· 70% ternera fresca y verduras frescas<br>· Cocinado a baja temperatura<br>· Pelo más brillante y mejor digestión</blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="channel">
+      <div class="channel-head">
+        <h3>Email marketing</h3>
+        <span class="meta">Cercano · Útil</span>
+      </div>
+      <div class="channel-grid">
+        <div class="specs">
+          <strong>Asunto:</strong> &lt; 50 caracteres. Beneficio o pregunta.<br><br>
+          <strong>Apertura:</strong> tutear, una frase de contexto.<br><br>
+          <strong>Cuerpo:</strong> una sola idea por email.<br><br>
+          <strong>CTA:</strong> botón único, verbo accionable.
+        </div>
+        <div>
+          <div class="example good">
+            <div class="label">Asunto + apertura</div>
+            <blockquote>Asunto: ¿Y si fuera la receta del cambio?<br>Hola Marta, sabemos que llevas tiempo buscando una comida que de verdad le siente bien a Luna…</blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="channel">
+      <div class="channel-head">
+        <h3>Instagram &amp; Facebook</h3>
+        <span class="meta">Cálido · Visual · Conversacional</span>
+      </div>
+      <div class="channel-grid">
+        <div class="specs">
+          <strong>Caption:</strong> 1–3 frases. Gancho + idea + CTA suave.<br><br>
+          <strong>Emojis:</strong> máximo 1–2, siempre relacionados.<br><br>
+          <strong>Hashtags:</strong> 4–6, marca + categoría.<br><br>
+          <strong>Tono:</strong> más relajado, igual de honesto.
+        </div>
+        <div>
+          <div class="example good">
+            <div class="label">Caption</div>
+            <blockquote>Las recetas Real Food se cocinan a fuego lento, como las de casa. Resultado: comida que tu perro reconoce desde la primera cucharada. 🥩<br>Descubre la gama en bio.<br>#AlphaSpirit #RealFood #ComidaRealParaPerros</blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="channel">
+      <div class="channel-head">
+        <h3>Atención al cliente</h3>
+        <span class="meta">Empático · Resolutivo</span>
+      </div>
+      <div class="channel-grid">
+        <div class="specs">
+          <strong>Apertura:</strong> saludo + nombre del tutor + nombre de la mascota si lo conocemos.<br><br>
+          <strong>Mensaje:</strong> reconocer + resolver + ofrecer siguiente paso.<br><br>
+          <strong>Cierre:</strong> "Un saludo del equipo Alpha Spirit". Sin emojis.
+        </div>
+        <div>
+          <div class="example good">
+            <div class="label">Respuesta tipo</div>
+            <blockquote>Hola Carlos, gracias por escribirnos. Sentimos que el pedido haya llegado con retraso. Lo hemos revisado y…<br><br>Un saludo del equipo Alpha Spirit.</blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="channel">
+      <div class="channel-head">
+        <h3>Packaging y claims</h3>
+        <span class="meta">Sintético · Memorable</span>
+      </div>
+      <div class="channel-grid">
+        <div class="specs">
+          <strong>Frontal:</strong> nombre + proteína + % carne/pescado.<br><br>
+          <strong>Claim:</strong> máximo 6 palabras.<br><br>
+          <strong>Trasera:</strong> ingredientes en orden, sin paja.
+        </div>
+        <div>
+          <div class="example good">
+            <div class="label">Claim</div>
+            <blockquote>85% carne fresca. Cocinado a baja temperatura.</blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 10. EJEMPLOS -->
+  <section id="ejemplos">
+    <div class="eyebrow">10 — Ejemplos antes / después</div>
+    <h2>El mismo mensaje, reescrito en Alpha Spirit.</h2>
+
+    <h3>Ejemplo 1 — Titular de home</h3>
+    <div class="example bad">
+      <div class="label">Antes</div>
+      <blockquote>"El mejor pienso del mercado para tu mascota, con ingredientes de alta calidad."</blockquote>
+      <div class="note">Adjetivos vacíos, sin dato, sin diferenciación.</div>
+    </div>
+    <div class="example good">
+      <div class="label">Después</div>
+      <blockquote>"ALIMENTACIÓN 100% NATURAL. Hasta un 85% de carne y pescado fresco, cocinados a baja temperatura."</blockquote>
+      <div class="note">Claim concreto + dato + método.</div>
+    </div>
+
+    <h3>Ejemplo 2 — Descripción de producto</h3>
+    <div class="example bad">
+      <div class="label">Antes</div>
+      <blockquote>"Este producto está elaborado con ingredientes seleccionados para ofrecer una nutrición completa y deliciosa que será del agrado de su animal de compañía."</blockquote>
+      <div class="note">Voz pasiva, "su", "animal de compañía", cero dato.</div>
+    </div>
+    <div class="example good">
+      <div class="label">Después</div>
+      <blockquote>"Cocinamos este estofado con ternera fresca y verduras de temporada, a fuego lento. Tu perro reconoce el sabor real desde la primera cucharada."</blockquote>
+      <div class="note">Verbo activo, tutea, ingrediente concreto, beneficio sensorial.</div>
+    </div>
+
+    <h3>Ejemplo 3 — Email de bienvenida</h3>
+    <div class="example bad">
+      <div class="label">Antes</div>
+      <blockquote>"Estimado cliente, le damos la bienvenida a nuestra marca. Esperamos que disfrute de nuestros productos premium."</blockquote>
+    </div>
+    <div class="example good">
+      <div class="label">Después</div>
+      <blockquote>"Bienvenido a Alpha Spirit. Aquí cocinamos para perros y gatos lo que comerían si pudieran elegir. Te dejamos un 10% para que tu peludo pruebe la diferencia."</blockquote>
+    </div>
+
+    <h3>Ejemplo 4 — Post Instagram</h3>
+    <div class="example bad">
+      <div class="label">Antes</div>
+      <blockquote>"¡¡¡NUEVO LANZAMIENTO!!! No te pierdas nuestro nuevo producto, ¡es el mejor del mercado! 🐶🐶🐶🥩🥩🥩❤️❤️❤️ #pienso #perros"</blockquote>
+    </div>
+    <div class="example good">
+      <div class="label">Después</div>
+      <blockquote>"Nuevo: Estofado de pato con verduras. Receta tradicional, cocinada a fuego lento, lista en su sobre. 🥄<br>Disponible en web.<br>#AlphaSpirit #RealFood"</blockquote>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 11. FORMATO -->
+  <section id="formato">
+    <div class="eyebrow">11 — Reglas de formato</div>
+    <h2>Cómo se escriben los detalles.</h2>
+
+    <div class="vocab">
+      <div class="vocab-box">
+        <h4>Tipografía y caja</h4>
+        <p><strong>Titulares de categoría:</strong> MAYÚSCULAS, sin punto final.</p>
+        <p><strong>Titulares de producto:</strong> Tipo oración (solo la primera mayúscula).</p>
+        <p><strong>Cuerpo de texto:</strong> minúsculas con mayúscula de inicio.</p>
+        <p><strong>CTA:</strong> verbo en infinitivo en MAYÚSCULAS (COMPRAR, DESCUBRIR, VER MÁS).</p>
+      </div>
+      <div class="vocab-box">
+        <h4>Números, unidades y precios</h4>
+        <p><strong>Pesos:</strong> sin espacio (3kg, 12kg, 400gr).</p>
+        <p><strong>Porcentajes:</strong> sin espacio (85%).</p>
+        <p><strong>Precio:</strong> símbolo antes (€19,80) con coma decimal.</p>
+        <p><strong>Rangos de precio:</strong> "Desde €19,80".</p>
+      </div>
+      <div class="vocab-box">
+        <h4>Puntuación</h4>
+        <p><strong>Exclamaciones:</strong> máximo una por pieza. Nunca dobles (¡¡!!).</p>
+        <p><strong>Puntos suspensivos:</strong> evitar. Restan firmeza.</p>
+        <p><strong>Guion largo (—):</strong> sí, para incisos editoriales.</p>
+        <p><strong>Comillas:</strong> españolas «» en piezas editoriales largas; rectas "" en redes y web.</p>
+      </div>
+      <div class="vocab-box">
+        <h4>Emojis y símbolos</h4>
+        <p><strong>Web:</strong> 0 emojis salvo en pop-ups o banners promocionales.</p>
+        <p><strong>Email:</strong> máximo 1 emoji en asunto o cuerpo.</p>
+        <p><strong>Redes:</strong> 1–2 emojis, siempre alimentarios o naturales (🥩 🐟 🌿 🐾).</p>
+        <p><strong>Atención al cliente:</strong> 0 emojis.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 12. CHECKLIST -->
+  <section id="checklist">
+    <div class="eyebrow">12 — Checklist final</div>
+    <h2>Antes de publicar cualquier texto.</h2>
+    <p class="lead">Si puedes responder "sí" a las 8 preguntas, el copy es Alpha Spirit. Si fallas en una, reescribe.</p>
+
+    <div class="col do" style="margin-top:24px;">
+      <h4>Pasa este test</h4>
+      <ul>
+        <li>¿Hay al menos un dato concreto (porcentaje, ingrediente, método)?</li>
+        <li>¿Estoy tuteando al lector?</li>
+        <li>¿Los verbos están en presente y en activa?</li>
+        <li>¿He evitado adjetivos vacíos ("el mejor", "increíble", "único")?</li>
+        <li>¿Hay un beneficio tangible para la mascota?</li>
+        <li>¿He limitado las MAYÚSCULAS al titular o claim?</li>
+        <li>¿Hay un solo CTA claro?</li>
+        <li>¿Lo leería un tutor real sin sentir que le están vendiendo?</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="row">
+    <div>
+      <div class="logo">Alpha Spirit</div>
+      <p class="meta">Manual de tono y estilo · v1.0</p>
+    </div>
+    <div class="meta">
+      Documento de uso interno.<br>
+      Marketing · Contenido · Atención al cliente.
+    </div>
+  </div>
+  <p class="bottom">Basado en el análisis de aspiritpetfood.store y las cinco líneas de producto: Alpha Spirit, Primal Spirit, Orygo, Real Food y la gama de Snacks (Albóndigas, Patés, Mousses, Barritas).</p>
+</footer>
+
+</body>
+</html>

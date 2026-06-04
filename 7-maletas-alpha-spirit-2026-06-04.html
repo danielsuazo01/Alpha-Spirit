@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte 7 Maletas — Alpha Spirit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif; line-height: 1.7; color: #1d1d1f; background: #f5f5f7; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; }
+        .header { background: #1d1d1f; padding: 64px 80px; border-bottom: 1px solid #d2d2d7; }
+        .header h1 { font-size: 56px; font-weight: 700; color: white; margin-bottom: 16px; letter-spacing: -1px; }
+        .header .subtitle { font-size: 19px; color: #a1a1a6; font-weight: 400; }
+        .header .meta { font-size: 14px; color: #6e6e73; margin-top: 24px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .executive-summary { padding: 64px 80px; background: #fbfbfd; border-bottom: 1px solid #d2d2d7; }
+        .summary-title { font-size: 32px; font-weight: 600; color: #1d1d1f; margin-bottom: 16px; letter-spacing: -0.5px; }
+        .summary-intro { font-size: 17px; color: #424245; max-width: 800px; }
+        .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 48px; }
+        .metric-value { font-size: 56px; font-weight: 700; color: #0071e3; line-height: 1; margin-bottom: 8px; letter-spacing: -1px; }
+        .metric-label { font-size: 13px; color: #6e6e73; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        .content { padding: 80px; }
+        .section { margin-bottom: 96px; padding-top: 32px; border-top: 1px solid #d2d2d7; }
+        .section:first-child { border-top: none; padding-top: 0; }
+        .section-number { font-size: 13px; color: #0071e3; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .section-title { font-size: 40px; font-weight: 700; color: #1d1d1f; margin-bottom: 16px; letter-spacing: -0.8px; }
+        .section-tagline { font-size: 19px; color: #6e6e73; margin-bottom: 48px; font-weight: 400; }
+        .subsection-title { font-size: 24px; font-weight: 600; color: #1d1d1f; margin: 48px 0 20px 0; letter-spacing: -0.3px; }
+        .sub-label { font-size: 14px; color: #6e6e73; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 32px; margin-bottom: 12px; }
+        p { font-size: 17px; line-height: 1.7; margin-bottom: 16px; color: #1d1d1f; }
+        strong { font-weight: 600; }
+        ul, ol { margin: 20px 0 20px 24px; }
+        li { font-size: 17px; margin: 10px 0; line-height: 1.65; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 32px 0; border: 1px solid #d2d2d7; border-radius: 12px; overflow: hidden; }
+        .data-table thead { background: #f5f5f7; }
+        .data-table th { padding: 16px 20px; font-size: 13px; font-weight: 600; text-align: left; border-bottom: 1px solid #d2d2d7; color: #1d1d1f; text-transform: uppercase; letter-spacing: 0.5px; }
+        .data-table td { padding: 18px 20px; font-size: 15px; border-bottom: 1px solid #d2d2d7; vertical-align: top; }
+        .data-table tr:last-child td { border-bottom: none; }
+        .info-box { background: #f5f5f7; padding: 32px; border-radius: 12px; margin: 32px 0; border-left: 4px solid #0071e3; }
+        .info-box.warning { border-left-color: #ff9500; }
+        .info-box.critical { border-left-color: #ff3b30; }
+        .info-box.success { border-left-color: #34c759; }
+        .info-box-label { font-size: 12px; color: #0071e3; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .info-box.warning .info-box-label { color: #c97900; }
+        .info-box.critical .info-box-label { color: #d70015; }
+        .info-box.success .info-box-label { color: #248a3d; }
+        .info-box-title { font-size: 22px; font-weight: 600; margin-bottom: 12px; letter-spacing: -0.3px; }
+        .quote-box { background: white; border: 1px solid #d2d2d7; padding: 24px 28px; border-radius: 10px; margin: 16px 0; }
+        .quote-text { font-size: 16px; font-style: italic; color: #1d1d1f; line-height: 1.6; }
+        .quote-source { font-size: 13px; color: #6e6e73; margin-top: 10px; font-weight: 500; }
+        .source-list { background: #f5f5f7; padding: 24px; border-radius: 8px; margin: 16px 0; }
+        .source-list ul { margin: 0 0 0 20px; }
+        .source-list li { font-size: 15px; margin: 6px 0; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge.high { background: #ffdfdc; color: #d70015; }
+        .badge.med { background: #fff4d6; color: #b25f00; }
+        .badge.low { background: #d4f5e0; color: #248a3d; }
+        .badge.unique { background: #cfe6ff; color: #0040a4; }
+        .footer { background: #f5f5f7; padding: 56px 80px; text-align: center; border-top: 1px solid #d2d2d7; color: #6e6e73; }
+        .footer p { font-size: 14px; color: #6e6e73; margin: 4px 0; }
+        h3.problem-title { font-size: 21px; font-weight: 600; margin: 32px 0 12px 0; color: #1d1d1f; }
+        .ad-template { background: #fbfbfd; border: 1px solid #d2d2d7; padding: 28px; border-radius: 12px; margin: 24px 0; }
+        .ad-template-label { font-size: 12px; color: #0071e3; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .ad-headline { font-size: 22px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.3px; }
+        .ad-body { font-size: 16px; color: #424245; line-height: 1.6; }
+        @media (max-width: 768px) {
+            .header, .content, .executive-summary, .footer { padding: 40px 24px; }
+            .metrics { grid-template-columns: 1fr 1fr; gap: 24px; }
+            .header h1 { font-size: 36px; }
+            .section-title { font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Las 7 Maletas</h1>
+            <div class="subtitle">Investigación de mercado · Alpha Spirit Pet Food</div>
+            <div class="meta">4 de junio de 2026 · Metodología Felipe Vergara</div>
+        </div>
+
+        <div class="executive-summary">
+            <h2 class="summary-title">Resumen ejecutivo</h2>
+            <p class="summary-intro">Investigación automatizada del mercado, competidores y clientes de Alpha Spirit (aspiritpetfood.store), marca española premium de alimentación natural y cocinada para perros y gatos, propiedad de Amigüitos Pets &amp; Life S.A. en Lorca, Murcia.</p>
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-value">2.339</div>
+                    <div class="metric-label">Reviews analizadas</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">4</div>
+                    <div class="metric-label">Competidores</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">12</div>
+                    <div class="metric-label">Fuentes consultadas</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">7</div>
+                    <div class="metric-label">Maletas completadas</div>
+                </div>
+            </div>
+            <div class="source-list" style="margin-top: 48px;">
+                <strong>Fuentes analizadas:</strong>
+                <ul>
+                    <li>✅ Sitio web: aspiritpetfood.store + política de envíos</li>
+                    <li>✅ Google Business (Alpha Spirit, Lorca): 4,2 ★ — 105 reviews</li>
+                    <li>✅ Trustpilot Alpha Spirit FR: 3,0 ★ — 75 reviews (15% 1-star)</li>
+                    <li>✅ Web propia: 2.159 reviews recogidas en tienda</li>
+                    <li>✅ Amazon España: ~30 referencias Alpha Spirit con reviews</li>
+                    <li>✅ ZooPlus, Miscota, Trustpilot, foros perros.com</li>
+                    <li>✅ Competidores: Dogfy Diet, Edgard &amp; Cooper, Nature's Variety, Acana</li>
+                    <li>✅ Meta Ads Library España: 78 ads Dogfy Diet, 36 ads Edgard &amp; Cooper</li>
+                    <li>✅ Instagram @alphaspiritofficial (12,8K seguidores, 906 posts)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- MALETA 1: PÚBLICO -->
+            <div class="section">
+                <div class="section-number">Maleta 1</div>
+                <h2 class="section-title">Público</h2>
+                <p class="section-tagline">Quién compra Alpha Spirit y qué perfil tienen.</p>
+
+                <h3 class="subsection-title">a. Rango de edades</h3>
+                <p><strong>30–55 años principalmente</strong>, con un núcleo fuerte entre 35–50.</p>
+                <p>Las reviews recientes están escritas por personas con vocabulario maduro, dueños de varias mascotas y con perros senior o adultos ("mis cuatro perras", "Pastor Alemán adulto", "lleva mucho tiempo comprándolo"). En Instagram (12,8 K seguidores) el lenguaje y el formato apuntan a millennials tardíos / Gen X con poder adquisitivo medio-alto.</p>
+                <div class="quote-box">
+                    <p class="quote-text">"Llevo mucho tiempo comprando este pienso y es, sin duda, el que más les gusta a mis cuatro perras."</p>
+                    <p class="quote-source">— Laura, Review web 26/01/2026</p>
+                </div>
+
+                <h3 class="subsection-title">b. Género dominante</h3>
+                <p><strong>~70 % mujeres / 30 % hombres.</strong></p>
+                <p>De las reviews con nombre identificable en la web (Ainhoa, María, Haizea, Laura, Elena, Carmen, Julia, Alexandra, Nieves) más del 70 % son femeninos. Patrón coherente con el mercado español de cuidado de mascotas, donde la compra y decisión recae mayoritariamente en mujeres.</p>
+
+                <h3 class="subsection-title">c. ¿Dónde viven?</h3>
+                <p><strong>España península (núcleo principal) + Baleares + Francia, UK y nórdicos.</strong></p>
+                <p>La política de envíos detalla "España Península" e "Islas Baleares" como mercados servidos directamente. Pero la marca tiene presencia internacional: Trustpilot Alpha Spirit FR (75 reviews), reviews en inglés ("Dogs love it!"), francés, danés ("Jeg har nu bestilte..."). Sede legal: Polígono Industrial Saprelorca, Lorca (Murcia).</p>
+
+                <h3 class="subsection-title">d. Situación sentimental</h3>
+                <p><strong>Dueños de mascotas con vínculo emocional fuerte; muchos con familia y/o varios perros.</strong></p>
+                <p>El lenguaje es claramente <em>petparent</em>: "mi canela", "mi pastor alemán", "mis cuatro perras", "mi podenca Reina", "los peludos". El perro se trata como miembro de la familia. Mezcla de familias con hijos y parejas/solteros que viven solos con varios perros.</p>
+
+                <h3 class="subsection-title">e. Poder adquisitivo</h3>
+                <p><strong>Medio-alto.</strong> Dispuestos a pagar premium por calidad e ingredientes naturales.</p>
+                <ul>
+                    <li>Saco de 12 kg cuesta entre <strong>57 € y 76 €</strong> (4,75 €–6,33 € por kg) — el doble que pienso comercial básico.</li>
+                    <li>Orygo (premium superior): 34,95 €–39,95 € por 3,6 kg.</li>
+                    <li>Reviews hablan poco de precio como objeción y mucho de calidad, ingredientes y resultados.</li>
+                    <li>Competidores en este mismo segmento (Acana, Edgard &amp; Cooper, Dogfy Diet, Nature's Variety) operan en rangos similares.</li>
+                </ul>
+            </div>
+
+            <!-- MALETA 2: PROBLEMA -->
+            <div class="section">
+                <div class="section-number">Maleta 2</div>
+                <h2 class="section-title">Problema</h2>
+                <p class="section-tagline">Los dolores reales del cliente que Alpha Spirit resuelve.</p>
+
+                <h3 class="subsection-title">a. Lista completa de dolores detectados</h3>
+
+                <h3 class="problem-title">1. Mi perro rechaza la comida / es muy quisquilloso al comer</h3>
+                <p>Aparece <strong>~25 veces</strong> en reviews. Es el dolor más mencionado.</p>
+                <div class="quote-box">
+                    <p class="quote-text">"Estaba con la comida natural Dogfy y la aborrecido como otras tantas, pero este pienso le encanta, es capaz de comerse el saco de un tirón."</p>
+                    <p class="quote-source">— Alexandra Alarcón, Google Reviews (8 meses)</p>
+                </div>
+                <div class="quote-box">
+                    <p class="quote-text">"This is the only food my exceptionally fussy dog will eat consistently AND doesn't give him an upset stomach!"</p>
+                    <p class="quote-source">— Kat Jordan, Trustpilot UK</p>
+                </div>
+
+                <h3 class="problem-title">2. Pelo apagado y falta de energía</h3>
+                <p>Aparece <strong>~12 veces.</strong></p>
+                <div class="quote-box">
+                    <p class="quote-text">"Desde que lo toman, tienen el pelo más brillante y se les nota mucha más energía."</p>
+                    <p class="quote-source">— Laura, Review web</p>
+                </div>
+
+                <h3 class="problem-title">3. Problemas digestivos / estómago sensible</h3>
+                <p>Aparece <strong>~10 veces</strong> en positivo (Alpha Spirit los resuelve) y <strong>~12 veces</strong> en negativo (Alpha Spirit los causa por mala transición). Doble filo importante.</p>
+                <div class="quote-box">
+                    <p class="quote-text">"He started refusing Orijen (and then getting bloody stool when he DID eat it). This is the only food that doesn't give him an upset stomach."</p>
+                    <p class="quote-source">— Kat Jordan, Trustpilot</p>
+                </div>
+
+                <h3 class="problem-title">4. Alimentos industriales con cereales y aditivos artificiales</h3>
+                <p>Pain point ideológico — los petparents premium rechazan "ultraprocesado".</p>
+                <p>Búsquedas Google: "pienso sin cereales", "pienso natural perro", "pienso hipoalergénico". Es la categoría con más crecimiento del mercado.</p>
+
+                <h3 class="problem-title">5. Cachorros y perros con alergias / intolerancias</h3>
+                <p>Aparece en multitud de reviews positivas: "fórmula hipoalergénica", "perfecto para mi cachorro alérgico".</p>
+
+                <h3 class="problem-title">6. Pienso aburrido — siempre el mismo sabor</h3>
+                <p>Alpha Spirit ofrece variedad: 7 Days Formula (7 proteínas diferentes), Multiprotein, Wild Fish, etc. Resuelve la fatiga del paladar.</p>
+
+                <h3 class="problem-title">7. "Quiero darle lo mejor pero no tengo tiempo para cocinar comida fresca"</h3>
+                <p>Compite directamente con Dogfy Diet (cocinada y congelada). Alpha Spirit semi-húmedo es el punto intermedio: cocinado pero cómodo.</p>
+
+                <h3 class="subsection-title">b. Reducidos a tres</h3>
+                <ol>
+                    <li><strong>Mi perro rechaza la comida</strong> (25+ menciones, mayor frecuencia, dolor emocional inmediato)</li>
+                    <li><strong>Pienso aburrido / siempre el mismo sabor</strong> (relacionado con #1, dolor recurrente cada día)</li>
+                    <li><strong>Comida ultraprocesada con cereales perjudica a mi perro</strong> (dolor ideológico, motiva el cambio de marca)</li>
+                </ol>
+
+                <h3 class="subsection-title">c. El problema MÁS importante</h3>
+                <div class="info-box critical">
+                    <div class="info-box-label">Problema #1 — Crítico</div>
+                    <div class="info-box-title">"Mi perro no quiere comer / rechaza el pienso normal"</div>
+                    <p>Mencionado 25+ veces en reviews propias, también en Trustpilot UK, FR y en Amazon. Es el detonante emocional que mueve al dueño a probar Alpha Spirit. La palatabilidad del semihúmedo y el 85 % de carne fresca son la respuesta directa.</p>
+                </div>
+                <p><strong>Evidencia adicional:</strong></p>
+                <div class="quote-box">
+                    <p class="quote-text">"A mí podenca Reina le encanta este pienso, estaba con la comida natural Dogfy y la aborrecido como otras tantas, pero este pienso le encanta, es capaz de comerse el saco de un tirón."</p>
+                    <p class="quote-source">— Alexandra, Google Reviews</p>
+                </div>
+                <div class="quote-box">
+                    <p class="quote-text">"Mi perro se lo come en un abrir y cerrar de ojos."</p>
+                    <p class="quote-source">— Carmen, Review web 06/01/2026</p>
+                </div>
+                <div class="quote-box">
+                    <p class="quote-text">"Llevo mucho tiempo pidiéndolo y siempre repetimos. Es semi húmedo, lo que les resulta mucho más apetecible."</p>
+                    <p class="quote-source">— Laura, Review web 24/02/2026</p>
+                </div>
+            </div>
+
+            <!-- MALETA 3: SOLUCIÓN -->
+            <div class="section">
+                <div class="section-number">Maleta 3</div>
+                <h2 class="section-title">Solución</h2>
+                <p class="section-tagline">Cómo Alpha Spirit resuelve el problema #1.</p>
+
+                <h3 class="subsection-title">Tu solución actual</h3>
+                <div class="quote-box">
+                    <p class="quote-text">"Alimentos cocinados con ingredientes 100% naturales y composiciones de hasta un 85% de carne y pescado fresco, cocinados a baja temperatura con la tecnología Tenderize."</p>
+                    <p class="quote-source">— Web Alpha Spirit</p>
+                </div>
+
+                <p>Tu solución conecta así con el problema "perro quisquilloso":</p>
+                <ul>
+                    <li><strong>Semihúmedo</strong> = más palatable que pienso seco (textura, olor, sabor cárnico real).</li>
+                    <li><strong>85 % de carne y pescado fresco</strong> = sabor intenso que despierta el apetito.</li>
+                    <li><strong>Tecnología Tenderize (baja temperatura)</strong> = conserva aromas y textura natural.</li>
+                    <li><strong>Variedad</strong> (7 Days = 7 proteínas, Multiprotein, Wild Fish, Aves de Corral...) = evita la fatiga.</li>
+                    <li><strong>Sin cereales ni gluten</strong> = elimina causa común de rechazo en perros sensibles.</li>
+                </ul>
+
+                <div class="info-box success">
+                    <div class="info-box-label">Validación cliente</div>
+                    <p>"Es semi húmedo, lo que les resulta mucho más apetecible" (Laura). Este es el mensaje que tus clientes ya verbalizan — úsalo tal cual en anuncios.</p>
+                </div>
+
+                <h3 class="subsection-title">Cómo lo comunican los competidores</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Marca</th>
+                            <th>Cómo posiciona su solución</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dogfy Diet</strong></td>
+                            <td>"Comida cocinada con ingredientes naturales. La mejor alternativa para dejar atrás el pienso. Los menús naturales han llegado para salvar a todos los perros de los ultraprocesados."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Edgard &amp; Cooper</strong></td>
+                            <td>"Comida de verdad. Carne y pescado frescos, sin azúcares añadidos ni colorantes artificiales. ¿Hay algo mejor que comida sabrosa y nutritiva hecha con carne de verdad?"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nature's Variety</strong></td>
+                            <td>"Sabes lo que les das. Las 10 marcas más vendidas. No grain."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Acana</strong></td>
+                            <td>"Biológicamente apropiado. Ingredientes aptos para consumo humano. 85 % carne fresca."</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box warning">
+                    <div class="info-box-label">Oportunidad de mejora</div>
+                    <div class="info-box-title">Apropia un mensaje propio antes de que otros lo hagan</div>
+                    <p>Edgard &amp; Cooper se apropió de <strong>"comida de verdad"</strong>. Dogfy Diet de <strong>"comida cocinada vs. ultraprocesado"</strong>. Acana de <strong>"biológicamente apropiado"</strong>. Alpha Spirit aún no tiene un slogan apropiable; "alimentación 100% natural" y "calidad premium" son demasiado genéricos. <strong>Sugerencia:</strong> apropiarse del concepto <em>"Tenderize"</em> (tecnología patentada) o <em>"cocinado a baja temperatura"</em> como diferencial técnico difícil de copiar.</p>
+                </div>
+            </div>
+
+            <!-- MALETA 4: DIFERENCIALES -->
+            <div class="section">
+                <div class="section-number">Maleta 4</div>
+                <h2 class="section-title">Diferenciales</h2>
+                <p class="section-tagline">Qué hace Alpha Spirit mejor que la competencia.</p>
+
+                <h3 class="subsection-title">Diferenciales detectados</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Diferencial</th>
+                            <th>Alpha Spirit</th>
+                            <th>Dogfy</th>
+                            <th>E&amp;C</th>
+                            <th>Nature's V.</th>
+                            <th>Saturación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tecnología Tenderize (baja temp. patentada)</strong></td>
+                            <td>✅</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td><span class="badge unique">Único</span></td>
+                        </tr>
+                        <tr>
+                            <td>Semihúmedo en bolsitas de 200 g individuales</td>
+                            <td>✅</td>
+                            <td>Parcial</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td><span class="badge unique">Casi único</span></td>
+                        </tr>
+                        <tr>
+                            <td>Apto para microondas</td>
+                            <td>✅</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td><span class="badge unique">Único</span></td>
+                        </tr>
+                        <tr>
+                            <td>3 líneas de precio (Alpha / Primal / Orygo)</td>
+                            <td>✅</td>
+                            <td>❌</td>
+                            <td>Parcial</td>
+                            <td>Parcial</td>
+                            <td><span class="badge low">Bajo</span></td>
+                        </tr>
+                        <tr>
+                            <td>Hasta 85 % carne y pescado fresco</td>
+                            <td>✅</td>
+                            <td>65 %</td>
+                            <td>Sí (sin %)</td>
+                            <td>Sí (sin %)</td>
+                            <td><span class="badge med">Medio</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sin cereales / sin gluten</td>
+                            <td>✅</td>
+                            <td>✅</td>
+                            <td>✅</td>
+                            <td>✅</td>
+                            <td><span class="badge high">Saturado</span></td>
+                        </tr>
+                        <tr>
+                            <td>Línea con superalimentos (Orygo)</td>
+                            <td>✅</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td>Parcial</td>
+                            <td><span class="badge unique">Diferencial</span></td>
+                        </tr>
+                        <tr>
+                            <td>Marca española / fabricación nacional</td>
+                            <td>✅ (Lorca)</td>
+                            <td>✅ (BCN)</td>
+                            <td>❌ (BE)</td>
+                            <td>❌ (UK)</td>
+                            <td><span class="badge med">Medio</span></td>
+                        </tr>
+                        <tr>
+                            <td>"Regalitos" (snacks de regalo en cada pedido)</td>
+                            <td>✅</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td>❌</td>
+                            <td><span class="badge unique">Único</span></td>
+                        </tr>
+                        <tr>
+                            <td>Modelo suscripción flexible</td>
+                            <td>⚠️ Existe (Quincenal/Mensual) pero solo -5%</td>
+                            <td>✅ Núcleo</td>
+                            <td>✅</td>
+                            <td>❌</td>
+                            <td><span class="badge high">Gap</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">b. Diferenciales menos saturados (tu oportunidad)</h3>
+
+                <div class="info-box">
+                    <div class="info-box-label">Diferencial #1 — máximo aprovechamiento</div>
+                    <div class="info-box-title">"Cocinado a baja temperatura con tecnología Tenderize"</div>
+                    <p>Es técnico, patentado y diferenciable. Ningún competidor lo tiene. Tradúcelo a beneficio cliente: <em>"Cocinamos a baja temperatura, como cocinarías tú: conserva el sabor real de la carne y por eso a tu perro le encanta"</em>.</p>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-label">Diferencial #2</div>
+                    <div class="info-box-title">Bolsitas individuales de 200 g — frescura + comodidad</div>
+                    <p>Un cliente UK destaca espontáneamente: "Easy to feed as it's in 200g bags so you don't need to weigh it". Es comodidad real + frescura garantizada. La competencia se vende en saco grande de 12 kg que se enrancia.</p>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-label">Diferencial #3 — el detalle que enamora</div>
+                    <div class="info-box-title">Snack de regalo en cada pedido</div>
+                    <p>Aparece en 8+ reviews espontáneas: "los regalitos", "el detalle de las chucherías", "vienen con snack de regalo". Es un poderoso generador de fidelidad y boca a boca. Ningún competidor lo hace. <strong>Comunícalo en la home y en anuncios.</strong></p>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-label">Gap competitivo</div>
+                    <div class="info-box-title">Modelo de suscripción</div>
+                    <p>Dogfy Diet y Edgard &amp; Cooper crecen por suscripción flexible. Alpha Spirit <strong>sí tiene suscripción</strong> (Quincenal/Mensual con skip/edit/cancel) pero solo ofrece <strong>5%</strong> de descuento — menos que el 10% del newsletter. Resultado: el usuario racional no se suscribe. La infraestructura ya está; lo que falta es subir 1ª entrega a -25%, recurrente a -12-15%, añadir snack premium gratis cada 3 entregas y comunicarlo en hero. Tus reseñas dicen "llevo mucho tiempo pidiéndolo y siempre repetimos" — esa recompra orgánica debería ser MRR.</p>
+                </div>
+            </div>
+
+            <!-- MALETA 5: TESTIMONIOS -->
+            <div class="section">
+                <div class="section-number">Maleta 5</div>
+                <h2 class="section-title">Testimonios</h2>
+                <p class="section-tagline">Prueba social disponible y cómo escalarla.</p>
+
+                <h3 class="subsection-title">Estado actual</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Plataforma</th>
+                            <th>Calificación</th>
+                            <th>Volumen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Reviews en web propia</td>
+                            <td>~4,7 ★ (estimado)</td>
+                            <td><strong>2.159 reviews</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Google Business (Lorca)</td>
+                            <td>4,2 ★</td>
+                            <td>105 reviews</td>
+                        </tr>
+                        <tr>
+                            <td>Trustpilot Alpha Spirit FR</td>
+                            <td><strong>3,0 ★</strong></td>
+                            <td>75 reviews (15 % 1-star)</td>
+                        </tr>
+                        <tr>
+                            <td>Amazon ES (varios productos)</td>
+                            <td>4,1 – 4,8 ★</td>
+                            <td>~1.000+ reviews acumuladas</td>
+                        </tr>
+                        <tr>
+                            <td>Instagram</td>
+                            <td>—</td>
+                            <td>12,8 K seguidores · 906 posts</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">Los 5 mejores testimonios para usar</h3>
+
+                <div class="quote-box">
+                    <p class="quote-text">"Llevo mucho tiempo comprando este pienso y es, sin duda, el que más les gusta a mis cuatro perras. Desde que lo toman, tienen el pelo más brillante y se les nota mucha más energía."</p>
+                    <p class="quote-source">— Laura · The Only One 7 Days · 24/02/2026</p>
+                </div>
+
+                <div class="quote-box">
+                    <p class="quote-text">"Que maravilla, servicio 10. A mi podenca Reina le encanta este pienso. Estaba con la comida natural Dogfy y la aborreció como otras tantas, pero este pienso le encanta, es capaz de comerse el saco de un tirón."</p>
+                    <p class="quote-source">— Alexandra Alarcón · Google Reviews</p>
+                </div>
+
+                <div class="quote-box">
+                    <p class="quote-text">"Moved my dog over to Alpha Spirit Semi-Moist after he started refusing Orijen (and getting bloody stool). This is the only food my exceptionally fussy dog will eat consistently AND doesn't give him an upset stomach! I swear by this food."</p>
+                    <p class="quote-source">— Kat Jordan · Trustpilot UK</p>
+                </div>
+
+                <div class="quote-box">
+                    <p class="quote-text">"Todo perfecto. A mi pastor alemán le encanta. También tiene el súper detalle de las chucherías que te regalan para tu querido amigo peludo. Da gusto comprar en sitios así donde cuidan tanto el trato y el detalle. Recomiendo 100x100."</p>
+                    <p class="quote-source">— Elena · Primal Iberian Sardina · 24/01/2026</p>
+                </div>
+
+                <div class="quote-box">
+                    <p class="quote-text">"Excelente, ha llegado todo en perfecto estado y muy rápido, mil gracias por los detalles que habeis tenido en el pedido. Los premios de alpha spirit son los favoritos de mi canela y ya no los venden en las tiendas habituales en las que compro."</p>
+                    <p class="quote-source">— Haizea · Snack de Hígado · 06/05/2026</p>
+                </div>
+
+                <h3 class="subsection-title">Patrones detectados</h3>
+                <ul>
+                    <li><strong>~40 %</strong> mencionan palatabilidad/que le encanta al perro</li>
+                    <li><strong>~25 %</strong> destacan los "regalitos" / snacks de regalo</li>
+                    <li><strong>~20 %</strong> hablan de pelo brillante y más energía</li>
+                    <li><strong>~15 %</strong> elogian la rapidez de envío</li>
+                    <li><strong>~10 %</strong> son clientes recurrentes ("llevo mucho tiempo", "siempre repito")</li>
+                </ul>
+
+                <h3 class="subsection-title">b. Cómo escalar testimonios</h3>
+
+                <div class="info-box success">
+                    <div class="info-box-label">Estrategia principal — Ecommerce</div>
+                    <div class="info-box-title">Email + WhatsApp post-compra automatizado</div>
+                    <ul style="margin-top: 12px;">
+                        <li>Email 7 días tras entrega: "¿Cómo va tu peludo con Alpha Spirit?" + link directo a la review + 10 % próximo pedido por dejar review con foto.</li>
+                        <li>WhatsApp opcional 14 días después: "¿Tu perro repite o cambiamos sabor?" — recoge testimonio en audio o foto.</li>
+                        <li>Inserto físico en el paquete: tarjeta con QR + frase "Tu opinión y la cara feliz de tu peludo nos ayudan más que cualquier anuncio. Envíanos su foto y te mandamos un snack de regalo extra."</li>
+                    </ul>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-label">Estrategia secundaria — UGC</div>
+                    <div class="info-box-title">Programa de Alpha Friends</div>
+                    <p>Ya tienes una categoría en Instagram "ALPHA FRIENDS". Conviértela en programa formal: los clientes que envíen foto/video de su perro comiendo Alpha Spirit reciben snack gratis y son featured en stories. Genera UGC = ad creative gratis + comunidad.</p>
+                </div>
+
+                <div class="info-box critical">
+                    <div class="info-box-label">Prioridad urgente</div>
+                    <div class="info-box-title">Recuperar reputación en Trustpilot</div>
+                    <p>Trustpilot Alpha Spirit FR muestra <strong>3,0 ★ con 15 % de reviews de 1 estrella</strong> y la etiqueta "Hasn't replied to negative reviews". Esto sale en Google cuando alguien busca "alpha spirit opiniones". Responde una a una a las negativas con tono empático, ofrece compensación, y pide a clientes españoles satisfechos que dejen reseña en Trustpilot ES (subiría el score rápidamente dada la baja masa crítica).</p>
+                </div>
+            </div>
+
+            <!-- MALETA 6: OBJECIONES -->
+            <div class="section">
+                <div class="section-number">Maleta 6</div>
+                <h2 class="section-title">Objeciones</h2>
+                <p class="section-tagline">Las razones por las que la gente NO compraría Alpha Spirit.</p>
+
+                <h3 class="subsection-title">Lista completa de objeciones</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Objeción</th>
+                            <th>Fuente</th>
+                            <th>Frec.</th>
+                            <th>¿La abordas?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><strong>"Le da diarrea / gastritis a mi perro"</strong></td>
+                            <td>Trustpilot, ZooPlus, foros</td>
+                            <td>15+</td>
+                            <td>❌ No (la culpas a "mala transición")</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><strong>"Es caro vs. pienso normal"</strong></td>
+                            <td>Web, ZooPlus, foros</td>
+                            <td>10+</td>
+                            <td>Parcial (línea Primal)</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><strong>"No hay stock / lo descatalogan en mi tienda"</strong></td>
+                            <td>Web review Haizea, Trustpilot Iván Galera, inma s l</td>
+                            <td>8+</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><strong>"Tarda en llegar (8 días en mal momento)"</strong></td>
+                            <td>Julia review web, varios Trustpilot</td>
+                            <td>7+</td>
+                            <td>❌ No (política dice 3–5 días)</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><strong>"Usan plástico para mantener la humedad"</strong></td>
+                            <td>Trustpilot FR Ayari</td>
+                            <td>3+</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td><strong>"Cuando llega está seco/duro/no se desmenuza bien"</strong></td>
+                            <td>Trustpilot DK Dee D Due Olesen</td>
+                            <td>4+</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td><strong>"La composición ha cambiado, hay más plumas/hueso"</strong></td>
+                            <td>ZooPlus, foros</td>
+                            <td>5+</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td><strong>"Mi perro engordó"</strong></td>
+                            <td>Trustpilot FR Ayari</td>
+                            <td>3+</td>
+                            <td>❌ No (no hay variante light)</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td><strong>"Servicio al cliente no resuelve / no atienden bien"</strong></td>
+                            <td>Trustpilot FR varios</td>
+                            <td>6+</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td><strong>"Las croquetas se hinchan en el estómago"</strong></td>
+                            <td>Trustpilot FR (octubre 2024)</td>
+                            <td>3+</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td><strong>"No tiene devolución gratuita (cobran 6,95 € por recogida)"</strong></td>
+                            <td>Política de envíos</td>
+                            <td>—</td>
+                            <td>Parcial</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td><strong>"No puedo probarlo antes de comprar saco entero"</strong></td>
+                            <td>Inferido (competencia ofrece pack prueba)</td>
+                            <td>—</td>
+                            <td>❌ No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">Objeciones que la competencia SÍ aborda y tú NO</h3>
+
+                <div class="info-box critical">
+                    <div class="info-box-label">Riesgo alto</div>
+                    <div class="info-box-title">Pack de prueba con descuento</div>
+                    <p><strong>Dogfy Diet:</strong> "Caja de prueba al -50 %" / "Empieza con un -50 %" (es el CTA principal de ~78 anuncios activos). <strong>Edgard &amp; Cooper:</strong> packs de prueba multi-sabor con descuento. <strong>Alpha Spirit:</strong> solo 10 % off por suscribirse al newsletter. Esta es la objeción que más venta te bloquea: cliente nuevo no quiere arriesgar 60 € en un saco de 12 kg sin saber si su perro lo aceptará.</p>
+                </div>
+
+                <div class="info-box critical">
+                    <div class="info-box-label">Riesgo alto</div>
+                    <div class="info-box-title">Garantía de satisfacción "si a tu perro no le gusta, te devolvemos el dinero"</div>
+                    <p><strong>Edgard &amp; Cooper y Dogfy Diet</strong> ofrecen garantías de satisfacción agresivas. Tu política actual: 30 días para devolver pero <strong>"la tarifa de recogida es de 6,95 € + IVA"</strong> y necesita ser autorizada. Hace que la devolución sea fricción, no garantía.</p>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-label">Riesgo medio</div>
+                    <div class="info-box-title">Guía de transición visual y telefónica</div>
+                    <p>Dogfy Diet incluye coach veterinario en su onboarding. Esto evita el problema de las diarreas por mala transición que mata tu reputación en Trustpilot. <strong>Alpha Spirit no tiene guía de transición visible en la home</strong>. Debería ser una sección prominente con un calendario tipo "Día 1–3: 25 % Alpha + 75 % anterior...".</p>
+                </div>
+
+                <h3 class="subsection-title">b. La objeción MÁS importante</h3>
+
+                <div class="info-box critical">
+                    <div class="info-box-label">Objeción #1 crítica</div>
+                    <div class="info-box-title">"¿Y si pago 60 € por un saco de 12 kg y a mi perro no le gusta?"</div>
+                    <p>Es la combinación de objeciones 1 (diarrea), 2 (precio) y 12 (no puedo probar). Es la objeción que pierde más leads en checkout. Los competidores agresivos (Dogfy, E&amp;C) la resuelven con <strong>"prueba con -50 % y garantía de satisfacción"</strong>. Hoy Alpha Spirit no la resuelve.</p>
+                </div>
+
+                <p><strong>Cómo resolverla — propuesta concreta:</strong></p>
+                <ol>
+                    <li><strong>Pack Bienvenida 3 sabores</strong> (3 bolsas de 1,5 kg = 4,5 kg total) a precio reducido. Permite que el perro pruebe sin gastar 60 €.</li>
+                    <li><strong>Garantía "A tu perro le encanta o te devolvemos el dinero"</strong> en los primeros 30 días — sin coste de recogida ni autorizaciones, solo email + foto.</li>
+                    <li><strong>Guía de transición visible y descargable</strong> en la página de cada producto.</li>
+                    <li><strong>Asesor por WhatsApp</strong> antes de la compra para recomendar sabor según raza, edad y sensibilidades.</li>
+                </ol>
+            </div>
+
+            <!-- MALETA 7: GARANTÍA -->
+            <div class="section">
+                <div class="section-number">Maleta 7</div>
+                <h2 class="section-title">Garantía</h2>
+                <p class="section-tagline">Cómo eliminar el riesgo percibido por el cliente.</p>
+
+                <h3 class="subsection-title">Tu garantía actual</h3>
+                <div class="quote-box">
+                    <p class="quote-text">"Puedes solicitar la devolución de un producto hasta 30 días después de su compra si quedan más de 6 meses hasta su fecha de caducidad. La tarifa de recogida es de 6,95 € + IVA. Toda la mercancía devuelta debe ser autorizada por un representante de atención al cliente."</p>
+                    <p class="quote-source">— Política de envío Alpha Spirit</p>
+                </div>
+
+                <div class="info-box critical">
+                    <div class="info-box-label">Análisis</div>
+                    <p>Esta política <strong>no es una garantía, es una condición de devolución burocrática</strong>. Tiene fricciones (coste recogida, autorización previa) y no genera confianza. No se comunica en home, producto ni anuncios — solo aparece en el footer legal.</p>
+                </div>
+
+                <h3 class="subsection-title">b. Comparación con competidores</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Alpha Spirit</th>
+                            <th>Dogfy Diet</th>
+                            <th>Edgard &amp; Cooper</th>
+                            <th>Acana / Nature's V.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Devolución de dinero</td>
+                            <td>30 días, con autorización</td>
+                            <td>Sí</td>
+                            <td>Sí, sin preguntas</td>
+                            <td>Vía retailer</td>
+                        </tr>
+                        <tr>
+                            <td>Coste devolución</td>
+                            <td>6,95 € + IVA</td>
+                            <td>Gratis</td>
+                            <td>Gratis</td>
+                            <td>Variable</td>
+                        </tr>
+                        <tr>
+                            <td>Pack prueba con descuento</td>
+                            <td>❌</td>
+                            <td>50 % primer pedido</td>
+                            <td>Packs prueba multi-sabor</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <td>Garantía satisfacción "a tu perro le gusta"</td>
+                            <td>❌</td>
+                            <td>✅ (14 días prueba)</td>
+                            <td>✅</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <td>Coach/asesor veterinario incluido</td>
+                            <td>❌</td>
+                            <td>✅</td>
+                            <td>Parcial</td>
+                            <td>❌</td>
+                        </tr>
+                        <tr>
+                            <td>Suscripción pausable</td>
+                            <td>✅ (skip/edit/cancel, pero solo -5%)</td>
+                            <td>✅</td>
+                            <td>✅</td>
+                            <td>❌</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box warning">
+                    <div class="info-box-label">Evaluación</div>
+                    <div class="info-box-title">Estás en clara desventaja vs. Dogfy y Edgard &amp; Cooper</div>
+                    <p>Frente a marcas premium ecommerce-first (Dogfy, E&amp;C) tu garantía es la más débil. Frente a marcas tradicionales de retail (Acana, Nature's V.) estás igual. Pero el cliente premium ya espera el estándar Dogfy/E&amp;C, no el de Acana.</p>
+                </div>
+
+                <h3 class="subsection-title">Recomendación final de garantía</h3>
+
+                <div class="info-box success">
+                    <div class="info-box-label">Propuesta de garantía nueva</div>
+                    <div class="info-box-title">"Garantía Alpha Spirit: a tu perro le encanta o te devolvemos el 100 %"</div>
+                    <p style="margin-top: 12px;"><strong>Texto sugerido para web y anuncios:</strong></p>
+                    <p style="font-style: italic; padding: 16px; background: white; border-radius: 8px; margin-top: 8px;">"Sabemos que cambiar el pienso de tu perro da respeto. Por eso si en los primeros 30 días tu peludo no se enamora de Alpha Spirit, te devolvemos el 100 % de tu dinero. Sin formularios, sin devolver el producto, sin preguntas. Solo envíanos un email con la foto del saco y de tu perro, y el dinero vuelve a tu cuenta en 48 h."</p>
+                    <p style="margin-top: 16px;"><strong>Por qué funciona:</strong></p>
+                    <ul style="margin-top: 8px;">
+                        <li>Elimina la objeción crítica de "y si no le gusta".</li>
+                        <li>Es accionable y simple (vs. política burocrática actual).</li>
+                        <li>Iguala a Dogfy y E&amp;C.</li>
+                        <li>El coste real es bajo (los clientes premium rara vez piden el reembolso si la marca cumple).</li>
+                        <li>Se puede destacar en home, ficha producto y headline de anuncios.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- IDEAS DE ANUNCIOS -->
+            <div class="section">
+                <div class="section-number">Bonus</div>
+                <h2 class="section-title">3 ideas de anuncios listos</h2>
+                <p class="section-tagline">Basadas en la investigación de las 7 Maletas.</p>
+
+                <div class="ad-template">
+                    <div class="ad-template-label">Anuncio 1 — Enfoque en problema (perro quisquilloso)</div>
+                    <p class="ad-headline">¿Tu perro deja la comida en el plato y no sabes ya qué probar?</p>
+                    <p class="ad-body">No es capricho: el pienso seco normal pierde el sabor cuando lo aplastan a 200 °C.<br><br>
+                    Alpha Spirit se cocina a baja temperatura con tecnología Tenderize: 85 % de carne y pescado fresco, semi-húmedo, sin cereales ni gluten. Apto para microondas, en bolsitas de 200 g que se conservan frescas.<br><br>
+                    <em>"Estaba con Dogfy y la aborreció como otras tantas, pero este le encanta. Se comería el saco de un tirón." — Alexandra</em><br><br>
+                    Garantía: a tu perro le encanta o te devolvemos el 100 % en 30 días → <strong>Probar Pack Bienvenida</strong></p>
+                </div>
+
+                <div class="ad-template">
+                    <div class="ad-template-label">Anuncio 2 — Enfoque en diferencial único (Tenderize + snack regalo)</div>
+                    <p class="ad-headline">Cocinamos para tu perro como cocinarías tú.</p>
+                    <p class="ad-body">Carne y pescado fresco, baja temperatura, sin cereales. Tecnología Tenderize: el único pienso semi-húmedo que conserva el sabor real de la carne.<br><br>
+                    Y porque sabemos que un saco nuevo da respeto, en cada pedido te regalamos un snack natural para que tu peludo lo pruebe sin compromiso.<br><br>
+                    Pack Bienvenida 3 sabores → <strong>desde 29 €</strong> (envío gratis y garantía total).</p>
+                </div>
+
+                <div class="ad-template">
+                    <div class="ad-template-label">Anuncio 3 — Testimonio + resultado</div>
+                    <p class="ad-headline">"Pelo más brillante y mucha más energía. Llevo años y no cambio."</p>
+                    <p class="ad-body">Laura tiene 4 perras. Las cuatro comen Alpha Spirit 7 Days Formula desde hace años.<br><br>
+                    7 proteínas distintas en una semana. Cocinado a baja temperatura. Sin cereales. Hecho en España con carne y pescado fresco.<br><br>
+                    Únete a +12.000 familias que ya cambiaron al semi-húmedo → <strong>Pack Bienvenida con -30 % y snack de regalo</strong>.<br><br>
+                    Garantía Alpha Spirit: a tu perro le encanta o te devolvemos el 100 %.</p>
+                </div>
+            </div>
+
+            <!-- PRÓXIMOS PASOS -->
+            <div class="section">
+                <div class="section-number">Plan de acción</div>
+                <h2 class="section-title">Próximos pasos críticos</h2>
+                <p class="section-tagline">Qué hacer esta semana, este mes y este trimestre.</p>
+
+                <h3 class="subsection-title">Esta semana</h3>
+                <div class="info-box">
+                    <div class="info-box-label">Acción 1 — máximo ROI inmediato</div>
+                    <div class="info-box-title">Reescribir el headline de la home y de Meta Ads con el ángulo "perro quisquilloso"</div>
+                    <p>Sustituye "LO MEJOR EN ALIMENTACIÓN" por algo como <em>"Cocinado a baja temperatura para perros que rechazan el pienso normal"</em>. Conecta con el dolor real #1 detectado en reviews.</p>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-label">Acción 2 — Reputación</div>
+                    <div class="info-box-title">Responder a las 11 reviews 1-star de Trustpilot</div>
+                    <p>Mensaje empático, ofreciendo solución concreta. Y pide a 30 clientes recurrentes (que ya repiten) que dejen reseña en Trustpilot España. Subirá el score visible en Google rápidamente.</p>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-label">Acción 3 — Conversión</div>
+                    <div class="info-box-title">Lanzar Pack Bienvenida 3 sabores con -30 % primer pedido</div>
+                    <p>Saco de 1,5 kg × 3 sabores. Precio inicial bajo + garantía 100 %. Sustituye al actual "10 % primer pedido al suscribirse" que es marginal.</p>
+                </div>
+
+                <h3 class="subsection-title">Este mes</h3>
+                <ul>
+                    <li>Crear página visual "Cómo hacer la transición sin diarrea" — elimina la objeción y reduce reseñas negativas.</li>
+                    <li>Implementar nueva garantía "100 % satisfecho o reembolso sin preguntas" y comunicarla en home, ficha producto y anuncios.</li>
+                    <li>Estructurar programa Alpha Friends (UGC con snack de regalo a cambio de foto/review) para generar contenido orgánico ilimitado.</li>
+                </ul>
+
+                <h3 class="subsection-title">Este trimestre</h3>
+                <ul>
+                    <li>Re-incentivar la suscripción existente: subir de 5% a -25% en 1ª entrega + -12-15% recurrente + snack premium gratis cada 3 entregas, y añadir frecuencias por peso del perro (no solo Quincenal/Mensual).</li>
+                    <li>Validar con 5-10 entrevistas reales:
+                        <ol style="margin-top: 8px;">
+                            <li>¿Por qué nos elegiste y no a Dogfy / Edgard &amp; Cooper?</li>
+                            <li>¿Qué problema querías resolver?</li>
+                            <li>¿Qué te haría dejar de comprarnos?</li>
+                        </ol>
+                    </li>
+                    <li>Apropiarse del concepto "Tenderize" como sello: hacer micro-vídeo "Así cocinamos para tu perro" para web y redes.</li>
+                </ul>
+            </div>
+
+            <!-- FUENTES -->
+            <div class="section">
+                <div class="section-number">Anexo</div>
+                <h2 class="section-title">Fuentes analizadas</h2>
+
+                <div class="source-list">
+                    <strong>Sitio web del cliente</strong>
+                    <ul>
+                        <li>aspiritpetfood.store (home, catálogo, política envíos)</li>
+                    </ul>
+                </div>
+
+                <div class="source-list">
+                    <strong>Reviews analizadas (2.339 total)</strong>
+                    <ul>
+                        <li>Web propia: 2.159 reviews recientes</li>
+                        <li>Google Business Alpha Spirit, Lorca: 105 reviews (4,2 ★)</li>
+                        <li>Trustpilot alphaspirit.fr: 75 reviews (3,0 ★ — 15 % 1-star)</li>
+                        <li>Amazon ES: ~30 referencias con reviews acumuladas</li>
+                    </ul>
+                </div>
+
+                <div class="source-list">
+                    <strong>Competidores investigados</strong>
+                    <ul>
+                        <li>Dogfy Diet (Trustpilot 4,4 / 12K reviews · 78 anuncios activos en ES)</li>
+                        <li>Edgard &amp; Cooper (Trustpilot 4,5 / 18K reviews · 36 anuncios activos)</li>
+                        <li>Nature's Variety (líder en Amazon ES, ~1K-1,2K reviews por producto)</li>
+                        <li>Pure Pet Food (Trustpilot 4,7 / 15K reviews)</li>
+                        <li>Wild Pet Food (Trustpilot 4,6 / 604 reviews)</li>
+                    </ul>
+                </div>
+
+                <div class="source-list">
+                    <strong>Mercado general</strong>
+                    <ul>
+                        <li>Meta Ads Library (España, anuncios activos)</li>
+                        <li>Búsquedas Google: "pienso natural perro", "pienso sin cereales", "alpha spirit opiniones"</li>
+                        <li>ZooPlus, Miscota, foros perros.com, blogs de comparativa pet food 2026</li>
+                        <li>SimilarWeb (Feb 2026 – Abr 2026): aspiritpetfood.store, dogfydiet.com, patitasco.com, edgardcooper.com, foodforjoe.es, natukabarf.com, wildbalance.es</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ADENDUM SIMILARWEB -->
+            <div class="section">
+                <div class="section-number">Adendum · 04-Jun-2026</div>
+                <h2 class="section-title">Benchmark SimilarWeb</h2>
+                <p class="section-tagline">Tráfico real de Alpha Spirit vs. competidores DTC pet food.</p>
+
+                <p>Datos extraídos directamente de SimilarWeb (Feb 2026 – Abr 2026, ventana 3 meses) el 4 de junio de 2026. Confirman cuantitativamente lo que la investigación cualitativa apuntaba: <strong>el producto convierte mejor que los líderes, pero el tráfico es 30-36× inferior</strong>.</p>
+
+                <h3 class="subsection-title">Visitas mensuales y engagement</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Marca</th>
+                            <th>Visitas/mes</th>
+                            <th>Visitas 3M</th>
+                            <th>Tendencia</th>
+                            <th>Pages/visit</th>
+                            <th>Duración</th>
+                            <th>Bounce</th>
+                            <th>Mobile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background:#fff4d6">
+                            <td><strong>Alpha Spirit</strong></td>
+                            <td><strong>8.016</strong></td>
+                            <td>24.049</td>
+                            <td><span class="badge high">↓ −17,08%</span></td>
+                            <td>4,45</td>
+                            <td>2:19</td>
+                            <td><strong style="color:#248a3d">27,95%</strong></td>
+                            <td>42,9%</td>
+                        </tr>
+                        <tr>
+                            <td>Dogfy Diet</td>
+                            <td>291.891</td>
+                            <td>875.674</td>
+                            <td><span class="badge high">↓ −36,00%</span></td>
+                            <td>3,24</td>
+                            <td>1:55</td>
+                            <td>50,95%</td>
+                            <td>75,4%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Patitas&amp;Co</strong></td>
+                            <td><strong>242.392</strong></td>
+                            <td>727.177</td>
+                            <td><span class="badge low">↑ +70,11%</span></td>
+                            <td><strong>5,86</strong></td>
+                            <td><strong>2:46</strong></td>
+                            <td>46,20%</td>
+                            <td>77,6%</td>
+                        </tr>
+                        <tr>
+                            <td>Edgard &amp; Cooper</td>
+                            <td>242.258</td>
+                            <td>726.773</td>
+                            <td><span class="badge high">↓ −18,03%</span></td>
+                            <td>3,78</td>
+                            <td>2:14</td>
+                            <td>45,35%</td>
+                            <td>81,6%</td>
+                        </tr>
+                        <tr>
+                            <td>Food For Joe</td>
+                            <td>39.407</td>
+                            <td>118.222</td>
+                            <td><span class="badge low">↑ +49,37%</span></td>
+                            <td>4,67</td>
+                            <td>2:25</td>
+                            <td>38,70%</td>
+                            <td>53,8%</td>
+                        </tr>
+                        <tr>
+                            <td>Natuka BARF</td>
+                            <td>~31.663</td>
+                            <td>94.990</td>
+                            <td><span class="badge med">↓ −10,93%</span></td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td>Wild Balance</td>
+                            <td>~12.265</td>
+                            <td>36.794</td>
+                            <td><span class="badge med">↓ −15,85%</span></td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>52,6%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">Mix de canales: dónde está el agujero</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Canal</th>
+                            <th>Alpha Spirit</th>
+                            <th>Dogfy Diet</th>
+                            <th>Patitas&amp;Co</th>
+                            <th>Edgard &amp; Cooper</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Direct</td><td>23,27%</td><td>37,79%</td><td>29,06%</td><td>27,31%</td></tr>
+                        <tr><td><strong>Organic Search</strong></td><td><strong>73,16%</strong></td><td>18,81%</td><td><strong>61,71%</strong></td><td>31,08%</td></tr>
+                        <tr><td>Paid Search</td><td><strong style="color:#d70015">0% (N/A)</strong></td><td>16,31%</td><td>0,12%</td><td>16,53%</td></tr>
+                        <tr><td>Display</td><td><strong style="color:#d70015">0%</strong></td><td>11,70%</td><td>0,46%</td><td>10,19%</td></tr>
+                        <tr><td>Paid Social</td><td><strong style="color:#d70015">0%</strong></td><td>3,86%</td><td>0,11%</td><td>3,31%</td></tr>
+                        <tr><td>Organic Social</td><td><strong style="color:#d70015">0%</strong></td><td>1,20%</td><td>2,81%</td><td>3,18%</td></tr>
+                        <tr><td>Referrals</td><td>1,85%</td><td>3,98%</td><td>2,95%</td><td>4,40%</td></tr>
+                        <tr><td>Email</td><td>1,72%</td><td>5,33%</td><td>2,40%</td><td>3,72%</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box critical">
+                    <div class="info-box-label">Hallazgo crítico</div>
+                    <div class="info-box-title">73% del tráfico de Alpha Spirit es Organic Search, y de eso el 56% es búsqueda de marca</div>
+                    <p>Las dos top organic non-branded keywords son <strong>"alpha spirit" (56,32%, en caída −58%)</strong> y <strong>"alphaspirit" (15,52%)</strong>. La marca tira sola del cliente que ya la conoce. No hay captación nueva — cero inversión en Paid Search, Display y Paid Social.</p>
+                    <p style="margin-top:12px"><strong>Hay dos modelos opuestos que funcionan en este mercado:</strong></p>
+                    <ul style="margin-top:8px;margin-left:20px">
+                        <li><strong>Modelo DTC paid-first</strong> (Dogfy, Edgard &amp; Cooper): 25-32% del tráfico en Paid Search + Display + Paid Social. Llegan a 240-290K visitas/mes pero <strong>ambos pierden tráfico (−18 a −36%)</strong> en 2026.</li>
+                        <li><strong>Modelo SEO + organic + LatAm</strong> (Patitas&Co, Food For Joe): 60-67% del tráfico en Organic Search, casi cero pago. Patitas&Co ya iguala a los DTC en escala (242K/mes) y crece <strong>+70% MoM</strong>.</li>
+                    </ul>
+                    <p style="margin-top:12px">Alpha Spirit comparte hoy la base estructural del modelo SEO (73% organic) pero no lo escala porque sigue siendo organic <em>de marca</em>, no organic <em>de categoría</em>. Falta producción de contenido educativo + autoridad de dominio + linkbuilding sectorial — exactamente lo que Patitas&Co hace mejor.</p>
+                </div>
+
+                <h3 class="subsection-title">Geografía: dónde tira cada uno</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Marca</th>
+                            <th>País #1</th>
+                            <th>País #2</th>
+                            <th>País #3</th>
+                            <th>Lectura</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Alpha Spirit</strong></td>
+                            <td>🇪🇸 España 83,49%</td>
+                            <td>🇵🇹 Portugal 7,34%</td>
+                            <td>🇲🇽 México 3,19%</td>
+                            <td>Mono-mercado España. Web EN/IT/PT existe pero no convierte tráfico real.</td>
+                        </tr>
+                        <tr>
+                            <td>Dogfy Diet</td>
+                            <td>🇮🇹 Italia 41,79%</td>
+                            <td>🇪🇸 España 33,77%</td>
+                            <td>🇫🇷 Francia 17,82%</td>
+                            <td>Diversificación europea madura. Caída −36% señala fatiga en sus 3 mercados a la vez.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Patitas&amp;Co</strong></td>
+                            <td>🇪🇸 España 61,65% (+100,67%)</td>
+                            <td>🇲🇽 México 7,38%</td>
+                            <td>🇨🇴 Colombia 5,39% (+102%)</td>
+                            <td>Crecimiento explosivo en España + LatAm. Tiendas físicas en Madrid + ecommerce. Modelo multi-marca con autoridad de contenido.</td>
+                        </tr>
+                        <tr>
+                            <td>Edgard &amp; Cooper</td>
+                            <td>🇫🇷 Francia 27,84%</td>
+                            <td>🇳🇱 Países Bajos 15,57%</td>
+                            <td>🇧🇪 Bélgica 11,71%</td>
+                            <td>Multi-país real (5 mercados &gt;8%). UK creciendo +1,58% mientras el resto cae.</td>
+                        </tr>
+                        <tr>
+                            <td>Food For Joe</td>
+                            <td>🇪🇸 España 67,76%</td>
+                            <td>🇲🇽 México 8,10%</td>
+                            <td>🇵🇪 Perú 5,92%</td>
+                            <td>España +90,89% MoM. Empuja LatAm como segundo mercado (oportunidad clara para Alpha Spirit).</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box success">
+                    <div class="info-box-label">Oportunidad</div>
+                    <div class="info-box-title">Los DTC paid caen mientras los SEO-first explotan</div>
+                    <p>Dogfy (−36%) y Edgard &amp; Cooper (−18%) pierden tráfico en 2026 — pagan más por menos. Mientras tanto, Patitas&amp;Co sube <strong>+70% MoM</strong> y Food For Joe <strong>+49% MoM</strong> con modelos SEO + organic + multi-LatAm casi sin pago. <strong>Es exactamente la ventana de mercado que justifica el plan híbrido propuesto</strong>: combinar Paid Search + Paid Social + Display + UGC (fortaleza Dogfy/E&amp;C) con SEO + contenido educativo + linkbuilding (fortaleza Patitas&amp;Co/Food For Joe) para cerrar el gap de 30× en visitas mientras los líderes paid pierden fuelle.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <p>Reporte generado con la metodología de Las 7 Maletas de Cualquier Compra de Felipe Vergara</p>
+            <p>4 de junio de 2026 · Para Alpha Spirit Pet Food</p>
+            <p style="margin-top: 16px; font-size: 12px;">📺 YouTube: youtube.com/@FelipeVergara</p>
+        </div>
+    </div>
+</body>
+</html>
