@@ -243,14 +243,14 @@
         <div class="finding-title">2. Quiz / matchmaker "¿Qué necesita tu peludo?"</div>
         <span class="badge b-info">Impacto alto · Esfuerzo medio</span>
       </div>
-      <p>Catálogo real (revisado 4-jun-2026 en /collections/all): <strong>200 productos</strong> · 5 líneas (Alpha Spirit, Primal Spirit, Orygo, Real Food, Snacks) × 2 especies × seco/semi/húmedo/snacks/packs. El usuario llega y se ahoga (paradoja de la elección, Ley de Hick). Un quiz de 4-5 pasos (especie · edad · peso · sensibilidades · objetivo) reduce fricción, recoge datos de zero-party y abre la puerta a personalización y a justificar la suscripción que ya existe (5%) elevándola a un beneficio real (-25% 1ª entrega). Es exactamente lo que Dogfy Diet hace mejor.</p>
+      <p>Catálogo real (revisado 4-jun-2026 en /collections/all): <strong>200 productos</strong> · 5 líneas (Alpha Spirit, Primal Spirit, Orygo, Real Food, Snacks) × 2 especies × seco/semi/húmedo/snacks/packs. El usuario llega y se ahoga (paradoja de la elección, Ley de Hick). Un quiz de 4-5 pasos (especie · edad · peso · sensibilidades · objetivo) reduce fricción, recoge datos zero-party, lleva al cliente nuevo hasta la suscripción que ya funciona bien (5% + envío gratis) y precarga la cadencia óptima por peso. <strong>El benchmark más claro es Food For Joe</strong> con su CTA principal "Crea el plan en 2 minutos".</p>
     </div>
     <div class="finding info">
       <div class="finding-head">
-        <div class="finding-title">3. Lanzar suscripción real (no solo cupón newsletter)</div>
-        <span class="badge b-info">Impacto alto · Esfuerzo alto</span>
+        <div class="finding-title">3. Cross-sell con compra directa + PDP con CTA siempre visible</div>
+        <span class="badge b-info">Impacto alto · Esfuerzo bajo</span>
       </div>
-      <p>Las reseñas están llenas de "llevo mucho tiempo pidiéndolo y siempre repetimos" — el comportamiento de recompra existe; lo que falta es la mecánica que lo capture como MRR. Hoy la suscripción solo es "10% por suscribirte al newsletter". La PDP ya tiene "Este artículo es una compra recurrente o diferida" en letra pequeña, pero sin tipos de cadencia visibles ni beneficios. Convertir esto en un Subscribe &amp; Save (envío cada 4/6/8 semanas, -10% permanente, snack extra, posibilidad de pausar) sería transformacional para LTV.</p>
+      <p>Dos fricciones que penalizan AOV y conversión del cliente decidido. (a) Los módulos de "Te puede interesar" / "Suelen comprar juntos" redirigen a otra ficha en vez de permitir "Añadir al carrito" desde la propia tarjeta. (b) En la PDP el botón "Añadir al carrito" queda enterrado tras descripción + ingredientes + composición analítica; en mobile el cliente nuevo no llega a verlo sin scrollear ~3 pantallas. Fix: quick-add en cada tarjeta de recomendado + bloque precio/suscripción/CTA en primer pliegue de la PDP + sticky bar mobile.</p>
     </div>
   </div>
 </section>
@@ -371,11 +371,11 @@
 
     <div class="finding warn">
       <div class="finding-head">
-        <div class="finding-title">H08. La suscripción existe y es flexible, pero el 5% off es inferior al newsletter (10%) — desincentivo racional</div>
-        <span class="badge b-warn">Alto · LTV</span>
+        <div class="finding-title">H08. La PDP entierra el CTA tras un scroll largo (especialmente en mobile)</div>
+        <span class="badge b-warn">Alto · CR mobile</span>
       </div>
-      <p>En la PDP aparece un toggle "OPCIONES DE COMPRA" con dos cards: <strong>Compra Única</strong> (€19,80) y <strong>Suscríbete y ahorra un 5%</strong> con badge "AHORRA 5%" y precio €18,81 vs €19,80 tachado. Tiene frecuencia Quincenal/Mensual, link "Detalles de la suscripción" y promesa de control absoluto (skip/edit/cancel). <strong>Lo flexible está bien, el incentivo no.</strong> El popup de newsletter da 10% off (one-shot). Resultado: el usuario que hace cuentas ve que suscribirse le da menos descuento que apuntarse al boletín. Dogfy/E&amp;C ofrecen 40-50% en 1ª entrega y 10-15% en recurrentes.</p>
-      <div class="reco">El toggle ya existe — falta reescribir incentivos: <strong>1ª entrega -25%</strong> · <strong>recurrente -12-15%</strong> · <strong>snack premium gratis cada 3 entregas</strong> · <strong>envío siempre gratis</strong>. Añadir frecuencia calculada por peso del perro (no solo Quincenal/Mensual). Mover beneficios encima del precio, no debajo en "Detalles".</div>
+      <p>La PDP actual ordena la información como ficha técnica de fabricante: descripción extensa + ingredientes + composición analítica + valores nutricionales → y el botón "Añadir al carrito" queda enterrado tras ~3 pantallas de scroll en mobile. El usuario decidido tarda demasiado en encontrar dónde comprar y el cliente nuevo se cansa antes de llegar al CTA. El toggle suscripción/compra única ya funciona bien — está bien incentivado con <strong>5% + envío gratis</strong>. El problema es que casi nadie lo ve.</p>
+      <div class="reco">Reordenar PDP para que <strong>precio + selector suscripción + botón "Añadir al carrito" estén en el primer pliegue mobile sin scroll</strong>. Sticky bar con el CTA al hacer scroll. Acordeón para ingredientes / composición / valores. La suscripción se mantiene como está (5% + envío gratis) — sólo se hace visible.</div>
     </div>
 
     <div class="finding warn">
@@ -407,11 +407,11 @@
 
     <div class="finding warn">
       <div class="finding-head">
-        <div class="finding-title">H12. Política de devoluciones hostil y poco visible</div>
-        <span class="badge b-warn">Medio · Confianza</span>
+        <div class="finding-title">H12. Cross-sell "Te puede interesar" redirige a otra ficha en vez de añadir al carrito</div>
+        <span class="badge b-warn">Medio · AOV</span>
       </div>
-      <p>La política indica: <strong>recogida cuesta 6,95€ + IVA al cliente</strong>, las reclamaciones por daño solo valen en las <strong>primeras 24 horas tras recibir</strong>, y el comprador debe gestionar la devolución por email. Para producto de food/perecedero esto es entendible operativamente, pero comunicarlo así de seco es una bandera roja para el comprador premium primerizo.</p>
-      <div class="reco">Reescribir como "Garantía Alpha Spirit": <em>"Si tu perro no lo come, te devolvemos el dinero. Sin preguntas, sin gastos de devolución durante 30 días."</em> — alinear con E&amp;C que es así de generoso. El coste de las devoluciones reales será marginal y el upside en confianza es altísimo.</p>
+      <p>Los módulos "Suelen comprar juntos" / "Te puede interesar" presentes en home, PDP y carrito muestran una tarjeta con imagen, nombre y precio del producto recomendado — pero el clic lleva a la ficha del producto, no permite añadirlo al carrito directamente. Cada clic extra entre el deseo y la compra mata cross-sell: el usuario que estaba a punto de cerrar el pedido se ve obligado a salir, leer otra ficha y volver, y muchas veces no vuelve.</p>
+      <div class="reco">Convertir cada tarjeta de recomendado en quick-add: botón "Añadir" visible en la propia tarjeta (con selector de tamaño en hover/tap si aplica), sin redirigir. Mantener un secundario "Ver ficha" para quien quiera más info. Patrón estándar Shopify (componente quick-add, ~6h dev).</div>
     </div>
 
     <div class="finding warn">
@@ -912,8 +912,8 @@
       <h3>Producto digital: quiz, suscripción, localización</h3>
       <div class="phase-meta">Movimientos que cambian el modelo de negocio, no solo el sitio.</div>
       <ul class="phase-list">
-        <li>Quiz "Encuentra la comida ideal de tu peludo" como entrada principal de la home — 4-5 pasos, recomienda fórmula + ración + cadencia</li>
-        <li>Re-incentivar la suscripción que ya existe: subir del 5% actual a -25% 1ª entrega + -12-15% recurrente, snack premium gratis cada 3 envíos, frecuencia editable por peso del perro (no solo Quincenal/Mensual), pausa en 1 clic</li>
+        <li>Quiz "Encuentra la comida ideal de tu peludo" como entrada principal de la home, <strong>estilo Food For Joe</strong> — 5 pasos: especie, raza, peso, edad, sensibilidades → recomienda 1-3 SKUs + suscripción precargada con cadencia óptima por peso</li>
+        <li>Mantener la suscripción tal como está (5% + envío gratis, ya funciona): añadir frecuencia editable por peso del perro (no solo Quincenal/Mensual) y pausa en 1 clic visible en el email transaccional</li>
         <li>Pet profile en cuenta del cliente — nombre, edad, peso, alergias, recomendaciones personalizadas</li>
         <li>Localización completa EN/IT/PT con Shopify Markets, traducción humana, rutas de envío y monedas locales</li>
         <li>Programa de fidelización Alpha Friends: puntos por reviews con foto, referidos, suscripción, etc.</li>

@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta Growth · Alpha Spirit · Junio 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0e0e0c;
+    --ink-2:#2a2a26;
+    --paper:#f6f3ec;
+    --paper-2:#efeae0;
+    --cream:#fbf8f1;
+    --line:#dcd6c7;
+    --accent:#c44a1c;
+    --accent-2:#3a5a3f;
+    --gold:#b8893a;
+    --red:#a8281e;
+    --amber:#c97900;
+    --green:#3a5a3f;
+    --blue:#2a4a6b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;font-weight:400}
+  .wrap{max-width:1240px;margin:0 auto;background:var(--cream);box-shadow:0 0 80px rgba(0,0,0,0.04)}
+
+  /* HEADER */
+  .hero{background:var(--ink);color:#fff;padding:96px 80px 88px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(800px 400px at 80% -10%, rgba(196,74,28,0.25), transparent 60%);pointer-events:none}
+  .hero-tag{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:#a8a39a;margin-bottom:24px;font-weight:600}
+  .hero h1{font-family:'Fraunces',serif;font-size:72px;font-weight:500;line-height:1.02;letter-spacing:-2px;margin-bottom:24px}
+  .hero h1 em{font-style:italic;color:#e89a6b;font-weight:400}
+  .hero .lede{font-size:21px;color:#cfcabf;max-width:840px;line-height:1.5;font-weight:300;margin-bottom:40px}
+  .hero-meta{display:flex;gap:48px;font-size:13px;color:#807a6f;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;border-top:1px solid #2a2a26;padding-top:32px;margin-top:48px;flex-wrap:wrap}
+  .hero-meta div span{display:block;color:#fff;font-size:14px;margin-top:6px;letter-spacing:0;text-transform:none;font-weight:400}
+
+  /* NAV */
+  .nav{background:var(--paper-2);padding:20px 80px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+  .nav-inner{display:flex;gap:24px;flex-wrap:wrap;font-size:13px;font-weight:500}
+  .nav a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px;transition:all 0.2s}
+  .nav a:hover{color:var(--accent);border-color:var(--accent)}
+
+  /* SECTIONS */
+  section{padding:96px 80px;border-bottom:1px solid var(--line)}
+  .sec-tag{font-size:11px;color:var(--accent);font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+  .sec-tag::before{content:"";display:inline-block;width:32px;height:1px;background:var(--accent)}
+  h2{font-family:'Fraunces',serif;font-size:52px;font-weight:500;line-height:1.05;letter-spacing:-1.5px;margin-bottom:20px;color:var(--ink)}
+  h2 em{font-style:italic;color:var(--accent);font-weight:400}
+  .sec-lede{font-size:20px;color:#5a5448;max-width:880px;margin-bottom:64px;font-weight:300;line-height:1.5}
+  h3{font-family:'Fraunces',serif;font-size:32px;font-weight:500;margin:48px 0 16px;letter-spacing:-0.5px;color:var(--ink)}
+  h4{font-size:18px;font-weight:600;margin:32px 0 12px;color:var(--ink);letter-spacing:-0.2px}
+  p{font-size:16px;line-height:1.7;margin-bottom:14px;color:var(--ink-2)}
+  strong{font-weight:600;color:var(--ink)}
+  ul,ol{margin:16px 0 16px 22px}
+  li{font-size:16px;line-height:1.65;margin:8px 0;color:var(--ink-2)}
+  a{color:var(--accent)}
+
+  /* SCORES */
+  .scores{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
+  .score{background:#fff;border:1px solid var(--line);padding:32px 28px;border-radius:4px;position:relative;overflow:hidden}
+  .score::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+  .score.green::before{background:var(--green)}
+  .score.amber::before{background:var(--amber)}
+  .score.red::before{background:var(--red)}
+  .score.blue::before{background:var(--blue)}
+  .score-num{font-family:'Fraunces',serif;font-size:56px;font-weight:500;line-height:1;letter-spacing:-2px;color:var(--ink)}
+  .score-num span{font-size:24px;color:#a8a39a;font-weight:400}
+  .score-label{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:#807a6f;margin-top:14px;font-weight:600}
+  .score-desc{font-size:13px;color:#5a5448;margin-top:8px;line-height:1.5}
+
+  /* FINDING CARDS */
+  .findings{display:grid;grid-template-columns:1fr;gap:24px;margin-top:40px}
+  .finding{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);padding:32px 36px;border-radius:4px}
+  .finding.crit{border-left-color:var(--red)}
+  .finding.warn{border-left-color:var(--amber)}
+  .finding.ok{border-left-color:var(--green)}
+  .finding.info{border-left-color:var(--blue)}
+  .finding-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:14px;flex-wrap:wrap}
+  .finding-title{font-family:'Fraunces',serif;font-size:24px;font-weight:500;letter-spacing:-0.4px;color:var(--ink);flex:1}
+  .badge{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 10px;border-radius:2px;font-weight:700;white-space:nowrap}
+  .b-crit{background:#f7e2e0;color:var(--red)}
+  .b-warn{background:#fbecd1;color:var(--amber)}
+  .b-ok{background:#dbe6dc;color:var(--green)}
+  .b-info{background:#d9e3ef;color:var(--blue)}
+  .evidence{background:var(--paper);padding:18px 22px;border-radius:3px;margin:18px 0;font-size:14px;color:#5a5448;border-left:2px solid var(--line);font-style:italic}
+  .reco{background:#f0ebe0;padding:18px 22px;border-radius:3px;margin:18px 0;font-size:15px;color:var(--ink-2)}
+  .reco::before{content:"→ Recomendación: ";font-weight:700;color:var(--accent);text-transform:uppercase;font-size:11px;letter-spacing:1.5px;display:block;margin-bottom:8px}
+
+  /* TABLE */
+  .table-wrap{overflow-x:auto;margin:40px 0}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  thead{background:var(--paper-2)}
+  th{text-align:left;padding:16px 20px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;color:var(--ink);border-bottom:1px solid var(--line)}
+  td{padding:14px 18px;font-size:14px;border-bottom:1px solid var(--line);vertical-align:middle;color:var(--ink-2)}
+  tr:last-child td{border-bottom:none}
+  tr.highlight{background:#fff8e1}
+  tr.win{background:#e7f5e9}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .dot-r{background:var(--red)}
+  .dot-a{background:var(--amber)}
+  .dot-g{background:var(--green)}
+
+  /* SIMILARWEB MOCKUP CARD */
+  .sw-card{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:32px 0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .sw-card.featured{border:2px solid var(--accent)}
+  .sw-card.win{border-left:4px solid var(--green)}
+  .sw-bar{background:linear-gradient(180deg,#5165e8,#3164f4);padding:8px 20px;color:#fff;font-size:11px;display:flex;justify-content:space-between;align-items:center;letter-spacing:.5px}
+  .sw-bar a{color:#fff;font-weight:500;font-size:11px;text-decoration:none;opacity:.85}
+  .sw-bar a:hover{opacity:1;text-decoration:underline}
+  .sw-head{padding:24px 28px;background:#fff;display:flex;align-items:center;gap:16px;border-bottom:1px solid #eef0f3}
+  .sw-logo{width:48px;height:48px;border-radius:8px;background:linear-gradient(135deg,#f0ebe0,#dcd6c7);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--ink);flex-shrink:0}
+  .sw-logo.dogfy{background:linear-gradient(135deg,#ff9b3a,#e87320);color:#fff}
+  .sw-logo.alpha{background:linear-gradient(135deg,#c44a1c,#7a2b0f);color:#fff}
+  .sw-logo.edgard{background:linear-gradient(135deg,#69b07a,#3a5a3f);color:#fff}
+  .sw-logo.patitas{background:linear-gradient(135deg,#f5c869,#c48a2a);color:#fff}
+  .sw-logo.foodforjoe{background:linear-gradient(135deg,#5a5448,#2a2a26);color:#fff}
+  .sw-title{flex:1}
+  .sw-title h4{font-family:'Inter',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.3px;margin:0;color:var(--ink)}
+  .sw-title .sw-desc{font-size:13px;color:#5a5448;margin-top:2px}
+  .sw-cta{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;border:1px solid var(--line);border-radius:4px;color:#5a5448;white-space:nowrap}
+  .sw-body{padding:28px;background:#fbfbfd}
+  .sw-section-label{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .sw-section-label .lbl-meta{font-size:11px;color:#807a6f;font-weight:400}
+  .sw-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+  .sw-kpi{background:#fff;border:1px solid #eef0f3;border-radius:6px;padding:18px 20px}
+  .sw-kpi-label{font-size:11px;color:#807a6f;letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase;font-weight:600}
+  .sw-kpi-val{font-family:'Inter',sans-serif;font-size:30px;font-weight:600;line-height:1.1;color:var(--ink);letter-spacing:-.5px}
+  .sw-kpi-trend{font-size:12px;font-weight:600;margin-top:4px}
+  .sw-trend-up{color:#15803d}
+  .sw-trend-down{color:#b91c1c}
+  .sw-engagement{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;padding:18px;background:#fff;border:1px solid #eef0f3;border-radius:6px}
+  .sw-eng-item{text-align:center}
+  .sw-eng-item .label{font-size:10px;text-transform:uppercase;color:#807a6f;letter-spacing:.5px;margin-bottom:4px;font-weight:600}
+  .sw-eng-item .val{font-size:18px;font-weight:600;color:var(--ink)}
+  .sw-device{display:flex;align-items:center;gap:14px}
+  .sw-donut{width:60px;height:60px;border-radius:50%;flex-shrink:0}
+  .sw-donut-legend{font-size:11px;line-height:1.5}
+  .sw-donut-legend .leg{display:flex;align-items:center;gap:6px;margin:2px 0}
+  .sw-donut-legend .leg-dot{width:8px;height:8px;border-radius:50%}
+  .sw-geo-list{display:flex;flex-direction:column;gap:8px}
+  .sw-geo-row{display:grid;grid-template-columns:90px 1fr 60px 70px;gap:10px;align-items:center;font-size:12px}
+  .sw-geo-row .name{color:var(--ink);font-weight:500}
+  .sw-geo-row .bar-wrap{background:#eef0f3;border-radius:2px;height:8px;overflow:hidden}
+  .sw-geo-row .bar{height:100%;background:#3164f4;border-radius:2px}
+  .sw-geo-row .pct{font-weight:600;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+  .sw-geo-row .ch{font-size:11px;text-align:right;font-weight:600}
+  .sw-channels{display:flex;justify-content:space-between;align-items:flex-end;gap:6px;height:140px;margin-top:8px;padding:0 8px}
+  .sw-ch{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+  .sw-ch-bar{width:100%;background:#3164f4;border-radius:2px 2px 0 0;min-height:2px;position:relative}
+  .sw-ch-bar.zero{background:#f7e2e0;outline:1px dashed var(--red);outline-offset:-1px;min-height:6px}
+  .sw-ch-val{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:10px;font-weight:600;color:var(--ink)}
+  .sw-ch-name{font-size:10px;color:#5a5448;font-weight:500;text-align:center;line-height:1.2}
+  .sw-foot{padding:14px 28px;background:#f4f5f7;font-size:11px;color:#807a6f;border-top:1px solid #eef0f3;display:flex;justify-content:space-between;align-items:center}
+
+  /* COMPARISON BAR */
+  .gap-vis{background:#fff;border:1px solid var(--line);border-radius:4px;padding:32px 36px;margin:32px 0}
+  .gap-row{display:grid;grid-template-columns:160px 1fr 100px;gap:18px;align-items:center;padding:10px 0;border-bottom:1px solid #f0ece2}
+  .gap-row:last-child{border-bottom:none}
+  .gap-name{font-weight:600;font-size:14px;color:var(--ink)}
+  .gap-bar-wrap{background:var(--paper);border-radius:3px;height:24px;overflow:hidden;position:relative}
+  .gap-bar{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:10px;color:#fff;font-size:11px;font-weight:600;letter-spacing:.5px}
+  .gap-bar.alpha{background:var(--accent)}
+  .gap-bar.dogfy{background:#e87320}
+  .gap-bar.patitas{background:var(--gold)}
+  .gap-bar.edgard{background:var(--green)}
+  .gap-bar.ffj{background:var(--ink-2)}
+  .gap-bar.natuka{background:#807a6f}
+  .gap-num{text-align:right;font-family:'Fraunces',serif;font-size:18px;font-weight:500;color:var(--ink)}
+
+  /* WIREFRAME */
+  .wire{background:#fff;border:1px solid var(--line);padding:24px;border-radius:6px;margin:24px 0;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+  .wire-header{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);margin-bottom:16px;background:var(--paper);border-radius:4px}
+  .wire-dot{display:flex;gap:6px}
+  .wire-dot span{width:10px;height:10px;border-radius:50%;background:#d4cfc2}
+  .wire-url{font-family:'JetBrains Mono',monospace;font-size:11px;color:#807a6f;background:#fff;padding:5px 12px;border-radius:3px;flex:1;margin:0 16px;text-align:center;border:1px solid var(--line)}
+  .wire-tag{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#807a6f}
+  .wire-grid{display:grid;gap:10px}
+  .wire-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#807a6f;margin-bottom:6px}
+  .block{background:var(--paper-2);border:1px dashed #b8b0a0;padding:14px;text-align:center;font-size:12px;color:#5a5448;border-radius:3px;font-weight:500;line-height:1.4}
+  .block.tall{padding:36px 14px}
+  .block.xtall{padding:64px 14px}
+  .block.h{background:var(--ink);color:#fff;border:none;padding:48px 18px;font-family:'Fraunces',serif;font-size:17px;font-weight:500;letter-spacing:-0.3px;text-align:left}
+  .block.h em{font-style:italic;color:#e89a6b;font-weight:400}
+  .block.h .sub{display:block;font-family:'Inter',sans-serif;font-size:11px;color:#cfcabf;margin-top:8px;font-weight:400;font-style:normal;letter-spacing:.5px}
+  .block.pri{background:var(--accent);color:#fff;border:none;font-weight:600}
+  .block.sub{background:#fff;border:1px solid var(--line);color:var(--ink-2)}
+  .block.win{background:#e7f5e9;border:1px solid #98c0a0;color:var(--green);font-weight:600}
+  .block.crit{background:#f7e2e0;border:1px dashed var(--red);color:var(--red);font-weight:600}
+  .block.terra{background:#fce4d7;border:1px solid #e89a6b;color:var(--accent);font-weight:600}
+  .block.beige{background:var(--cream);border:1px solid var(--line);color:var(--ink-2)}
+  .block.product{background:#fff;border:1px solid var(--line);color:var(--ink-2);padding:10px}
+  .row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .row-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .row-5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .row-c{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:32px 0}
+  .ba-col{display:flex;flex-direction:column}
+  .ba-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;padding:6px 14px;border-radius:3px;align-self:flex-start}
+  .ba-label.before{background:#f7e2e0;color:var(--red)}
+  .ba-label.after{background:#dbe6dc;color:var(--green)}
+
+  /* PILLARS */
+  .pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
+  .pillar{background:#fff;border:1px solid var(--line);padding:32px;border-radius:4px;border-top:3px solid var(--accent)}
+  .pillar.alt{border-top-color:var(--accent-2)}
+  .pillar.amber{border-top-color:var(--amber)}
+  .pillar.blue{border-top-color:var(--blue)}
+  .pillar-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:8px}
+  .pillar.alt .pillar-tag{color:var(--accent-2)}
+  .pillar.amber .pillar-tag{color:var(--amber)}
+  .pillar.blue .pillar-tag{color:var(--blue)}
+  .pillar h3{font-size:24px;margin:0 0 16px;letter-spacing:-0.3px}
+
+  /* PHASES */
+  .phase{background:#fff;border:1px solid var(--line);padding:36px 40px;border-radius:4px;margin-bottom:24px;position:relative}
+  .phase-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:10px}
+  .phase h3{margin-top:0;font-size:28px;margin-bottom:8px}
+  .phase-meta{font-size:13px;color:#807a6f;margin-bottom:24px;font-weight:500;display:flex;gap:24px;flex-wrap:wrap}
+  .phase-list{margin:0;padding:0;list-style:none}
+  .phase-list li{padding:14px 0;border-top:1px solid var(--line);font-size:15px;display:flex;gap:16px;align-items:flex-start}
+  .phase-list li::before{content:"";display:inline-block;width:6px;height:6px;background:var(--accent);border-radius:50%;margin-top:9px;flex-shrink:0}
+  .phase-month{display:grid;grid-template-columns:80px 1fr;gap:18px;padding:18px 0;border-top:1px solid var(--line);font-size:14px}
+  .phase-month .m{font-family:'Fraunces',serif;font-size:20px;font-weight:500;color:var(--accent);letter-spacing:-.3px}
+  .phase-month .what{color:var(--ink-2)}
+
+  /* SCENARIOS */
+  .scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+  .scen{background:#fff;border:1px solid var(--line);padding:32px;border-radius:4px;position:relative}
+  .scen.featured{background:var(--ink);color:#fff;border:none}
+  .scen-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#807a6f;margin-bottom:8px}
+  .scen.featured .scen-tag{color:#e89a6b}
+  .scen-num{font-family:'Fraunces',serif;font-size:72px;font-weight:500;line-height:1;letter-spacing:-2px;color:var(--ink);margin-bottom:4px}
+  .scen.featured .scen-num{color:#fff}
+  .scen-sub{font-size:14px;color:#807a6f;margin-bottom:24px;font-weight:500}
+  .scen.featured .scen-sub{color:#cfcabf}
+  .scen-list{display:flex;flex-direction:column;gap:8px;font-size:14px}
+  .scen-list .row{display:flex;justify-content:space-between;border-bottom:1px solid #f0ece2;padding:6px 0}
+  .scen.featured .scen-list .row{border-bottom-color:#2a2a26}
+  .scen-list .row span:first-child{color:#807a6f}
+  .scen.featured .scen-list .row span:first-child{color:#a8a39a}
+  .scen-list .row strong{color:var(--ink);font-weight:600}
+  .scen.featured .scen-list .row strong{color:#fff}
+  .scen-note{font-size:12px;color:#807a6f;margin-top:18px;line-height:1.5}
+  .scen.featured .scen-note{color:#a8a39a}
+
+  /* MOODBOARD */
+  .mood{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
+  .mood-card{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .mood-swatch{height:140px;display:flex;align-items:flex-end;padding:16px;color:#fff;font-family:'Fraunces',serif;font-size:18px;font-weight:500;letter-spacing:-0.3px}
+  .mood-body{padding:16px 20px}
+  .mood-body h4{margin:0 0 4px;font-size:13px}
+  .mood-body p{font-size:12px;color:#5a5448;margin:0;line-height:1.5}
+  .sw-ink{background:linear-gradient(135deg,#0e0e0c,#2a2a26)}
+  .sw-terra{background:linear-gradient(135deg,#c44a1c,#a83812)}
+  .sw-green{background:linear-gradient(135deg,#3a5a3f,#2a4530)}
+  .sw-cream{background:linear-gradient(135deg,#f6f3ec,#e8e0cc);color:var(--ink)}
+  .sw-gold{background:linear-gradient(135deg,#b8893a,#8a6428)}
+  .sw-clay{background:linear-gradient(135deg,#e89a6b,#c47848)}
+
+  /* TYPE SPEC */
+  .type-spec{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+  .type-card{background:#fff;border:1px solid var(--line);padding:32px;border-radius:4px}
+  .type-card .meta{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#807a6f;font-weight:700;margin-bottom:18px}
+  .type-card .specimen{font-size:48px;line-height:1;letter-spacing:-1px;margin-bottom:14px;color:var(--ink)}
+  .type-card.serif .specimen{font-family:'Fraunces',serif;font-weight:500;font-style:italic}
+  .type-card.sans .specimen{font-family:'Inter',sans-serif;font-weight:600}
+  .type-card .desc{font-size:13px;color:#5a5448}
+
+  /* COMPONENT MOCKUPS */
+  .pdp-mock{background:#fff;border:1px solid var(--line);padding:32px;border-radius:6px;margin:24px 0;display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .pdp-img{background:linear-gradient(135deg,#e8e0cc,#c4b89a);border-radius:6px;min-height:340px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-style:italic;color:var(--accent);font-size:48px;font-weight:500}
+  .pdp-info h5{font-family:'Fraunces',serif;font-size:28px;font-weight:500;margin-bottom:6px;letter-spacing:-0.3px}
+  .pdp-badge{display:inline-flex;align-items:center;gap:6px;background:#fff8e1;color:var(--amber);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:99px;margin-bottom:14px}
+  .pdp-stars{color:var(--gold);font-size:14px;margin-bottom:12px}
+  .pdp-stars span{color:#807a6f;font-size:12px;margin-left:6px}
+  .pdp-price{display:flex;align-items:baseline;gap:10px;margin-bottom:18px}
+  .pdp-price .now{font-family:'Fraunces',serif;font-size:32px;font-weight:500;color:var(--ink)}
+  .pdp-price .was{font-size:14px;color:#807a6f;text-decoration:line-through}
+  .pdp-price .save{font-size:11px;font-weight:700;color:var(--green);background:#e7f5e9;padding:2px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px}
+  .pdp-opt{background:var(--cream);border:1px solid var(--line);border-radius:4px;padding:14px 16px;margin-bottom:10px}
+  .pdp-opt.sel{border-color:var(--accent);background:#fce4d7}
+  .pdp-opt h6{font-size:13px;font-weight:600;margin-bottom:4px}
+  .pdp-opt .small{font-size:11px;color:#5a5448}
+  .pdp-cta{background:var(--accent);color:#fff;padding:16px;text-align:center;border-radius:4px;font-weight:600;font-size:15px;letter-spacing:.5px;margin-top:14px}
+  .pdp-trust{display:flex;justify-content:space-between;font-size:11px;color:#5a5448;margin-top:14px;gap:12px;text-align:center}
+  .pdp-trust div{flex:1;background:var(--paper);padding:10px;border-radius:3px;border:1px solid var(--line)}
+
+  /* QUOTE */
+  .quote{background:var(--ink);color:#fff;padding:64px 80px;margin:80px -80px;font-family:'Fraunces',serif;font-size:34px;line-height:1.3;font-weight:400;font-style:italic;letter-spacing:-0.5px}
+  .quote::before{content:"\201C";font-size:120px;line-height:0.5;color:var(--accent);display:block;margin-bottom:32px;font-style:normal}
+  .quote-att{font-family:'Inter',sans-serif;font-size:13px;font-style:normal;color:#a8a39a;text-transform:uppercase;letter-spacing:2px;margin-top:32px;font-weight:600}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:#a8a39a;padding:72px 80px;text-align:center}
+  footer p{color:#a8a39a;font-size:13px;margin:8px 0}
+  footer strong{color:#fff}
+
+  /* CALLOUT */
+  .callout{background:#fff8e1;border-left:4px solid var(--amber);padding:24px 28px;border-radius:3px;margin:32px 0;display:flex;gap:20px;align-items:flex-start}
+  .callout.win{background:#e7f5e9;border-left-color:var(--green)}
+  .callout.crit{background:#f7e2e0;border-left-color:var(--red)}
+  .callout .ico{width:32px;height:32px;border-radius:50%;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-weight:700}
+  .callout.win .ico{background:var(--green)}
+  .callout.crit .ico{background:var(--red)}
+  .callout h4{margin:0 0 8px;font-size:17px}
+  .callout p{margin:0;font-size:14px}
+
+  /* PRICING TABLE */
+  table.pricing td.strike{text-decoration:line-through;color:#807a6f}
+  table.pricing td.inc{color:var(--green);font-weight:600}
+  table.pricing tr.section td{background:var(--ink);color:#fff;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-size:11px;padding:12px 18px}
+
+  /* DETAILED FIX CARD */
+  .fix-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:32px;margin:18px 0;display:grid;grid-template-columns:1fr 320px;gap:32px}
+  .fix-card .body h4{margin-top:0;font-family:'Fraunces',serif;font-size:22px;font-weight:500;letter-spacing:-.3px}
+  .fix-card .body .meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .fix-card .side{background:var(--paper);padding:20px;border-radius:4px;border:1px solid var(--line);font-size:13px;line-height:1.6}
+  .fix-card .side h5{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:#807a6f;margin-bottom:8px;margin-top:0}
+  .fix-card .side h5:not(:first-of-type){margin-top:14px}
+  .fix-card .side .euros{font-family:'Fraunces',serif;font-size:24px;font-weight:500;color:var(--green);letter-spacing:-.3px}
+
+  @media (max-width:960px){
+    .hero,section,.nav,footer{padding:64px 28px}
+    .hero h1{font-size:44px}
+    h2{font-size:36px}
+    .scores,.pillars,.scenarios,.cases-grid,.team-grid,.mood,.type-spec{grid-template-columns:1fr}
+    .sw-kpi-grid,.sw-engagement{grid-template-columns:1fr 1fr}
+    .quote{margin:48px -28px;padding:48px 28px;font-size:22px}
+    .hero-meta{flex-direction:column;gap:20px}
+    .nav{position:relative}
+    .gap-row{grid-template-columns:1fr;gap:6px}
+    .sw-channels{height:auto;flex-wrap:wrap}
+    .sw-ch{min-width:60px}
+    .ba,.pdp-mock,.fix-card{grid-template-columns:1fr}
+    .row-3,.row-4,.row-5,.row-c{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-tag">Propuesta Growth · Junio 2026</div>
+  <h1>De 2M€ a <em>4M€</em><br>en 12 meses.</h1>
+  <p class="lede">Plan de aceleración para Alpha Spirit basado en la auditoría UX completa, la investigación 7 Maletas, la reconstrucción del embudo de conversión y el benchmark SimilarWeb del ecosistema DTC pet food (junio 2026). Diagnóstico cuantitativo, rediseño web detallado, hoja de ruta mes a mes y modelo de inversión.</p>
+  <div class="hero-meta">
+    <div>Marca<span>Alpha Spirit · Amigüitos Pets &amp; Life S.A.</span></div>
+    <div>Dominio<span>aspiritpetfood.store</span></div>
+    <div>Horizonte<span>12-24 meses · 3 fases</span></div>
+    <div>Fecha<span>4 de junio de 2026</span></div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#resumen">Resumen</a>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#benchmark">Benchmark SimilarWeb</a>
+    <a href="#fugas">Las 8 fugas</a>
+    <a href="#diseno">Rediseño web</a>
+    <a href="#metodo">Metodología</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#inversion">Modelo de inversión</a>
+    <a href="#escenarios">Escenarios</a>
+    <a href="#cierre">Próximos pasos</a>
+  </div>
+</nav>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="sec-tag">01 · Resumen ejecutivo</div>
+  <h2>Producto de 10.<br>Captación al <em>0</em>.</h2>
+  <p class="sec-lede">Alpha Spirit tiene un producto que enamora — 2.159 reseñas en web propia, bounce 27,95%, duración 2:19, 4,45 pages/visit. Mejor engagement que cualquiera de los líderes DTC. Pero recibe 30× menos tráfico que Dogfy Diet o Patitas&amp;Co. El cuello de botella no es el producto ni la web — es el mix de canales de captación. Y la ventana de mercado está abierta: los líderes paid pierden tráfico, los SEO-first explotan.</p>
+
+  <div class="scores">
+    <div class="score green">
+      <div class="score-num">27,95<span>%</span></div>
+      <div class="score-label">Bounce rate Alpha Spirit</div>
+      <div class="score-desc">El mejor del sector. Dogfy 50,95% · E&amp;C 45,35% · Patitas&amp;Co 46,20%.</div>
+    </div>
+    <div class="score red">
+      <div class="score-num">30<span>×</span></div>
+      <div class="score-label">Gap de tráfico vs líderes</div>
+      <div class="score-desc">8K visitas/mes vs 240-292K. Mono-mercado España (83,5%).</div>
+    </div>
+    <div class="score amber">
+      <div class="score-num">+1,4<span>M€</span></div>
+      <div class="score-label">Recuperables sin paid</div>
+      <div class="score-desc">Sólo arreglando checkout, PDP, recomendados con compra directa, traducciones e i18n.</div>
+    </div>
+    <div class="score blue">
+      <div class="score-num">4,0<span>M€</span></div>
+      <div class="score-label">Objetivo 12-18 meses</div>
+      <div class="score-desc">Inversión lean 350K€/año (≈1.000€/día) · crece exponencial sobre +30% actual.</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:80px">Los tres movimientos que desbloquean los 4M€</h3>
+  <div class="findings">
+    <div class="finding ok">
+      <div class="finding-head">
+        <div class="finding-title">1. Quiz de entrada para segmentar (estilo Food For Joe)</div>
+        <span class="badge b-ok">Impacto alto · Esfuerzo bajo</span>
+      </div>
+      <p>La suscripción Quincenal/Mensual ya funciona muy bien con <strong>5% off + envío gratis</strong> — ese mix está correctamente incentivado y es la base de la recurrencia. Lo que falta es <strong>un quiz de entrada en la home, tipo Food For Joe</strong>: 5 preguntas (especie, raza, peso, edad, sensibilidades) que reduzcan los 200 SKUs a 1-3 productos recomendados y precarguen la suscripción con la cadencia óptima. Captura zero-party data, dirige al cliente correcto desde el primer clic y alimenta segmentación de Klaviyo y audiencias Meta.</p>
+      <div class="reco">Impacto estimado: <strong>+400-600K€/año</strong> por mejor CR del cliente nuevo. Activable en 6-8 semanas. La suscripción se mantiene como está — sólo se le añade un on-ramp.</div>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head">
+        <div class="finding-title">2. Rediseñar la web como página de marca premium</div>
+        <span class="badge b-ok">Impacto alto · Esfuerzo medio</span>
+      </div>
+      <p>Hoy la web es una plantilla Shopify de 2018: hero con 4 banners genéricos, PDP sin objeciones, sin calculadora, navegación que duplica entradas por especie y por gama, sin storytelling de Tenderize ni de Lorca. La web ya convierte mejor que la de los líderes (bounce 27,95%) pero por dependencia del cliente recurrente — no por mérito del diseño. Un rediseño bien hecho captura al cliente nuevo que hoy no convierte.</p>
+      <div class="reco">Impacto estimado: <strong>+400-700K€/año</strong> en CR (de 2% a 2,8-3,2%). Sección 05 de este documento desarrolla el rediseño componente a componente.</div>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head">
+        <div class="finding-title">3. Activar el mix de canales de captación</div>
+        <span class="badge b-ok">Impacto alto · Esfuerzo medio-alto</span>
+      </div>
+      <p>Hoy el 73% del tráfico es Organic Search y el 56% son búsquedas por la propia marca ("alpha spirit"). Cero Paid Search, cero Display, cero Paid Social. Dogfy y Edgard &amp; Cooper meten 25-32% del tráfico en esos tres canales para llegar a 240-290K visitas/mes. Patitas&amp;Co lo hace con SEO + contenido. La estrategia híbrida combina ambos.</p>
+      <div class="reco">Inversión recomendada año 1: <strong>~280K€/año en paid (≈800€/día)</strong> dentro del presupuesto lean de 350K€ + <strong>SEO + linkbuilding sectorial</strong>. Reparto Meta 55% · Google 20% · TikTok 10% · YouTube 8% · Influencer 7%.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNÓSTICO -->
+<section id="diagnostico">
+  <div class="sec-tag">02 · Diagnóstico actual</div>
+  <h2>Alpha Spirit hoy<br>en <em>SimilarWeb</em>.</h2>
+  <p class="sec-lede">Radiografía objetiva del posicionamiento digital actual. Datos extraídos de SimilarWeb el 4 de junio de 2026, ventana Feb 2026 – Abr 2026 (3 meses). Reproducción fiel del panel real consultado.</p>
+
+  <div class="sw-card featured">
+    <div class="sw-bar"><span>SimilarWeb · Website Performance</span><a href="https://www.similarweb.com/website/aspiritpetfood.store/" target="_blank">aspiritpetfood.store ↗</a></div>
+    <div class="sw-head">
+      <div class="sw-logo alpha">α</div>
+      <div class="sw-title">
+        <h4>aspiritpetfood.store</h4>
+        <div class="sw-desc">At Alpha Spirit we are committed to the well-being and natural nutrition of dogs and cats. — Sede Lorca, Murcia</div>
+      </div>
+      <div class="sw-cta">Feb 2026 – Abr 2026 (3M)</div>
+    </div>
+    <div class="sw-body">
+      <div class="sw-kpi-grid">
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Total visits (3M)</div>
+          <div class="sw-kpi-val">24.049</div>
+          <div class="sw-kpi-trend sw-trend-down">↓ −17,08% from last month</div>
+        </div>
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Device distribution</div>
+          <div class="sw-device">
+            <svg class="sw-donut" viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="#cfd9ff" stroke-width="6"/><circle cx="18" cy="18" r="14" fill="none" stroke="#3164f4" stroke-width="6" stroke-dasharray="50.21 87.96" stroke-dashoffset="0" transform="rotate(-90 18 18)"/></svg>
+            <div class="sw-donut-legend">
+              <div class="leg"><span class="leg-dot" style="background:#3164f4"></span>Desktop 57,08%</div>
+              <div class="leg"><span class="leg-dot" style="background:#cfd9ff"></span>Mobile 42,92%</div>
+            </div>
+          </div>
+        </div>
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Ranks</div>
+          <div style="font-size:14px;line-height:1.7">
+            <div>Global rank · <strong>#1.898.000</strong></div>
+            <div>🇪🇸 Spain rank · <strong>#54.433</strong></div>
+            <div>Pet Food & Supplies · <strong>#6.268</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sw-section-label">Engagement overview <span class="lbl-meta">· Feb 2026 – Abr 2026 · Worldwide</span></div>
+      <div class="sw-engagement">
+        <div class="sw-eng-item"><div class="label">Monthly visits</div><div class="val">8.016</div></div>
+        <div class="sw-eng-item"><div class="label">Pages / visit</div><div class="val">4,45</div></div>
+        <div class="sw-eng-item"><div class="label">Visit duration</div><div class="val">00:02:19</div></div>
+        <div class="sw-eng-item"><div class="label">Bounce rate</div><div class="val" style="color:#15803d">27,95%</div></div>
+      </div>
+
+      <div class="sw-section-label">Top countries</div>
+      <div style="background:#fff;border:1px solid #eef0f3;border-radius:6px;padding:18px">
+        <div class="sw-geo-list">
+          <div class="sw-geo-row"><span class="name">🇪🇸 Spain</span><div class="bar-wrap"><div class="bar" style="width:83.49%"></div></div><span class="pct">83,49%</span><span class="ch sw-trend-down">↓ −12,55%</span></div>
+          <div class="sw-geo-row"><span class="name">🇵🇹 Portugal</span><div class="bar-wrap"><div class="bar" style="width:7.34%"></div></div><span class="pct">7,34%</span><span class="ch sw-trend-down">↓ −7,32%</span></div>
+          <div class="sw-geo-row"><span class="name">🇲🇽 Mexico</span><div class="bar-wrap"><div class="bar" style="width:3.19%"></div></div><span class="pct">3,19%</span><span class="ch sw-trend-down">↓ −64,40%</span></div>
+          <div class="sw-geo-row"><span class="name">🇵🇱 Poland</span><div class="bar-wrap"><div class="bar" style="width:1.98%"></div></div><span class="pct">1,98%</span><span class="ch sw-trend-down">↓ −88,81%</span></div>
+          <div class="sw-geo-row"><span class="name">🇺🇸 United States</span><div class="bar-wrap"><div class="bar" style="width:1.83%"></div></div><span class="pct">1,83%</span><span class="ch sw-trend-down">↓ −86,72%</span></div>
+        </div>
+      </div>
+
+      <div class="sw-section-label" style="margin-top:24px">Marketing channels</div>
+      <div style="background:#fff;border:1px solid #eef0f3;border-radius:6px;padding:24px 18px">
+        <div class="sw-channels">
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:32px"><span class="sw-ch-val">23,27%</span></div><div class="sw-ch-name">Direct</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:102px"><span class="sw-ch-val">73,16%</span></div><div class="sw-ch-name">Org. Search</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar zero"><span class="sw-ch-val">0%</span></div><div class="sw-ch-name">Paid Search</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:4px"><span class="sw-ch-val">1,85%</span></div><div class="sw-ch-name">Referrals</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar zero"><span class="sw-ch-val">0%</span></div><div class="sw-ch-name">Display</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar zero"><span class="sw-ch-val">0%</span></div><div class="sw-ch-name">Org. Social</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar zero"><span class="sw-ch-val">0%</span></div><div class="sw-ch-name">Paid Social</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:3px"><span class="sw-ch-val">1,72%</span></div><div class="sw-ch-name">Email</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sw-foot"><span>Fuente: SimilarWeb · captura 4-jun-2026</span><span>Industry: Pet Food & Supplies</span></div>
+  </div>
+
+  <div class="callout crit">
+    <div class="ico">!</div>
+    <div>
+      <h4>El 56% del tráfico orgánico es búsqueda de marca</h4>
+      <p>Top organic non-branded: "alpha spirit" (56,32%, ↓ −58,40%) y "alphaspirit" (15,52%). La marca ya tira sola del cliente que la conoce — no hay captación de demanda nueva. Tres canales (Paid Search, Display, Paid Social) están literalmente a 0%. Son las tres palancas que Dogfy, Edgard &amp; Cooper y los DTC usan para llegar a 240-290K visitas/mes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BENCHMARK -->
+<section id="benchmark">
+  <div class="sec-tag">03 · Benchmark SimilarWeb</div>
+  <h2>Dos modelos<br>en el mismo <em>mercado</em>.</h2>
+  <p class="sec-lede">Cuatro competidores directos en pet food natural. Las capturas reproducen el panel real de cada marca en SimilarWeb (Feb-Abr 2026). Dos modelos opuestos están funcionando — solo uno está creciendo.</p>
+
+  <div class="gap-vis">
+    <h4 style="margin:0 0 18px;font-family:'Fraunces',serif;font-size:22px;font-weight:500;letter-spacing:-.3px">Visitas mensuales · escala real</h4>
+    <div class="gap-row"><span class="gap-name">Dogfy Diet</span><div class="gap-bar-wrap"><div class="gap-bar dogfy" style="width:100%">↓ −36% MoM</div></div><span class="gap-num">291.891</span></div>
+    <div class="gap-row"><span class="gap-name">Patitas&Co</span><div class="gap-bar-wrap"><div class="gap-bar patitas" style="width:83%">↑ +70% MoM</div></div><span class="gap-num">242.392</span></div>
+    <div class="gap-row"><span class="gap-name">Edgard & Cooper</span><div class="gap-bar-wrap"><div class="gap-bar edgard" style="width:83%">↓ −18% MoM</div></div><span class="gap-num">242.258</span></div>
+    <div class="gap-row"><span class="gap-name">Food For Joe</span><div class="gap-bar-wrap"><div class="gap-bar ffj" style="width:13%">↑ +49% MoM</div></div><span class="gap-num">39.407</span></div>
+    <div class="gap-row"><span class="gap-name">Natuka BARF</span><div class="gap-bar-wrap"><div class="gap-bar natuka" style="width:10%">↓ −11% MoM</div></div><span class="gap-num">~31.663</span></div>
+    <div class="gap-row"><span class="gap-name" style="color:var(--accent)">Alpha Spirit</span><div class="gap-bar-wrap"><div class="gap-bar alpha" style="width:2.7%">↓ −17%</div></div><span class="gap-num" style="color:var(--accent)">8.016</span></div>
+  </div>
+
+  <h3>Dogfy Diet · líder DTC paid en caída</h3>
+  <p>El referente español de comida cocinada al vapor con suscripción. Modelo DTC paid-first: invierte fuerte en Meta + Google + Display. Pierde tráfico de doble dígito en 2026 — fatiga creativa visible.</p>
+
+  <div class="sw-card">
+    <div class="sw-bar"><span>SimilarWeb · Website Performance</span><a href="https://www.similarweb.com/website/dogfydiet.com/" target="_blank">dogfydiet.com ↗</a></div>
+    <div class="sw-head">
+      <div class="sw-logo dogfy">DD</div>
+      <div class="sw-title">
+        <h4>dogfydiet.com</h4>
+        <div class="sw-desc">Crea el plan de alimentación 100% natural y personalizado para tu peludo en tan solo 2 minutos.</div>
+      </div>
+      <div class="sw-cta">Feb 2026 – Abr 2026 (3M)</div>
+    </div>
+    <div class="sw-body">
+      <div class="sw-kpi-grid">
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Total visits (3M)</div>
+          <div class="sw-kpi-val">875.674</div>
+          <div class="sw-kpi-trend sw-trend-down">↓ −36% from last month</div>
+        </div>
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Device distribution</div>
+          <div class="sw-device">
+            <svg class="sw-donut" viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="#cfd9ff" stroke-width="6"/><circle cx="18" cy="18" r="14" fill="none" stroke="#3164f4" stroke-width="6" stroke-dasharray="21.63 87.96" stroke-dashoffset="0" transform="rotate(-90 18 18)"/></svg>
+            <div class="sw-donut-legend">
+              <div class="leg"><span class="leg-dot" style="background:#3164f4"></span>Desktop 24,61%</div>
+              <div class="leg"><span class="leg-dot" style="background:#cfd9ff"></span>Mobile 75,39%</div>
+            </div>
+          </div>
+        </div>
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Ranks</div>
+          <div style="font-size:14px;line-height:1.7">
+            <div>Global · <strong>#184.879</strong></div>
+            <div>🇪🇸 Spain · <strong>#9.938</strong></div>
+            <div>Pet Food & Supplies · <strong>#445</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="sw-engagement">
+        <div class="sw-eng-item"><div class="label">Monthly visits</div><div class="val">291.891</div></div>
+        <div class="sw-eng-item"><div class="label">Pages / visit</div><div class="val">3,24</div></div>
+        <div class="sw-eng-item"><div class="label">Visit duration</div><div class="val">00:01:55</div></div>
+        <div class="sw-eng-item"><div class="label">Bounce rate</div><div class="val">50,95%</div></div>
+      </div>
+      <div class="sw-section-label">Top countries</div>
+      <div style="background:#fff;border:1px solid #eef0f3;border-radius:6px;padding:18px;margin-bottom:20px">
+        <div class="sw-geo-list">
+          <div class="sw-geo-row"><span class="name">🇮🇹 Italy</span><div class="bar-wrap"><div class="bar" style="width:41.79%"></div></div><span class="pct">41,79%</span><span class="ch sw-trend-down">↓ −39,65%</span></div>
+          <div class="sw-geo-row"><span class="name">🇪🇸 Spain</span><div class="bar-wrap"><div class="bar" style="width:33.77%"></div></div><span class="pct">33,77%</span><span class="ch sw-trend-down">↓ −35,22%</span></div>
+          <div class="sw-geo-row"><span class="name">🇫🇷 France</span><div class="bar-wrap"><div class="bar" style="width:17.82%"></div></div><span class="pct">17,82%</span><span class="ch sw-trend-down">↓ −40,22%</span></div>
+        </div>
+      </div>
+      <div class="sw-section-label">Marketing channels</div>
+      <div style="background:#fff;border:1px solid #eef0f3;border-radius:6px;padding:24px 18px">
+        <div class="sw-channels">
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:53px"><span class="sw-ch-val">37,79%</span></div><div class="sw-ch-name">Direct</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:26px"><span class="sw-ch-val">18,81%</span></div><div class="sw-ch-name">Org. Search</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:23px"><span class="sw-ch-val">16,31%</span></div><div class="sw-ch-name">Paid Search</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:6px"><span class="sw-ch-val">3,98%</span></div><div class="sw-ch-name">Referrals</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:16px"><span class="sw-ch-val">11,70%</span></div><div class="sw-ch-name">Display</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:2px"><span class="sw-ch-val">1,20%</span></div><div class="sw-ch-name">Org. Social</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:5px"><span class="sw-ch-val">3,86%</span></div><div class="sw-ch-name">Paid Social</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:8px"><span class="sw-ch-val">5,33%</span></div><div class="sw-ch-name">Email</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sw-foot"><span>Fuente: SimilarWeb · captura 4-jun-2026</span><span>72% del search es branded</span></div>
+  </div>
+
+  <h3 style="margin-top:80px">Patitas&Co · el SEO-first que está explotando</h3>
+  <p>Pet shop multi-marca con tiendas físicas en Madrid (Fuencarral 156, Narváez 27) + ecommerce. Modelo opuesto a Dogfy: organic search 61,7%, casi cero pago. <strong>Crece +70% MoM</strong> y ya iguala a los DTC líderes en escala. Es el patrón que Alpha Spirit puede copiar más fácil — base orgánica de marca compartida.</p>
+
+  <div class="sw-card win">
+    <div class="sw-bar"><span>SimilarWeb · Website Performance</span><a href="https://www.similarweb.com/website/patitasco.com/" target="_blank">patitasco.com ↗</a></div>
+    <div class="sw-head">
+      <div class="sw-logo patitas">🐾</div>
+      <div class="sw-title">
+        <h4>patitasco.com</h4>
+        <div class="sw-desc">Patitas & Co — Tienda de productos para mascotas con la mejor comida natural, pienso, comida húmeda, accesorios y mucho más.</div>
+      </div>
+      <div class="sw-cta">Feb 2026 – Abr 2026 (3M)</div>
+    </div>
+    <div class="sw-body">
+      <div class="sw-kpi-grid">
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Total visits (3M)</div>
+          <div class="sw-kpi-val">727.177</div>
+          <div class="sw-kpi-trend sw-trend-up">↑ +70,11% from last month</div>
+        </div>
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Device distribution</div>
+          <div class="sw-device">
+            <svg class="sw-donut" viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="#cfd9ff" stroke-width="6"/><circle cx="18" cy="18" r="14" fill="none" stroke="#3164f4" stroke-width="6" stroke-dasharray="19.68 87.96" stroke-dashoffset="0" transform="rotate(-90 18 18)"/></svg>
+            <div class="sw-donut-legend">
+              <div class="leg"><span class="leg-dot" style="background:#3164f4"></span>Desktop 22,38%</div>
+              <div class="leg"><span class="leg-dot" style="background:#cfd9ff"></span>Mobile 77,62%</div>
+            </div>
+          </div>
+        </div>
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Ranks</div>
+          <div style="font-size:14px;line-height:1.7">
+            <div>Global · <strong>#103.357</strong></div>
+            <div>🇪🇸 Spain · <strong>#2.870</strong></div>
+            <div>Pet Food & Supplies · <strong>#215</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="sw-engagement">
+        <div class="sw-eng-item"><div class="label">Monthly visits</div><div class="val">242.392</div></div>
+        <div class="sw-eng-item"><div class="label">Pages / visit</div><div class="val" style="color:#15803d">5,86</div></div>
+        <div class="sw-eng-item"><div class="label">Visit duration</div><div class="val" style="color:#15803d">00:02:46</div></div>
+        <div class="sw-eng-item"><div class="label">Bounce rate</div><div class="val">46,20%</div></div>
+      </div>
+      <div class="sw-section-label">Top countries</div>
+      <div style="background:#fff;border:1px solid #eef0f3;border-radius:6px;padding:18px;margin-bottom:20px">
+        <div class="sw-geo-list">
+          <div class="sw-geo-row"><span class="name">🇪🇸 Spain</span><div class="bar-wrap"><div class="bar" style="width:61.65%"></div></div><span class="pct">61,65%</span><span class="ch sw-trend-up">↑ +100,67%</span></div>
+          <div class="sw-geo-row"><span class="name">🇲🇽 Mexico</span><div class="bar-wrap"><div class="bar" style="width:7.38%"></div></div><span class="pct">7,38%</span><span class="ch sw-trend-up">↑ +57,22%</span></div>
+          <div class="sw-geo-row"><span class="name">🇨🇴 Colombia</span><div class="bar-wrap"><div class="bar" style="width:5.39%"></div></div><span class="pct">5,39%</span><span class="ch sw-trend-up">↑ +102,23%</span></div>
+          <div class="sw-geo-row"><span class="name">🇵🇪 Peru</span><div class="bar-wrap"><div class="bar" style="width:4.77%"></div></div><span class="pct">4,77%</span><span class="ch sw-trend-up">↑ +27,98%</span></div>
+          <div class="sw-geo-row"><span class="name">🇦🇷 Argentina</span><div class="bar-wrap"><div class="bar" style="width:4.43%"></div></div><span class="pct">4,43%</span><span class="ch sw-trend-up">↑ +17,95%</span></div>
+        </div>
+      </div>
+      <div class="sw-section-label">Marketing channels</div>
+      <div style="background:#fff;border:1px solid #eef0f3;border-radius:6px;padding:24px 18px">
+        <div class="sw-channels">
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:41px"><span class="sw-ch-val">29,06%</span></div><div class="sw-ch-name">Direct</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:86px"><span class="sw-ch-val">61,71%</span></div><div class="sw-ch-name">Org. Search</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar zero"><span class="sw-ch-val">0,12%</span></div><div class="sw-ch-name">Paid Search</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:4px"><span class="sw-ch-val">2,95%</span></div><div class="sw-ch-name">Referrals</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar zero"><span class="sw-ch-val">0,46%</span></div><div class="sw-ch-name">Display</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:4px"><span class="sw-ch-val">2,81%</span></div><div class="sw-ch-name">Org. Social</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar zero"><span class="sw-ch-val">0,11%</span></div><div class="sw-ch-name">Paid Social</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:3px"><span class="sw-ch-val">2,40%</span></div><div class="sw-ch-name">Email</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sw-foot"><span>Fuente: SimilarWeb · captura 4-jun-2026</span><span>Pages/visit 5,86 — el mejor del sector</span></div>
+  </div>
+
+  <h3 style="margin-top:80px">Edgard & Cooper · multi-país, mix sano</h3>
+  <p>Marca belga premium con propósito (donación a refugios). Mix más equilibrado del sector: organic 31,1% + paid search 16,5% + display 10,2%. Multi-país real (FR + NL + BE + DE + UK), 81,6% mobile. Pierde tráfico (−18%) pero menos que Dogfy.</p>
+
+  <div class="sw-card">
+    <div class="sw-bar"><span>SimilarWeb · Website Performance</span><a href="https://www.similarweb.com/website/edgardcooper.com/" target="_blank">edgardcooper.com ↗</a></div>
+    <div class="sw-head">
+      <div class="sw-logo edgard">E&C</div>
+      <div class="sw-title">
+        <h4>edgardcooper.com</h4>
+        <div class="sw-desc">Junk free food. Real food, for real pets. — Bélgica / internacional</div>
+      </div>
+      <div class="sw-cta">Feb 2026 – Abr 2026 (3M)</div>
+    </div>
+    <div class="sw-body">
+      <div class="sw-kpi-grid">
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Total visits (3M)</div>
+          <div class="sw-kpi-val">726.773</div>
+          <div class="sw-kpi-trend sw-trend-down">↓ −18,03% from last month</div>
+        </div>
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Device distribution</div>
+          <div class="sw-device">
+            <svg class="sw-donut" viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="#cfd9ff" stroke-width="6"/><circle cx="18" cy="18" r="14" fill="none" stroke="#3164f4" stroke-width="6" stroke-dasharray="16.21 87.96" stroke-dashoffset="0" transform="rotate(-90 18 18)"/></svg>
+            <div class="sw-donut-legend">
+              <div class="leg"><span class="leg-dot" style="background:#3164f4"></span>Desktop 18,43%</div>
+              <div class="leg"><span class="leg-dot" style="background:#cfd9ff"></span>Mobile 81,57%</div>
+            </div>
+          </div>
+        </div>
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Ranks</div>
+          <div style="font-size:14px;line-height:1.7">
+            <div>Global · <strong>#162.824</strong></div>
+            <div>🇫🇷 France · <strong>#15.562</strong></div>
+            <div>Pet Food & Supplies · <strong>#386</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="sw-engagement">
+        <div class="sw-eng-item"><div class="label">Monthly visits</div><div class="val">242.258</div></div>
+        <div class="sw-eng-item"><div class="label">Pages / visit</div><div class="val">3,78</div></div>
+        <div class="sw-eng-item"><div class="label">Visit duration</div><div class="val">00:02:14</div></div>
+        <div class="sw-eng-item"><div class="label">Bounce rate</div><div class="val">45,35%</div></div>
+      </div>
+      <div class="sw-section-label">Marketing channels</div>
+      <div style="background:#fff;border:1px solid #eef0f3;border-radius:6px;padding:24px 18px">
+        <div class="sw-channels">
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:38px"><span class="sw-ch-val">27,31%</span></div><div class="sw-ch-name">Direct</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:44px"><span class="sw-ch-val">31,08%</span></div><div class="sw-ch-name">Org. Search</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:23px"><span class="sw-ch-val">16,53%</span></div><div class="sw-ch-name">Paid Search</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:6px"><span class="sw-ch-val">4,40%</span></div><div class="sw-ch-name">Referrals</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:14px"><span class="sw-ch-val">10,19%</span></div><div class="sw-ch-name">Display</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:5px"><span class="sw-ch-val">3,18%</span></div><div class="sw-ch-name">Org. Social</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:5px"><span class="sw-ch-val">3,31%</span></div><div class="sw-ch-name">Paid Social</div></div>
+          <div class="sw-ch"><div class="sw-ch-bar" style="height:5px"><span class="sw-ch-val">3,72%</span></div><div class="sw-ch-name">Email</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sw-foot"><span>Fuente: SimilarWeb · captura 4-jun-2026</span><span>Mejor estructura de mix del sector</span></div>
+  </div>
+
+  <h3 style="margin-top:80px">Food For Joe · challenger acelerando</h3>
+  <p>Comida cocinada para perros y gatos, modelo similar al de Alpha Spirit. Crece +49% MoM con presupuesto pequeño. España 67,8% + LatAm (MX, PE, CO, AR). Pages/visit 4,67 — segundo mejor engagement del sector.</p>
+
+  <div class="sw-card">
+    <div class="sw-bar"><span>SimilarWeb · Website Performance</span><a href="https://www.similarweb.com/website/foodforjoe.es/" target="_blank">foodforjoe.es ↗</a></div>
+    <div class="sw-head">
+      <div class="sw-logo foodforjoe">FFJ</div>
+      <div class="sw-title">
+        <h4>foodforjoe.es</h4>
+        <div class="sw-desc">Ingredientes frescos 100% naturales, recetas y raciones adaptadas a las necesidades de tu perro o gato.</div>
+      </div>
+      <div class="sw-cta">Feb 2026 – Abr 2026 (3M)</div>
+    </div>
+    <div class="sw-body">
+      <div class="sw-kpi-grid">
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Total visits (3M)</div>
+          <div class="sw-kpi-val">118.222</div>
+          <div class="sw-kpi-trend sw-trend-up">↑ +49,37% from last month</div>
+        </div>
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Engagement</div>
+          <div style="font-size:14px;line-height:1.7">
+            <div>Monthly · <strong>39.407</strong></div>
+            <div>Pages/visit · <strong>4,67</strong></div>
+            <div>Duration · <strong>2:25</strong></div>
+            <div>Bounce · <strong>38,70%</strong></div>
+          </div>
+        </div>
+        <div class="sw-kpi">
+          <div class="sw-kpi-label">Ranks</div>
+          <div style="font-size:14px;line-height:1.7">
+            <div>Global · <strong>#434.815</strong></div>
+            <div>🇪🇸 Spain · <strong>#11.677</strong></div>
+            <div>Pet Food · <strong>#1.275</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="sw-section-label">Top countries</div>
+      <div style="background:#fff;border:1px solid #eef0f3;border-radius:6px;padding:18px">
+        <div class="sw-geo-list">
+          <div class="sw-geo-row"><span class="name">🇪🇸 Spain</span><div class="bar-wrap"><div class="bar" style="width:67.76%"></div></div><span class="pct">67,76%</span><span class="ch sw-trend-up">↑ +90,89%</span></div>
+          <div class="sw-geo-row"><span class="name">🇲🇽 Mexico</span><div class="bar-wrap"><div class="bar" style="width:8.10%"></div></div><span class="pct">8,10%</span><span class="ch sw-trend-down">↓ −20,63%</span></div>
+          <div class="sw-geo-row"><span class="name">🇵🇪 Peru</span><div class="bar-wrap"><div class="bar" style="width:5.92%"></div></div><span class="pct">5,92%</span><span class="ch sw-trend-down">↓ −23,06%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="sw-foot"><span>Fuente: SimilarWeb · captura 4-jun-2026</span><span>+49% MoM — el patrón replicable</span></div>
+  </div>
+
+  <h3 style="margin-top:80px">Comparativa cruzada</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Marca</th><th>Visitas/mes</th><th>Tendencia</th><th>Pages/visit</th><th>Duración</th><th>Bounce</th><th>Mobile</th><th>País #1</th><th>Rank pet</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight"><td><strong>Alpha Spirit</strong></td><td><strong>8.016</strong></td><td><span class="dot dot-r"></span>−17%</td><td>4,45</td><td>2:19</td><td style="color:#15803d;font-weight:600">27,95%</td><td>42,9%</td><td>🇪🇸 83,5%</td><td>#6.268</td></tr>
+        <tr><td>Dogfy Diet</td><td>291.891</td><td><span class="dot dot-r"></span>−36%</td><td>3,24</td><td>1:55</td><td>50,95%</td><td>75,4%</td><td>🇮🇹 41,8%</td><td>#445</td></tr>
+        <tr class="win"><td><strong>Patitas&Co</strong></td><td><strong>242.392</strong></td><td style="color:#15803d;font-weight:600"><span class="dot dot-g"></span>+70%</td><td><strong>5,86</strong></td><td><strong>2:46</strong></td><td>46,20%</td><td>77,6%</td><td>🇪🇸 61,7%</td><td>#215</td></tr>
+        <tr><td>Edgard & Cooper</td><td>242.258</td><td><span class="dot dot-r"></span>−18%</td><td>3,78</td><td>2:14</td><td>45,35%</td><td>81,6%</td><td>🇫🇷 27,8%</td><td>#386</td></tr>
+        <tr><td>Food For Joe</td><td>39.407</td><td style="color:#15803d;font-weight:600"><span class="dot dot-g"></span>+49%</td><td>4,67</td><td>2:25</td><td>38,70%</td><td>53,8%</td><td>🇪🇸 67,8%</td><td>#1.275</td></tr>
+        <tr><td>Natuka BARF</td><td>~31.663</td><td><span class="dot dot-a"></span>−11%</td><td>—</td><td>—</td><td>—</td><td>—</td><td>🇪🇸</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout win">
+    <div class="ico">✓</div>
+    <div>
+      <h4>Dos modelos funcionan, solo uno está creciendo</h4>
+      <p><strong>DTC paid-first</strong> (Dogfy, E&amp;C) → 240-290K visitas/mes pero pierden −18 a −36%. <strong>SEO + organic + LatAm</strong> (Patitas&amp;Co +70%, Food For Joe +49%) → crecen a doble dígito mensual. Alpha Spirit ya está estructuralmente más cerca del segundo modelo (73% organic). La oportunidad es combinar ambas palancas: copiar el SEO de Patitas + activar paid como Dogfy + UGC como Food For Joe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LAS 8 FUGAS DEL EMBUDO -->
+<section id="fugas">
+  <div class="sec-tag">04 · Las 8 fugas</div>
+  <h2>1,4 a 2,2M€<br>al año <em>se evaporan</em>.</h2>
+  <p class="sec-lede">Ocho fugas concretas detectadas en la auditoría UX y el embudo reconstruido. Antes de meter un euro extra en captación hay que tapar estos agujeros — si no, cada euro nuevo se pierde en el funnel. A continuación cada fuga con el fix técnico, la herramienta y el impacto esperado.</p>
+
+  <div class="fix-card">
+    <div class="body">
+      <div class="meta-row"><span class="badge b-crit">CRÍTICA</span><span class="badge b-info">Captación</span></div>
+      <h4>1. No hay quiz de entrada que segmente al cliente</h4>
+      <p>El catálogo tiene 200 SKUs y el cliente nuevo aterriza directamente en una home-catálogo sin contexto. <strong>Food For Joe</strong> resuelve esto con un quiz de entrada de 5 pasos ("Crea el plan en 2 minutos") que reduce el catálogo a 1-3 productos recomendados y dispara la conversión. Alpha Spirit no tiene esa pieza: el cliente nuevo se pierde entre gamas y formatos, y sólo convierte el recurrente que ya sabe lo que busca. La suscripción (5% + envío gratis) ya funciona bien — falta llevar al cliente nuevo hasta ella.</p>
+      <div class="evidence">Home aspiritpetfood.store: 4 banners genéricos + listado. Sin quiz, sin selector por perro, sin recomendador. Food For Joe coloca el quiz como CTA principal del hero.</div>
+    </div>
+    <div class="side">
+      <h5>Fix</h5>
+      Quiz en home (no popup) de 5 pasos: especie, raza, peso, edad, sensibilidades → 1-3 productos + suscripción precargada con cadencia óptima por peso.
+      <h5>Tecnología</h5>
+      Octane AI / Shop Quiz / componente custom Shopify (~60€/mes).
+      <h5>Tiempo</h5>
+      6-8 semanas (UX + lógica + integración Klaviyo y Meta CAPI).
+      <h5>Impacto/año</h5>
+      <div class="euros">+400-600K€</div>
+    </div>
+  </div>
+
+  <div class="fix-card">
+    <div class="body">
+      <div class="meta-row"><span class="badge b-crit">CRÍTICA</span><span class="badge b-info">PDP → ATC</span></div>
+      <h4>2. PDP no contesta objeciones</h4>
+      <p>Falta calculadora de raciones por peso del perro, FAQ con objeciones reales (diarrea por transición, conservación del semihúmedo, instrucciones de microondas), reviews con foto filtradas por raza/edad/problema. El cliente nuevo llega y no encuentra respuesta a las 3-5 dudas que decide su compra. Trustpilot FR tiene 15% de reviews 1-star, mayoría por "diarrea" — exactamente la objeción que la PDP no responde.</p>
+      <div class="evidence">Ficha actual de "The Only One Aves de Corral" muestra descripción + ingredientes + composición analítica. Cero módulos de prueba social con imagen, cero calculadora, cero FAQ.</div>
+    </div>
+    <div class="side">
+      <h5>Fix</h5>
+      Bloque "Tu perro" con calculadora (peso + edad → gramos/día). FAQ con 8 objeciones acordeón. Reviews con foto filtrables (Loox, Judge.me o Yotpo).
+      <h5>Tecnología</h5>
+      Loox (~40€/mes) + componente custom raciones (8h dev).
+      <h5>Tiempo</h5>
+      3 semanas.
+      <h5>Impacto/año</h5>
+      <div class="euros">+250-400K€</div>
+    </div>
+  </div>
+
+  <div class="fix-card">
+    <div class="body">
+      <div class="meta-row"><span class="badge b-crit">CRÍTICA</span><span class="badge b-info">Checkout</span></div>
+      <h4>3. Checkout sin Bizum, SeQura, Klarna ni PayPal</h4>
+      <p>Métodos actuales: Visa, Mastercard, Amex, Maestro, Apple Pay, Google Pay, Shop Pay, Union Pay. Falta Bizum (~25M usuarios España), SeQura/Klarna (BNPL líderes para ticket alto) y PayPal (compradores que no quieren introducir tarjeta nueva). Para sacos de 76€ o compras múltiples, "Paga en 3 plazos sin intereses" reduce fricción de ticket alto y aumenta AOV.</p>
+    </div>
+    <div class="side">
+      <h5>Fix</h5>
+      Activar Bizum + SeQura/Klarna 3 plazos + PayPal desde Shopify Payments. Mostrar logos visibles en PDP y checkout.
+      <h5>Tecnología</h5>
+      Shopify Payments + apps oficiales (gratuito en setup).
+      <h5>Tiempo</h5>
+      1-2 semanas (alta + verificación).
+      <h5>Impacto/año</h5>
+      <div class="euros">+150-250K€</div>
+    </div>
+  </div>
+
+  <div class="fix-card">
+    <div class="body">
+      <div class="meta-row"><span class="badge b-crit">CRÍTICA</span><span class="badge b-info">PDP → ATC</span></div>
+      <h4>4. Stock-outs en packs hero</h4>
+      <p>4 de 16 packs aparecen "Agotado" en /collections/packs-perro (Aves de Corral 12kg, Multiprotein 12kg, Soft Food Aves 9kg). El cross-sell también muestra agotados. Cada agotado en home/PDP es un cliente que abandona o sustituye por opción peor — y arruina la confianza.</p>
+    </div>
+    <div class="side">
+      <h5>Fix</h5>
+      Alerta automática a producción cuando stock &lt;15 días. Filtrar agotados del cross-sell. Botón "avísame cuando vuelva" con captura email.
+      <h5>Tecnología</h5>
+      Back in Stock Klaviyo + Shopify Flow.
+      <h5>Tiempo</h5>
+      1 semana técnica + ajuste producción.
+      <h5>Impacto/año</h5>
+      <div class="euros">+80-140K€</div>
+    </div>
+  </div>
+
+  <div class="fix-card">
+    <div class="body">
+      <div class="meta-row"><span class="badge b-warn">ALTA</span><span class="badge b-info">Sesión → PDP</span></div>
+      <h4>5. Hero home no comunica Tenderize ni semihúmedo</h4>
+      <p>El hero actual son 4 banners genéricos ("Lo mejor en alimentación", "Alimentación 100% natural", "Calidad premium", "Superalimentos al poder"). Ninguno cuenta la historia que vende: cocinado a baja temperatura en Lorca, 85% carne fresca, snack de regalo, tecnología Tenderize. Edgard &amp; Cooper vende propósito; Dogfy vende plan personalizado; Alpha Spirit vende SKUs.</p>
+    </div>
+    <div class="side">
+      <h5>Fix</h5>
+      Hero único con vídeo 6s de Tenderize (cocción a baja Tª) + claim "Cocinado a baja temperatura. En Lorca." + CTA "Empezar el quiz".
+      <h5>Tecnología</h5>
+      Vídeo MP4 1080p comprimido (&lt;2MB) + componente Liquid Shopify.
+      <h5>Tiempo</h5>
+      2-3 semanas (vídeo + edit + integración).
+      <h5>Impacto/año</h5>
+      <div class="euros">+120-200K€</div>
+    </div>
+  </div>
+
+  <div class="fix-card">
+    <div class="body">
+      <div class="meta-row"><span class="badge b-warn">ALTA</span><span class="badge b-info">SEO + i18n</span></div>
+      <h4>6. EN/IT/PT sin traducir</h4>
+      <p>Las versiones EN, IT y PT del dominio muestran menús, banners y CTAs en español. Google indexa contenido duplicado en castellano para los tres mercados. El mercado europeo está ciego — y un 90% del tráfico EN/IT/PT acaba rebotando porque la web no le habla en su idioma.</p>
+    </div>
+    <div class="side">
+      <h5>Fix</h5>
+      Weglot o Langify para traducción gestionada + hreflang correcto + Stripe local (EUR/GBP) + reescritura de copy (no traducción literal).
+      <h5>Tecnología</h5>
+      Weglot (~70€/mes) o Shopify Markets + traductor profesional.
+      <h5>Tiempo</h5>
+      6-8 semanas (traducción + revisión + setup).
+      <h5>Impacto/año</h5>
+      <div class="euros">+100-180K€</div>
+    </div>
+  </div>
+
+  <div class="fix-card">
+    <div class="body">
+      <div class="meta-row"><span class="badge b-warn">ALTA</span><span class="badge b-info">Pre-compra</span></div>
+      <h4>7. Sin WhatsApp ni chat</h4>
+      <p>Solo atención email L-V 6:30-15:00. Las dudas de "¿le va bien a mi raza?", "¿se puede mezclar con seco?", "¿cuánto le doy a mi perro de 7kg?" se pierden — y con ellas la conversión. WhatsApp Business API + chat con plantillas frecuentes resuelve el 80% en &lt;5 minutos.</p>
+    </div>
+    <div class="side">
+      <h5>Fix</h5>
+      Tidio o Crisp + WhatsApp Business API + 15 plantillas pre-cargadas + botón flotante mobile.
+      <h5>Tecnología</h5>
+      Tidio (~30€/mes) + WhatsApp Business gratis.
+      <h5>Tiempo</h5>
+      2 semanas (setup + plantillas + formación atención).
+      <h5>Impacto/año</h5>
+      <div class="euros">+60-100K€</div>
+    </div>
+  </div>
+
+  <div class="fix-card">
+    <div class="body">
+      <div class="meta-row"><span class="badge b-warn">ALTA</span><span class="badge b-info">Cross-sell + PDP</span></div>
+      <h4>8. Recomendados sin compra directa + PDP con scroll largo hasta el CTA</h4>
+      <p>Dos fricciones que penalizan AOV y CR del cliente decidido. <strong>(a)</strong> El módulo "Te puede interesar" / "Suelen comprar juntos" lleva al usuario a la ficha del producto recomendado — no permite añadir al carrito desde la home, la PDP o el carrito. Cada clic extra entre el deseo y la compra mata cross-sell. <strong>(b)</strong> En la PDP el botón "Añadir al carrito" queda enterrado tras un scroll largo de descripción + ingredientes + composición analítica + valores nutricionales; en mobile el cliente nuevo no llega.</p>
+      <div class="evidence">PDP de "The Only One" actual: el CTA aparece después de scrollear ~3 pantallas en mobile. Módulos "También te puede interesar" requieren clic → ficha → atc (3 pasos vs 1).</div>
+    </div>
+    <div class="side">
+      <h5>Fix</h5>
+      (a) Botón "Añadir al carrito" directo (con selector de tamaño quick-view) en cada tarjeta de recomendados. (b) PDP con CTA sticky mobile + bloque de precio/suscripción/atc en primer pliegue + acordeón para ingredientes/composición.
+      <h5>Tecnología</h5>
+      Componente quick-add Shopify (~6h dev) + reordenación PDP (~10h dev).
+      <h5>Tiempo</h5>
+      2 semanas.
+      <h5>Impacto/año</h5>
+      <div class="euros">+80-140K€</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="ico">€</div>
+    <div>
+      <h4>Total recuperable conservador: +1,4M€ a +2,2M€/año sin tocar paid</h4>
+      <p>Esta es la base sobre la que tiene sentido invertir en escala. Si se mete paid antes de tapar las fugas, el dinero se evapora en el funnel.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REDISEÑO WEB -->
+<section id="diseno">
+  <div class="sec-tag">05 · Rediseño web</div>
+  <h2>Una web que <em>cuida</em><br>tanto como el producto.</h2>
+  <p class="sec-lede">El rediseño detallado de aspiritpetfood.store, componente a componente. No es un facelift — es traducir la promesa del producto (cocinado en Lorca, 85% carne fresca, Tenderize) al lenguaje visual y de interacción que ya esperan los compradores premium en 2026. Wireframes, paleta, tipografía y especificación técnica.</p>
+
+  <!-- 5.1 IDENTIDAD VISUAL -->
+  <h3>5.1 Identidad visual · paleta y tipografía</h3>
+  <p>El diseño actual usa una paleta corporativa fría (negro + rojo + blanco plano) que no refleja la naturaleza artesanal del producto. Propongo una paleta inspirada en la cocina del producto — terracota cálido, verde profundo de hierba, crema cocinada — y un sistema tipográfico con serif editorial para titulares (transmite oficio, cuidado, tradición) y sans para cuerpo (claridad, modernidad).</p>
+
+  <h4>Moodboard de paleta</h4>
+  <div class="mood">
+    <div class="mood-card"><div class="mood-swatch sw-ink">Ink #0e0e0c</div><div class="mood-body"><h4>Tinta · fondo oscuro</h4><p>Hero, footer, llamadas serias. Reemplaza al negro plano actual.</p></div></div>
+    <div class="mood-card"><div class="mood-swatch sw-cream">Cream #fbf8f1</div><div class="mood-body"><h4>Crema · fondo principal</h4><p>Calidez de cocina. Sustituye al blanco frío de Shopify.</p></div></div>
+    <div class="mood-card"><div class="mood-swatch sw-terra">Terracota #c44a1c</div><div class="mood-body"><h4>Terracota · color marca</h4><p>CTAs, acentos. Tierra de Lorca + cocción.</p></div></div>
+    <div class="mood-card"><div class="mood-swatch sw-green">Verde profundo #3a5a3f</div><div class="mood-body"><h4>Verde · naturaleza</h4><p>Badges "natural", "sin cereales", refugio.</p></div></div>
+    <div class="mood-card"><div class="mood-swatch sw-gold">Oro #b8893a</div><div class="mood-body"><h4>Oro · premium</h4><p>Reviews 5★, sellos, garantías.</p></div></div>
+    <div class="mood-card"><div class="mood-swatch sw-clay">Arcilla #e89a6b</div><div class="mood-body"><h4>Arcilla · cálido suave</h4><p>Cabeceras secundarias, hover.</p></div></div>
+  </div>
+
+  <h4 style="margin-top:48px">Sistema tipográfico</h4>
+  <div class="type-spec">
+    <div class="type-card serif">
+      <div class="meta">Display · Fraunces (serif)</div>
+      <div class="specimen">Comida cocinada,<br>no procesada.</div>
+      <p class="desc">Serif editorial con cursiva expresiva para titulares y momentos editoriales. Transmite oficio, cuidado, atención al detalle. Open source de Google Fonts. Sustituye a la display sans actual.</p>
+    </div>
+    <div class="type-card sans">
+      <div class="meta">Texto · Inter (sans)</div>
+      <div class="specimen">85% carne y pescado<br>fresco real.</div>
+      <p class="desc">Sans neutra y legible para cuerpo, navegación, PDP. Mejor rendimiento mobile, optimizado para pantalla. Pareja natural con Fraunces. Open source de Google Fonts.</p>
+    </div>
+  </div>
+
+  <!-- 5.2 HOME -->
+  <h3 style="margin-top:80px">5.2 Home · de catálogo plano a página de marca</h3>
+  <p>La home actual es un catálogo: 4 banners genéricos + listado de productos. La home propuesta es una secuencia editorial: hero que cuenta el producto, quiz que captura intención, prueba social, gamas con propósito, recetas, suscripción.</p>
+
+  <div class="ba">
+    <div class="ba-col">
+      <span class="ba-label before">Antes · actual</span>
+      <div class="wire">
+        <div class="wire-header">
+          <div class="wire-dot"><span></span><span></span><span></span></div>
+          <span class="wire-url">aspiritpetfood.store</span>
+          <span class="wire-tag">Hoy</span>
+        </div>
+        <div class="wire-grid">
+          <div class="block sub" style="font-size:11px;padding:8px">Top bar promo 10% off newsletter</div>
+          <div class="block sub" style="font-size:11px;padding:8px">Navbar: Inicio · Perros · Gatos · Packs · Blog · Sobre</div>
+          <div class="block tall">Hero 1<br><span style="font-size:11px">"LO MEJOR EN ALIMENTACIÓN"</span></div>
+          <div class="row-4">
+            <div class="block sub">Hero 2<br><span style="font-size:10px">100% NATURAL</span></div>
+            <div class="block sub">Hero 3<br><span style="font-size:10px">CALIDAD PREMIUM</span></div>
+            <div class="block sub">Hero 4<br><span style="font-size:10px">SUPERALIMENTOS</span></div>
+            <div class="block sub">Hero 5<br><span style="font-size:10px">PACK + INFO</span></div>
+          </div>
+          <div class="block" style="font-size:11px">Listado productos genérico — 12 SKUs sin contexto</div>
+          <div class="block" style="font-size:11px">Footer plano: políticas + IG + idiomas en footer</div>
+        </div>
+      </div>
+    </div>
+    <div class="ba-col">
+      <span class="ba-label after">Después · propuesta</span>
+      <div class="wire">
+        <div class="wire-header">
+          <div class="wire-dot"><span></span><span></span><span></span></div>
+          <span class="wire-url">aspiritpetfood.store</span>
+          <span class="wire-tag">Rediseño</span>
+        </div>
+        <div class="wire-grid">
+          <div class="block beige" style="font-size:11px;padding:8px">Anuncio: <strong>−25% en tu 1ª caja + snack gratis</strong></div>
+          <div class="block sub" style="font-size:11px;padding:8px;text-align:left">α &nbsp; Quiz · Perros · Gatos · Real Food · Manifiesto · Tiendas &nbsp; 🔍 🛒</div>
+          <div class="block h">Comida cocinada,<br>no <em>procesada</em>.<br><span class="sub">85% carne fresca · Cocinado a baja Tª en Lorca · Tenderize®</span></div>
+          <div class="row-2">
+            <div class="block pri" style="padding:14px">Empezar el quiz →</div>
+            <div class="block sub">▶ Cómo cocinamos · vídeo 60s</div>
+          </div>
+          <div class="block win" style="padding:14px">🐾 12.847 perros y gatos ya repiten cada mes · ★ 4,9 / 5</div>
+          <div class="block terra" style="padding:18px">El quiz · "¿Qué necesita tu peludo?" en 5 pasos</div>
+          <div class="block" style="font-size:11px">Las tres gamas — Alpha · Primal · Orygo<br>(con propósito explicado, no SKUs sueltos)</div>
+          <div class="block beige" style="font-size:11px">Bloque "Real Food" — alimentos frescos + recetas</div>
+          <div class="block beige" style="font-size:11px">Sección "Cómo se hace en Lorca" — fotos fábrica</div>
+          <div class="block beige" style="font-size:11px">Reviews carrusel con foto de cliente</div>
+          <div class="block beige" style="font-size:11px">Suscripción detalle + calculadora ahorro mensual</div>
+          <div class="block beige" style="font-size:11px">FAQ — 8 objeciones top</div>
+          <div class="block sub" style="font-size:11px">Footer rico: tiendas físicas + B2B vets + idiomas reales</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Componentes nuevos en home</h4>
+  <ol>
+    <li><strong>Anuncio superior</strong> con incentivo concreto (-25% 1ª caja + snack), no descuento newsletter genérico.</li>
+    <li><strong>Navbar simplificada</strong>: Quiz primero (entrada principal), Perros, Gatos, Real Food, Manifiesto, Tiendas. Quita la duplicidad "por especie / por gama" del menú actual.</li>
+    <li><strong>Hero único</strong> con titular editorial + claim + CTA quiz + vídeo de cocción (no carrusel de 4 banners que nadie lee).</li>
+    <li><strong>Social proof inmediato</strong> bajo el hero — número de mascotas que repiten + nota media.</li>
+    <li><strong>Quiz inline</strong> en home (no popup): 5 pasos, captura zero-party, recomienda gama y suscripción.</li>
+    <li><strong>Bloque "Cómo cocinamos en Lorca"</strong> con fotografía editorial de fábrica — Tenderize y proceso visible.</li>
+    <li><strong>Las tres gamas con propósito</strong> en bloque editorial (Alpha = día a día · Primal = alta proteína · Orygo = senior/especial), no como categorías de catálogo.</li>
+    <li><strong>Calculadora de ahorro suscripción</strong> con simulador interactivo (perro X kg → suscripción Y € → ahorro Z €/año).</li>
+    <li><strong>Footer rico</strong> con: tiendas físicas (cuando existan), portal B2B vets, idiomas reales con bandera y URL distinta, sello de fábrica propia.</li>
+  </ol>
+
+  <!-- 5.3 PDP -->
+  <h3 style="margin-top:80px">5.3 PDP · ficha de producto que vende</h3>
+  <p>La PDP actual tiene la información correcta pero ordenada como ficha técnica de fabricante (descripción + ingredientes + composición analítica) y el botón de "Añadir al carrito" queda enterrado tras un scroll largo, especialmente en mobile. La PDP propuesta ordena por <strong>jerarquía de decisión del cliente nuevo</strong>: precio claro, suscripción visible (5% + envío gratis), reviews con foto, calculadora de raciones, FAQ — y el CTA siempre presente con sticky bar mobile.</p>
+
+  <div class="pdp-mock">
+    <div class="pdp-img" style="font-style:italic">α</div>
+    <div class="pdp-info">
+      <span class="pdp-badge">🏆 Best seller · 4.2K compras</span>
+      <h5>The Only One · Aves de Corral</h5>
+      <div class="pdp-stars">★★★★★ <span>4,9 · 487 reviews verificados</span></div>
+      <div class="pdp-price">
+        <span class="now">57,90 €</span>
+        <span class="was">76,90 €</span>
+        <span class="save">Ahorra 19€</span>
+      </div>
+      <p style="font-size:13px;color:#5a5448;margin-bottom:18px">12 kg de pienso semihúmedo con 85% pollo fresco. Cocinado a baja temperatura. Sin cereales ni gluten.</p>
+      <div class="pdp-opt sel">
+        <h6>★ Suscripción Quincenal · −5% + envío gratis</h6>
+        <div class="small">Skip / edita / cancela cuando quieras · La palanca de recurrencia que ya funciona</div>
+      </div>
+      <div class="pdp-opt">
+        <h6>Comprar una vez</h6>
+        <div class="small">76,90 € · entrega 24-48h</div>
+      </div>
+      <div class="pdp-cta">Añadir a la cesta →</div>
+      <div class="pdp-trust">
+        <div>🚚 <strong>Envío gratis</strong><br>en suscripción</div>
+        <div>🐕 <strong>Quiz</strong><br>plan en 2 min</div>
+        <div>🏭 <strong>Hecho en Lorca</strong><br>fábrica propia</div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Estructura completa de la PDP (de arriba a abajo)</h4>
+  <ol>
+    <li><strong>Galería</strong> con foto producto + foto de perro comiendo + microscopía ingrediente + foto fábrica Lorca + vídeo cocción (5 slots).</li>
+    <li><strong>Badge contextual</strong> (Best seller / Nuevo / Bajo stock) — sin "10% off newsletter" que ya está en banner.</li>
+    <li><strong>Nombre claro + estrellas verificadas</strong> con número de reviews.</li>
+    <li><strong>Precio claro</strong> con el ahorro de la suscripción (−5% + envío gratis) destacado a su lado.</li>
+    <li><strong>Descripción de 1 línea</strong> con el qué + el cómo (no 6 líneas de marketing).</li>
+    <li><strong>Selector suscripción vs compra única</strong> con la suscripción pre-seleccionada por defecto.</li>
+    <li><strong>CTA grande terracota visible sin scroll en mobile</strong> + sticky bar al hacer scroll (no enterrar el botón tras 3 pantallas de descripción).</li>
+    <li><strong>Trust badges</strong> en una fila: envío gratis suscripción / hecho en Lorca / 2.000+ reseñas.</li>
+    <li><strong>Calculadora de raciones</strong> — input peso del perro → output gramos/día + cuánto dura un saco.</li>
+    <li><strong>Bloque "Qué hay dentro"</strong> con ingredientes top en visual editorial (no tabla aburrida).</li>
+    <li><strong>Reviews con foto</strong> filtrable por raza, edad, problema resuelto (Loox / Judge.me / Yotpo).</li>
+    <li><strong>FAQ específica</strong> del producto (8 preguntas): transición, microondas, mezcla con seco, conservación, raciones, intolerancias, almacenaje, envío.</li>
+    <li><strong>Cross-sell con compra directa</strong>: cada tarjeta de "Te puede interesar" / "Suelen comprar juntos" con botón "Añadir" en la propia tarjeta — NO redirige a otra ficha.</li>
+  </ol>
+
+  <!-- 5.4 QUIZ -->
+  <h3 style="margin-top:80px">5.4 Quiz "¿Qué necesita tu peludo?"</h3>
+  <p>El quiz es la pieza central del rediseño y el benchmark más claro es <strong>Food For Joe</strong> ("Crea el plan en 2 minutos" como CTA principal de la home). Reduce los 200 SKUs del catálogo a 1-3 productos recomendados, captura datos zero-party (especie, raza, peso, edad, sensibilidades), precarga la suscripción que ya funciona (5% + envío gratis) con la cadencia óptima por peso, y alimenta segmentación de Klaviyo + audiencias custom para Meta Ads. Es la pieza que falta para llevar al cliente nuevo hasta la recurrencia que el cliente actual ya ejecuta.</p>
+
+  <div class="wire">
+    <div class="wire-header">
+      <div class="wire-dot"><span></span><span></span><span></span></div>
+      <span class="wire-url">aspiritpetfood.store/quiz</span>
+      <span class="wire-tag">Quiz · 5 pasos</span>
+    </div>
+    <div class="wire-grid">
+      <div class="block sub" style="font-size:11px;padding:6px">● ● ● ○ ○ &nbsp; Paso 3 de 5</div>
+      <div class="block h">¿Qué necesita tu peludo?<br><span class="sub">5 preguntas y te recomendamos su comida ideal</span></div>
+      <div class="row-3">
+        <div class="block sub">🐕 Perro</div>
+        <div class="block pri">🐱 Gato</div>
+        <div class="block sub">🐕+🐱 Ambos</div>
+      </div>
+      <div class="row-4">
+        <div class="block sub">&lt; 5 kg</div>
+        <div class="block sub">5-15 kg</div>
+        <div class="block pri">15-30 kg</div>
+        <div class="block sub">&gt; 30 kg</div>
+      </div>
+      <div class="row-3">
+        <div class="block sub">Cachorro</div>
+        <div class="block pri">Adulto</div>
+        <div class="block sub">Senior</div>
+      </div>
+      <div class="row-2">
+        <div class="block pri">Continuar →</div>
+        <div class="block sub">← Atrás</div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Pasos del quiz y datos capturados</h4>
+  <ol>
+    <li><strong>Paso 1 · Especie</strong> (Perro / Gato / Ambos) — segmenta catálogo.</li>
+    <li><strong>Paso 2 · Peso</strong> (&lt;5 / 5-15 / 15-30 / &gt;30 kg) — calcula raciones recomendadas.</li>
+    <li><strong>Paso 3 · Edad</strong> (Cachorro / Adulto / Senior) — recomienda gama (Alpha / Primal / Orygo).</li>
+    <li><strong>Paso 4 · Sensibilidades</strong> (Ninguna / Digestión / Alergias / Pelo / Articular) — filtra fórmula.</li>
+    <li><strong>Paso 5 · Email + nombre del peludo</strong> — captura zero-party + activa flow Klaviyo.</li>
+    <li><strong>Resultado</strong>: 1-3 productos recomendados + suscripción pre-configurada (5% + envío gratis) con cadencia óptima según peso + opción "envíame el plan por email".</li>
+  </ol>
+
+  <div class="callout win">
+    <div class="ico">✓</div>
+    <div>
+      <h4>Food For Joe es el benchmark más claro del quiz como motor de captación</h4>
+      <p>"Crea el plan en 2 minutos" es su CTA principal en la home. Es exactamente la pieza que Alpha Spirit no tiene y que cumple 4 funciones a la vez: (1) reduce la paradoja de elección sobre 200 SKUs, (2) captura email + datos del perro, (3) lleva al cliente nuevo a la suscripción que ya funciona, (4) alimenta Meta Custom Audiences y Klaviyo segments. Dogfy Diet usa la misma mecánica.</p>
+    </div>
+  </div>
+
+  <!-- 5.5 MOBILE -->
+  <h3 style="margin-top:80px">5.5 Mobile · 75-80% del tráfico en pet food premium</h3>
+  <p>Alpha Spirit tiene hoy <strong>57% desktop / 43% mobile</strong> — al revés del sector (Dogfy 75% mobile, E&amp;C 81%, Patitas 78%). Refleja audiencia más adulta + UX mobile débil que ahuyenta al cliente joven. Mobile-first es obligado.</p>
+
+  <div class="ba">
+    <div class="ba-col">
+      <span class="ba-label before">Antes · mobile actual</span>
+      <div class="wire" style="max-width:280px;margin:0 auto">
+        <div class="wire-header" style="padding:6px 8px">
+          <span class="wire-tag" style="font-size:9px">Mobile · 375px</span>
+        </div>
+        <div class="wire-grid" style="gap:6px">
+          <div class="block sub" style="font-size:10px;padding:6px">☰ &nbsp; α &nbsp; 🛒</div>
+          <div class="block xtall" style="font-size:10px">Hero genérico<br>"LO MEJOR EN..."</div>
+          <div class="row-2">
+            <div class="block sub" style="font-size:9px">Producto<br>genérico</div>
+            <div class="block sub" style="font-size:9px">Producto<br>genérico</div>
+          </div>
+          <div class="row-2">
+            <div class="block sub" style="font-size:9px">Producto</div>
+            <div class="block sub" style="font-size:9px">Producto</div>
+          </div>
+          <div class="block sub" style="font-size:9px">Footer plano</div>
+        </div>
+      </div>
+    </div>
+    <div class="ba-col">
+      <span class="ba-label after">Después · mobile rediseño</span>
+      <div class="wire" style="max-width:280px;margin:0 auto">
+        <div class="wire-header" style="padding:6px 8px">
+          <span class="wire-tag" style="font-size:9px">Mobile · 375px</span>
+        </div>
+        <div class="wire-grid" style="gap:6px">
+          <div class="block beige" style="font-size:9px;padding:5px">−25% 1ª caja + snack →</div>
+          <div class="block sub" style="font-size:10px;padding:6px">☰ &nbsp; α &nbsp; 🔍 🛒</div>
+          <div class="block h" style="padding:24px 10px;font-size:13px">Comida cocinada,<br>no <em>procesada</em>.</div>
+          <div class="block pri" style="padding:12px">Empezar el quiz →</div>
+          <div class="block win" style="font-size:9px;padding:6px">★ 4,9 · 12.847 mascotas</div>
+          <div class="block terra" style="font-size:9px;padding:8px">Quiz · 5 pasos</div>
+          <div class="block beige" style="font-size:9px">Cómo se hace en Lorca →</div>
+          <div class="block beige" style="font-size:9px">Reviews con foto</div>
+          <div class="block sub" style="font-size:9px;background:var(--accent);color:#fff;font-weight:600;position:relative">Sticky CTA · WhatsApp +<br>"Empezar el quiz"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Mejoras mobile específicas</h4>
+  <ul>
+    <li><strong>Sticky CTA inferior</strong> con quiz + WhatsApp (siempre visible, no se pierde al hacer scroll).</li>
+    <li><strong>Botón WhatsApp flotante</strong> visible en cada PDP — única vía de pre-compra en horario amplio.</li>
+    <li><strong>Imágenes WebP comprimidas</strong> (objetivo &lt;100KB cada PDP image) para mejorar LCP en 3G/4G.</li>
+    <li><strong>Hero compacto</strong> con titular + vídeo + 1 CTA — no carrusel deslizante.</li>
+    <li><strong>Suscripción accordeón</strong> en PDP mobile: comparativa visible sin scroll secundario.</li>
+    <li><strong>Checkout en 1 página</strong> con autocompletado de dirección + Bizum / Apple Pay arriba.</li>
+    <li><strong>Botón "añadir al carrito" sticky</strong> en PDP mobile cuando el original sale de viewport.</li>
+  </ul>
+
+  <!-- 5.6 NAVIGATION -->
+  <h3 style="margin-top:80px">5.6 Arquitectura de información</h3>
+  <p>El menú actual mezcla dos sistemas mentales (entrada por especie vs por gama de marca) y duplica entradas. El cliente nuevo no sabe si "Alpha", "Primal" y "Orygo" son sabores, gamas o marcas distintas. Hay que simplificar a un solo eje de entrada y explicar las gamas como elección, no como navegación.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Sección</th><th>Hoy</th><th>Propuesta</th></tr></thead>
+      <tbody>
+        <tr><td>Entrada principal</td><td>Listado top: Perros / Gatos / Packs Alpha Spirit. Footer expone 5 líneas más.</td><td>Quiz como primera entrada. Después: Perros · Gatos · Real Food · Manifiesto · Tiendas. Sin "Packs" suelto.</td></tr>
+        <tr><td>Gamas (Alpha / Primal / Orygo / Real Food / Snacks)</td><td>Mezcladas con marcas de "especie" en footer. Confunde.</td><td>Página "Las gamas" editorial que explica para qué sirve cada una. Acceso a las gamas desde resultados del quiz o desde PDPs.</td></tr>
+        <tr><td>Páginas faltantes</td><td>Sin "Manifiesto", sin "Cómo cocinamos", sin "Por qué Alpha Spirit", sin "Para vets/tiendas".</td><td>"Manifiesto" (storytelling Lorca + Tenderize), "Cómo cocinamos" (proceso visual), "B2B vets" (portal con login).</td></tr>
+        <tr><td>i18n</td><td>EN/IT/PT en footer pero contenido en español → indexación duplicada.</td><td>EN/IT/PT traducidos de verdad + selector de país visible en header + hreflang correcto.</td></tr>
+        <tr><td>Búsqueda</td><td>Búsqueda básica de Shopify (sin sugerencias).</td><td>Búsqueda con sugerencias (Algolia / Searchanise) + entrada rápida a quiz desde resultado vacío.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 5.7 TRUST -->
+  <h3 style="margin-top:80px">5.7 Trust signals · señales de confianza</h3>
+  <p>La confianza no se construye con un logo de "Sello de calidad" sino con datos verificables. La web actual muestra cero datos cuantificables — el rediseño los hace centrales.</p>
+
+  <div class="findings">
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">Datos cuantificables visibles en home</div></div>
+      <p><strong>"12.847 mascotas repiten cada mes"</strong> · <strong>"4,9 ★ media en 2.159 reseñas"</strong> · <strong>"85% carne fresca verificada"</strong> · <strong>"Cocinado en Lorca desde 2014"</strong>. Cuatro datos concretos en lugar de cuatro adjetivos vacíos.</p>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">Reviews con foto y filtros</div></div>
+      <p>Sustituir el bloque estático de reseñas por un carrusel con foto del cliente + perro + producto. Filtros por raza, edad, problema resuelto. Aporta prueba social directa y reduce objeción "y si no le va bien a mi perro".</p>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">Garantía visible (no en footer legal)</div></div>
+      <p>Bloque "A tu perro le gusta o te devolvemos el 100%" en PDP + checkout + ad creatives. Iguala a Dogfy y E&amp;C y elimina la objeción más costosa.</p>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">Equipo veterinario visible</div></div>
+      <p>Página "Equipo" con fotos de las personas que formulan + veterinarias colaboradoras + perfil del fundador. Patitas&amp;Co lo hace muy bien — equipo cinófilo con cara visible reduce fricción de marca anónima.</p>
+    </div>
+    <div class="finding ok">
+      <div class="finding-head"><div class="finding-title">Sello "Fabricado en España" + transparencia de origen</div></div>
+      <p>Trazabilidad por lote (modelo Open Farm): qué proveedor de carne, qué ganadería, cuándo se cocinó. Para premium 2026 es ya esperado, no un extra.</p>
+    </div>
+  </div>
+
+  <!-- 5.8 PERFORMANCE -->
+  <h3 style="margin-top:80px">5.8 Performance y tecnología</h3>
+  <p>Auditoría Lighthouse recomendada antes de empezar el rediseño. Stack tecnológico propuesto:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Capa</th><th>Stack actual</th><th>Stack propuesto</th><th>Por qué</th></tr></thead>
+      <tbody>
+        <tr><td>Plataforma</td><td>Shopify (plan estándar)</td><td>Shopify Plus</td><td>Markets para i18n real, checkout extensible, mejor SLA</td></tr>
+        <tr><td>Theme</td><td>Theme heredado tipo Debut (2018)</td><td>Theme custom sobre Dawn o Impulse</td><td>Componentes modernos, performance, modular</td></tr>
+        <tr><td>Suscripción</td><td>App genérica · 5% off único</td><td>Recharge + componentes custom</td><td>Cadencias flexibles, skip 1-clic, upgrade in-app</td></tr>
+        <tr><td>Reviews</td><td>Reviews nativas Shopify</td><td>Loox o Judge.me</td><td>Foto, filtros, integración con Klaviyo</td></tr>
+        <tr><td>Email automation</td><td>Mailchimp básico (probable)</td><td>Klaviyo</td><td>Welcome, abandono, win-back, segmentos zero-party del quiz</td></tr>
+        <tr><td>Pagos locales</td><td>Visa / MC / Amex / Apple / Google</td><td>+ Bizum + SeQura + Klarna + PayPal</td><td>Cobertura España 95% (vs ~60% hoy)</td></tr>
+        <tr><td>i18n</td><td>Multi-store no traducido</td><td>Weglot + hreflang</td><td>Mercados EN/IT/PT con contenido real</td></tr>
+        <tr><td>Chat</td><td>Solo email</td><td>Tidio + WhatsApp Business API</td><td>Respuestas en &lt;5 min, 80% cobertura</td></tr>
+        <tr><td>Analytics</td><td>GA básico</td><td>GA4 + Shopify Analytics + dashboards custom</td><td>Funnel real, no estimaciones</td></tr>
+        <tr><td>Búsqueda</td><td>Búsqueda Shopify nativa</td><td>Searchanise o Algolia</td><td>Sugerencias instantáneas, filtros, search analytics</td></tr>
+        <tr><td>CDN imágenes</td><td>Shopify CDN básico</td><td>+ optimización WebP/AVIF automática</td><td>LCP mobile &lt;2,5s</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- METODOLOGÍA -->
+<section id="metodo">
+  <div class="sec-tag">06 · Metodología Growth</div>
+  <h2>Cuatro pilares.<br>Un solo <em>equipo</em>.</h2>
+  <p class="sec-lede">El método de trabajo: alineamos cada palanca con la cuenta de resultados. No es "diseño + ads + soporte" como agencia tradicional, es una unidad multidisciplinar que opera Alpha Spirit como si fuera el propio equipo interno.</p>
+
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-tag">First</div>
+      <h3>Visión y modelo de negocio</h3>
+      <p>Definimos el modelo (DTC + retail + B2B), propuesta de valor por gama y mapa de público objetivo cruzando 7 Maletas + SimilarWeb + ventas históricas. Construimos el ecosistema digital cohesivo: web + suscripción + email + paid + retail + B2B alineados.</p>
+    </div>
+    <div class="pillar alt">
+      <div class="pillar-tag">Second</div>
+      <h3>Estrategia financiera y rentabilidad</h3>
+      <p>Tesorería + cuenta de resultados + balance + unit economics por canal. <strong>MER objetivo 2,8x-3,5x</strong>. Payback &lt; 4 meses. Regla CEO: si el MER baja de 2,5x dos semanas seguidas, paramos de escalar y reinvertimos en producto/CRO. Evita quemar caja por ventas brutas destruyendo margen.</p>
+    </div>
+    <div class="pillar amber">
+      <div class="pillar-tag">Third</div>
+      <h3>Infraestructura tecnológica</h3>
+      <p>Shopify Plus + Recharge + Klaviyo + Weglot + Loox + Tidio + Bizum/SeQura/Klarna + GA4 + Searchanise. Modular, integrable, escalable. Cada herramienta justificada por impacto medible — no por modas. Stack detallado en sección 5.8.</p>
+    </div>
+    <div class="pillar blue">
+      <div class="pillar-tag">Fourth</div>
+      <h3>Marketing digital y posicionamiento</h3>
+      <p>Captación 360°: Meta + Google + TikTok + YouTube + Influencer + SEO. Plan de contenidos por gama y por etapa del funnel. Medición semanal en dashboard custom con CAC por canal, MER, payback y LTV por cohorte. Ajuste creativos cada 14 días.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:80px">Optimize & Evolve · ritmo de trabajo</h3>
+  <div class="pillars" style="grid-template-columns:repeat(2,1fr)">
+    <div class="pillar amber"><div class="pillar-tag">Daily</div><h3 style="font-size:20px">Reporting diario</h3><p>Dashboard custom con tráfico, CR, CAC, MER, payback, churn suscripción y LTV cohorte. Actualizado cada mañana. Alertas automáticas si MER &lt; 2,5x o stock crítico.</p></div>
+    <div class="pillar blue"><div class="pillar-tag">Weekly</div><h3 style="font-size:20px">Sprint creativo</h3><p>Lunes: review métricas + lectura competencia. Martes-jueves: producción 6-8 creatividades nuevas. Viernes: lanzamiento + análisis A/B semana anterior.</p></div>
+    <div class="pillar"><div class="pillar-tag">Biweekly</div><h3 style="font-size:20px">Testing CRO</h3><p>Cada 2 semanas: 1-2 tests en web (PDP, checkout, hero, suscripción) con muestra mínima estadísticamente significativa. Ganador integrado, perdedor descartado.</p></div>
+    <div class="pillar alt"><div class="pillar-tag">Monthly</div><h3 style="font-size:20px">Comité estratégico</h3><p>Revisión mensual con CEO Alpha Spirit: P&amp;L, hitos del roadmap, ajustes de inversión, decisiones de NPD. Reporting trimestral con presentación de avance vs plan.</p></div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="sec-tag">07 · Roadmap 12 meses</div>
+  <h2>Mes a mes.<br>Sin <em>improvisar</em>.</h2>
+  <p class="sec-lede">Tres fases con objetivos medibles. Cada fase exige que la anterior haya validado sus métricas — no se acelera sobre una base rota. Lo que sigue es el detalle mes a mes con entregables y KPIs por hito.</p>
+
+  <div class="phase">
+    <div class="phase-tag">Fase 1 · Meses 0-6 · Foundation + Quick Wins</div>
+    <h3>Tapar las fugas y reescribir el storytelling</h3>
+    <div class="phase-meta">
+      <span>Objetivo · CR de 2% a 2,8%</span>
+      <span>Captura del 70% del valor recuperable</span>
+      <span>Inversión ~500€/día paid (15K€/mes)</span>
+    </div>
+
+    <div class="phase-month"><div class="m">M0</div><div class="what"><strong>Kick-off + auditoría técnica completa</strong>. Acceso a Shopify, GA4, Klaviyo, Meta Business. Lighthouse mobile. Mapa de redirecciones. Alta de Recharge, Loox, Tidio, Weglot, Bizum / SeQura / Klarna. Quick win 1: activar pagos locales (semanas 1-2).</div></div>
+
+    <div class="phase-month"><div class="m">M1</div><div class="what"><strong>Quiz de entrada en home</strong> (estilo Food For Joe) + email flow Klaviyo welcome + abandono. Cross-sell con compra directa (sin redirigir a otra ficha). Fotografía nueva fábrica Lorca + producción vídeo Tenderize 60s.</div></div>
+
+    <div class="phase-month"><div class="m">M2</div><div class="what"><strong>PDP rediseñada</strong> con CTA visible sin scroll + sticky bar mobile, calculadora de raciones, FAQ acordeón y reviews con foto. WhatsApp Business + Tidio en producción. Stock-out alertas automatizadas.</div></div>
+
+    <div class="phase-month"><div class="m">M3</div><div class="what"><strong>Home rediseñada</strong> con hero vídeo Tenderize, quiz inline 5 pasos, bloques editoriales "Cómo se hace en Lorca" y "Las gamas con propósito". Lanzamiento i18n EN + IT + PT con Weglot + hreflang. Sticky CTA mobile.</div></div>
+
+    <div class="phase-month"><div class="m">M4-M5</div><div class="what"><strong>Pruebas Paid Social Meta + Google Ads</strong> con creatividades nuevas (UGC primero, después Tenderize). Primer pulso de ROAS por audiencia. Linkbuilding inicial: 10-15 dominios sectoriales (vets, blogs cinófilos, comparadores).</div></div>
+
+    <div class="phase-month"><div class="m">M6</div><div class="what"><strong>Revisión Fase 1 y go/no-go Fase 2</strong>. KPIs esperados: CR ≥ 2,5%, MER ≥ 2,8x en pruebas paid, suscripción ≥ 12% de pedidos, NPS ≥ 50, churn mensual sub &lt; 8%.</div></div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-tag">Fase 2 · Meses 6-12 · Escalado y expansión</div>
+    <h3>Activar el mix de canales y abrir mercados</h3>
+    <div class="phase-meta">
+      <span>Objetivo · 80-120K visitas/mes</span>
+      <span>Crecimiento exponencial sobre +30% base</span>
+      <span>Inversión ~1.000€/día paid (~280K€/año) + UGC</span>
+    </div>
+
+    <div class="phase-month"><div class="m">M7-M8</div><div class="what"><strong>Escalado Meta + Google Ads</strong> en presupuesto y audiencias. Custom audiences desde quiz + reviews con foto + retargeting checkout. Display empieza en M8 con retargeting y prospecting controlado.</div></div>
+
+    <div class="phase-month"><div class="m">M9</div><div class="what"><strong>TikTok Shop España</strong> abierto con 5 SKUs hero: Pack Soft Food 3kg, Pack The Only One 3kg, Albóndigas 400g, Mousse 85g, Estofados Real Food. LIVE semanal de cocción Tenderize. Programa de afiliados con 30-50 micro-creators cinófilos al 8-12% comisión.</div></div>
+
+    <div class="phase-month"><div class="m">M10</div><div class="what"><strong>Plan SEO de categoría</strong> (no solo marca): keyword research + 30 artículos editoriales en blog veterinario (transición, recetas, cuidados, comparativas). Linkbuilding sectorial agresivo: 20-30 dominios cinófilos. Modelo Patitas&amp;Co.</div></div>
+
+    <div class="phase-month"><div class="m">M11</div><div class="what"><strong>Klaviyo full stack</strong>: welcome flow segmentado por especie + carrito abandonado A/B + win-back suscripción + VIP segmentado + newsletter editorial semanal con recetas y storytelling. SMS programado para drops + win-back.</div></div>
+
+    <div class="phase-month"><div class="m">M12</div><div class="what"><strong>Cierre Fase 2 y go/no-go Fase 3</strong>. KPIs esperados: crecimiento ≥ +60% YoY (doblar el +30% base), MER ≥ 2,8x sostenido, payback &lt; 4 meses, 25-30% pedidos suscripción, 15% tráfico LatAm.</div></div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-tag">Fase 3 · Meses 12-24 · Consolidación retail + B2B</div>
+    <h3>Brand & comercio unificado</h3>
+    <div class="phase-meta">
+      <span>Objetivo · expansión LatAm + EU</span>
+      <span>Modelo retail + DTC + B2B</span>
+      <span>Inversión adicional sólo si MER ≥ 2,8x sostenido</span>
+    </div>
+
+    <ul class="phase-list">
+      <li><strong>Marketplaces</strong>: Amazon ES/IT/DE con SKUs hero + Sponsored Products. Miravia + El Corte Inglés online como segundo cinturón.</li>
+      <li><strong>Portal B2B</strong> para veterinarias y tiendas con catálogos personalizados + descuentos por volumen + pago a crédito + pedidos recurrentes (Shopify B2B).</li>
+      <li><strong>Distribución física</strong>: prueba en Patitas&amp;Co (Fuencarral 156 y Narváez 27, Madrid) + 30-50 pet shops premium seleccionados.</li>
+      <li><strong>Brand campaigns</strong>: TV connected (Atresplayer / RTVE Play) + OOH selectivo + podcast sponsoring si MER sostenido ≥ 2,8x.</li>
+      <li><strong>Sub-marca felina</strong>: Alpha Spirit Cat con campaña de lanzamiento independiente — captar el 30% de hogares con perro + gato.</li>
+      <li><strong>Análisis predictivo de demanda</strong> + recomendaciones mensuales de NPD (nuevos packs estacionales, bundles "Welcome Pack" 25€, sabores de temporada).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- MODELO DE INVERSIÓN -->
+<section id="inversion">
+  <div class="sec-tag">08 · Modelo de inversión</div>
+  <h2>Sin fee fijo<br>el primer <em>año</em>.</h2>
+  <p class="sec-lede">El modelo de colaboración propuesto: Growth Management con inversión colaborativa. El fee tradicional de agencia (~8.000€/mes estructural) desaparece. Solo se cobra cuando la marca llega a 1M€ de facturación en la nueva categoría de producto activada.</p>
+
+  <h3>Standard del mercado vs propuesta</h3>
+  <div class="table-wrap">
+    <table class="pricing">
+      <thead>
+        <tr>
+          <th>Inversión</th>
+          <th>Coste standard</th>
+          <th>Fase 1 (6m)</th>
+          <th>Fase 2 (+6m)</th>
+          <th>Fase 3 (+año)</th>
+          <th>Observaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="section"><td colspan="6">Gestión de tráfico · de 8.000€ standard a 3.000€ + variable</td></tr>
+        <tr><td>Fee Paid Media</td><td class="strike">1.800-2.200€/mes</td><td class="inc">Inc.</td><td class="inc">Inc.</td><td class="inc">Inc.</td><td>Fee solo año 1 o hasta 1M€ fact. categoría</td></tr>
+        <tr><td>Fee Marketing Automation</td><td class="strike">700-1.200€/mes</td><td class="inc">Inc.</td><td class="inc">Inc.</td><td class="inc">Inc.</td><td>Klaviyo + Recharge</td></tr>
+        <tr><td>Fee Gestión SEO</td><td class="strike">1.200-2.000€/mes</td><td class="inc">Inc.</td><td class="inc">Inc.</td><td class="inc">Inc.</td><td>ES + EN + IT + PT</td></tr>
+        <tr><td>Fee PR</td><td class="strike">2.200-4.400€/mes</td><td class="inc">Inc.</td><td class="inc">Inc.</td><td class="inc">Inc.</td><td>Foco vets, etólogos, prensa cinófila</td></tr>
+        <tr><td>Bolsa Desarrollos Shopify Plus</td><td class="strike">2.100-3.600€/mes</td><td class="inc">Inc. push</td><td class="inc">Inc. estab.</td><td class="inc">Inc. evolutivos</td><td>Quiz, calculadora, Bizum, Weglot, B2B</td></tr>
+        <tr class="section"><td colspan="6">Captación tráfico · 3.500-6.000€ → 10.000€+ /mes</td></tr>
+        <tr><td>Google Ads</td><td>1.500-3.000€</td><td>1.500€</td><td class="inc">Según ROAS</td><td class="inc">Según ROAS</td><td>Shopping + Search + PMax</td></tr>
+        <tr><td>Paid Social Meta</td><td>1.000-2.000€</td><td>+2.000€</td><td class="inc">Según ROAS</td><td class="inc">Según ROAS</td><td>Tenderize + semihúmedo + UGC</td></tr>
+        <tr><td>TikTok + TikTok Shop</td><td>200€</td><td>500€ pruebas</td><td class="inc">Spark Ads</td><td class="inc">12-15% paid total</td><td>5 SKUs hero + LIVE + afiliados</td></tr>
+        <tr><td>UGC / Influencer</td><td>0€</td><td>4.000€</td><td class="inc">+5.000€</td><td class="inc">Según ROAS</td><td>Micro-creators cinófilos + vets</td></tr>
+        <tr><td>Linkbuilding</td><td>500-1.000€</td><td>0€</td><td>400€</td><td class="inc">Según autoridad</td><td>Modelo Patitas&Co</td></tr>
+        <tr><td>Klaviyo automation</td><td>500-1.000€</td><td>Workflows 200€</td><td>Newsletters +300€</td><td class="inc">Stack completo</td><td>Welcome, abandono, win-back, VIP</td></tr>
+        <tr><td>SMS</td><td>0€</td><td>2.500€</td><td>5.000€</td><td>10.000€</td><td>~0,05€/SMS · 10K contactos</td></tr>
+        <tr class="section"><td colspan="6">Foto, vídeo y diseño · según demanda</td></tr>
+        <tr><td>Contenido orgánico + ads + producto</td><td>2.000€/media</td><td>Según demanda</td><td>Según demanda</td><td>Según demanda</td><td>Reels, UGC, fotografía PDP, motion</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout win">
+    <div class="ico">€</div>
+    <div>
+      <h4>Ahorro en fees año 1: ~80-130K€</h4>
+      <p>Equivalente a meter 3-4 meses adicionales de paid Search o un programa UGC completo con 30 micro-creators. Sin fees fijos hasta que la nueva categoría facture 1M€.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ESCENARIOS -->
+<section id="escenarios">
+  <div class="sec-tag">09 · Escenario recomendado</div>
+  <h2>1.000€/día.<br>Inversión <em>lean</em>, crecimiento exponencial.</h2>
+  <p class="sec-lede">Alpha Spirit ya crece al <strong>+30% anual</strong> con prácticamente cero paid. Con una inversión total de <strong>350K€ (≈1.000€/día)</strong> sobre un embudo ya tapado y un quiz que segmente al cliente nuevo, el crecimiento pasa de orgánico a exponencial. No hace falta una ronda ni quemar caja: hace falta meter euros donde el funnel ya convierte.</p>
+
+  <div class="scenarios">
+    <div class="scen">
+      <div class="scen-tag">Base (sin paid)</div>
+      <div class="scen-num">+30<span style="font-size:24px;color:#a8a39a">%</span></div>
+      <div class="scen-sub">Crecimiento orgánico actual</div>
+      <div class="scen-list">
+        <div class="row"><span>Inversión mkt/año</span><strong>~0€ paid</strong></div>
+        <div class="row"><span>Motor</span><strong>Recurrencia + branded search</strong></div>
+        <div class="row"><span>Riesgo</span><strong>Dependencia 100% cliente fiel</strong></div>
+      </div>
+      <p class="scen-note">El crecimiento ya existe pero está techado por la captación. Sin sumar cliente nuevo, la curva se aplana en 2-3 años.</p>
+    </div>
+    <div class="scen featured">
+      <div class="scen-tag">★ Recomendado · Lean</div>
+      <div class="scen-num">350<span style="font-size:24px;color:#a8a39a">K€</span></div>
+      <div class="scen-sub">≈1.000€/día · 12 meses</div>
+      <div class="scen-list">
+        <div class="row"><span>Inversión total/año</span><strong>350K€</strong></div>
+        <div class="row"><span>Paid puro</span><strong>~280K€ (800€/día)</strong></div>
+        <div class="row"><span>CRO + content + email</span><strong>~70K€</strong></div>
+        <div class="row"><span>Crecimiento esperado</span><strong>Exponencial sobre +30%</strong></div>
+      </div>
+      <p class="scen-note">Con el embudo tapado, el quiz capturando cliente nuevo y la suscripción (5% + envío gratis) reteniéndolo, 1.000€/día son suficientes para activar el efecto compuesto del +30% actual.</p>
+    </div>
+    <div class="scen">
+      <div class="scen-tag">Expansión (opcional)</div>
+      <div class="scen-num">+50<span style="font-size:24px;color:#a8a39a">%</span></div>
+      <div class="scen-sub">Sólo si MER ≥ 2,8x sostenido</div>
+      <div class="scen-list">
+        <div class="row"><span>Inversión adicional</span><strong>+150-200K€</strong></div>
+        <div class="row"><span>Foco</span><strong>LatAm + EN/IT/PT activos</strong></div>
+        <div class="row"><span>Decisión</span><strong>Mes 9-12, no antes</strong></div>
+      </div>
+      <p class="scen-note">Sólo si el escenario lean demuestra MER ≥ 2,8x sostenido durante 2 trimestres. No se mete antes para no quemar caja.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="ico">▲</div>
+    <div>
+      <h4>Por qué 1.000€/día y no más</h4>
+      <p>Alpha Spirit no necesita "comprar crecimiento" — ya lo tiene al +30% orgánico. Necesita <strong>alimentar lo que ya funciona</strong>: cliente nuevo entra por el quiz, la suscripción (5% + envío gratis) lo retiene y el +30% se compone. Pasarse de 1.000€/día antes de validar MER ≥ 2,8x destruye margen sin acelerar la curva. La regla: subir presupuesto sólo cuando el dato lo pida, no antes.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:64px">Reparto recomendado del paid (280K€ ≈ 800€/día)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Canal</th><th>% del paid</th><th>€/año</th><th>Función</th></tr></thead>
+      <tbody>
+        <tr><td>Meta Ads (FB + IG)</td><td>55%</td><td>~155K</td><td>Volumen TOFU + MOFU · creatividades semihúmedo + Tenderize</td></tr>
+        <tr><td>Google Ads (Search + PMax)</td><td>20%</td><td>~55K</td><td>Captura marca + categorías "comida natural perro"</td></tr>
+        <tr><td>TikTok Ads + TikTok Shop</td><td>10-15%</td><td>~30K</td><td>UGC + demo cocción + audiencia 25-40 amantes mascotas</td></tr>
+        <tr><td>YouTube / programmatic</td><td>8%</td><td>~22K</td><td>Brand awareness + retargeting frecuencia controlada</td></tr>
+        <tr><td>Influencer marketing</td><td>7%</td><td>~18K</td><td>Vets, etólogos, micro-influencers cinófilos (8-12% comisión)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CIERRE -->
+<section id="cierre" style="background:var(--ink);color:#fff;border-bottom:none">
+  <div class="sec-tag" style="color:#e89a6b">10 · Próximos pasos</div>
+  <h2 style="color:#fff">El producto ya enamora.<br>Toca <em style="color:#e89a6b">escalarlo</em>.</h2>
+  <p style="font-size:18px;color:#cfcabf;max-width:880px;margin-top:32px;font-weight:300;line-height:1.6">Alpha Spirit no necesita reinventarse. Lo que tiene es bueno: marca con propósito real, producto patentado (Tenderize), fábrica artesana en Lorca, comunidad emocional, snack de regalo que se recuerda, web que ya convierte mejor que la de los líderes. Lo que necesita es rediseñar la web a la altura del producto y activar las palancas de captación que hoy están a 0% — combinando el modelo SEO + organic de Patitas&amp;Co con el paid de Dogfy y el UGC de Food For Joe.</p>
+
+  <h3 style="color:#fff;margin-top:64px">Cómo seguimos</h3>
+  <ol style="margin-top:24px">
+    <li style="color:#cfcabf"><strong style="color:#fff">Reunión de validación (1h)</strong> — repaso de la propuesta, ajustes de scope y prioridades.</li>
+    <li style="color:#cfcabf"><strong style="color:#fff">Auditoría técnica completa (1 semana)</strong> — accesos a Shopify, GA4, Meta Business y Klaviyo. Lighthouse mobile. Mapa de redirecciones. Comprobación de stack actual.</li>
+    <li style="color:#cfcabf"><strong style="color:#fff">Kick-off + Quick Wins (semana 2)</strong> — activar Bizum/SeQura/Klarna, ajustar incentivos suscripción, alertas de stock crítico.</li>
+    <li style="color:#cfcabf"><strong style="color:#fff">Rediseño Fase 1 (meses 1-3)</strong> — PDP rediseñada, home rediseñada, i18n EN/IT/PT, WhatsApp + chat, política devoluciones.</li>
+    <li style="color:#cfcabf"><strong style="color:#fff">Escalado Fase 2 (meses 6-12)</strong> — paid activo en Meta + Google + TikTok, plan SEO de categoría, marketplaces y TikTok Shop.</li>
+  </ol>
+
+  <div class="hero-meta" style="border-top:1px solid #2a2a26;margin-top:64px">
+    <div>Inicio recomendado<span style="color:#fff">Julio 2026 · cierre antes de la temporada alta Q4</span></div>
+    <div>Plazo entrega Fase 1<span style="color:#fff">6 meses · CR de 2% a 2,8%</span></div>
+    <div>Compromiso de inversión<span style="color:#fff">Sin fee fijo año 1 · solo paid + tools</span></div>
+    <div>Riesgo principal<span style="color:#fff">Posponer y dejar que Patitas&amp;Co consolide el SEO de categoría</span></div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Propuesta Growth · Alpha Spirit</strong></p>
+  <p>4 de junio de 2026 · Documento confidencial</p>
+  <p style="margin-top:24px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;line-height:1.7">
+    Fuentes: aspiritpetfood.store (ES/EN/IT/PT) · SimilarWeb Feb-Abr 2026 (aspiritpetfood.store, dogfydiet.com, patitasco.com, edgardcooper.com, foodforjoe.es, natukabarf.com, wildbalance.es) · Meta Ads Library España · Trustpilot · Google Business · investigación 7 Maletas · auditoría UX · embudo y benchmark de inversión
+  </p>
+</footer>
+
+</div>
+</body>
+</html>
